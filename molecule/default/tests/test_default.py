@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import testinfra.utils.ansible_runner
 
@@ -16,10 +17,17 @@ def test_health(host):
         "--body",
         "localhost/-/readiness?all=1",
     )
-    cmd = host.run_expect(
-        expected=[0],
-        command=" ".join(args),
-    )
+    retries = 120
+    while retries > 0:
+        cmd = host.run(
+            command=" ".join(args),
+        )
+        if cmd.rc == 0:
+            break
+        retries -= 1
+        time.sleep(1)
+    assert retries > 0
+
     response = json.loads(s=cmd.stdout)
     assert response["status"] == "ok"
     assert response["cache_check"][0]["status"] == "ok"
