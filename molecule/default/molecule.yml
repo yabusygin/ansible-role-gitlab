@@ -10,7 +10,7 @@ platforms:
     image: ${TEST_IMAGE}
     command: ""
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - /var/lib/docker
     keep_volumes: false
     privileged: true
