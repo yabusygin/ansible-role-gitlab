@@ -12,3 +12,8 @@
   template:
     src: docker-compose.yml.j2
     dest: /etc/docker-gitlab/docker-compose.yml
+
+- name: run GitLab
+  docker_compose:
+    state: present
+    project_src: /etc/docker-gitlab
