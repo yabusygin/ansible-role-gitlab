@@ -2,3 +2,8 @@
 - name: install Docker
   import_role:
     name: yabusygin.docker
+
+- name: create configuration directory
+  file:
+    path: /etc/docker-gitlab
+    state: directory
