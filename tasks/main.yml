@@ -1,2 +1,4 @@
 ---
-# tasks file for gitlab
+- name: install Docker
+  import_role:
+    name: yabusygin.docker
