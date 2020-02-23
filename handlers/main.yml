@@ -1,2 +1,6 @@
 ---
-# handlers file for gitlab
+- name: restart GitLab
+  docker_compose:
+    state: present
+    restarted: yes
+    project_src: /etc/docker-gitlab
