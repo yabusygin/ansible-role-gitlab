@@ -1,5 +1,5 @@
 ---
 - name: converge
-  hosts: all
+  hosts: instance
   roles:
     - role: gitlab
