@@ -1,0 +1,29 @@
+---
+name: test
+on:
+  - push
+jobs:
+  test:
+    name: run tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - "geerlingguy/docker-ubuntu1804-ansible:latest"
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v2
+        with:
+          path: docker
+      - name: set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+      - name: run templates rendering tests
+        run: python -m unittest discover --verbose --start-directory "$GITHUB_WORKSPACE/docker"
+      - name: run molecule tests
+        run: |
+          cd $GITHUB_WORKSPACE/docker
+          molecule test --all
+        env:
+          TEST_IMAGE: ${{ matrix.image }}
