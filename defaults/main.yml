@@ -1,3 +1,4 @@
 ---
 gitlab_image: gitlab/gitlab-ce
 gitlab_url: http://gitlab.example.com
+gitlab_ssh_port: 22022
