@@ -2,4 +2,4 @@ ansible
 Jinja2
 PyYAML
 importlib_resources
-molecule[docker]
+molecule[docker]==2.22
