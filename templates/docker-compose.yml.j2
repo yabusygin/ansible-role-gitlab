@@ -3,29 +3,29 @@ version: "3.7"
 services:
   gitlab:
     image: {{ gitlab_image }}
-  volumes:
-    - type: volume
-      source: config
-      target: /etc/gitlab
-    - type: bind
+    volumes:
+      - type: volume
+        source: config
+        target: /etc/gitlab
+      - type: bind
         source: ./gitlab.rb
         target: /etc/gitlab/gitlab.rb
-    - type: volume
-      source: data
-      target: /var/opt/gitlab
-    - type: volume
-      source: log
-      target: /var/log/gitlab
-  networks:
-    - bridge
-  ports:
-    - protocol: tcp
-      target: 80
-      published: 80
-    - protocol: tcp
-      target: 22
-      published: {{ gitlab_ssh_port }}
-  restart: always
+      - type: volume
+        source: data
+        target: /var/opt/gitlab
+      - type: volume
+        source: log
+        target: /var/log/gitlab
+    networks:
+      - bridge
+    ports:
+      - protocol: tcp
+        target: 80
+        published: 80
+      - protocol: tcp
+        target: 22
+        published: {{ gitlab_ssh_port }}
+    restart: always
 volumes:
   config:
   data:
