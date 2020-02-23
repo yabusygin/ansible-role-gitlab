@@ -1,2 +1,4 @@
 ---
 ansible_python_interpreter: python3
+
+gitlab_monitoring_whitelist: 0.0.0.0/0
