@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  role_name: docker
+  author: Alexey Busygin
+  description: An Ansible role installing GitLab CE.
+  license: MIT
+  min_ansible_version: 2.7
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+  galaxy_tags:
+    - docker
+    - git
+    - gitlab

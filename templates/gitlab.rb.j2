@@ -1,0 +1,9 @@
+external_url '{{ gitlab_url }}'
+gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
+{% if gitlab_monitoring_whitelist is defined %}
+    {% if gitlab_monitoring_whitelist is string %}
+gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist }}']
+    {% else %}
+gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist|join("', '") }}']
+    {% endif %}
+{% endif %}

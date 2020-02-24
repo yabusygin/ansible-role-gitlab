@@ -1,0 +1,5 @@
+ansible
+Jinja2
+PyYAML
+importlib_resources
+molecule[docker]==2.22
