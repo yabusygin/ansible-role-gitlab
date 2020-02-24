@@ -1,48 +1,57 @@
-Role Name
-=========
+Ansible Role: gitlab
+====================
 
-A brief description of the role goes here.
+An Ansible role installing [GitLab CE][GitLab].
+
+[GitLab]: https://docs.gitlab.com/ce/README.html
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+Optional variables:
+
+*   `gitlab_image` (default: `gitlab/gitlab-ce`)
+*   `gitlab_url` (default: `http://gitlab.example.com`)
+*   `gitlab_ssh_port` (default: `22022`)
+*   `gitlab_monitoring_whitelist` (default: `127.0.0.0/8`)
+
+An example of variables usage provided in *Example Playbook* section.
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+The role depends on [yabusygin.docker][Docker Role] role.
+
+[Docker Role]: https://galaxy.ansible.com/yabusygin/docker
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: gitlab, x: 42 }
+```yaml
+---
+- hosts: production
+  roles:
+    - role: yabusygin.docker
+  vars:
+    gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+    gitlab_url: http://gitlab.test
+    gitlab_ssh_port: 2222
+    gitlab_monitoring_whitelist:
+      - 127.0.0.0/8
+      - 10.0.1.0/24
+```
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+Alexey Busygin \<busygin.contact@yandex.ru\>
