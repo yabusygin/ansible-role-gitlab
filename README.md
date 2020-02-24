@@ -39,7 +39,7 @@ Example Playbook
 ---
 - hosts: production
   roles:
-    - role: yabusygin.docker
+    - role: yabusygin.gitlab
   vars:
     gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
     gitlab_url: http://gitlab.test
