@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: docker
+  role_name: gitlab
   author: Alexey Busygin
   description: An Ansible role installing GitLab CE.
   license: MIT
