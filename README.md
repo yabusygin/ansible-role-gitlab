@@ -1,6 +1,8 @@
 Ansible Role: gitlab
 ====================
 
+![Test workflow status](https://github.com/yabusygin/ansible-role-gitlab/workflows/test/badge.svg)
+
 An Ansible role installing [GitLab CE][GitLab].
 
 [GitLab]: https://docs.gitlab.com/ce/README.html
