@@ -22,6 +22,7 @@ Optional variables:
 *   `gitlab_url` (default: `http://gitlab.example.com`)
 *   `gitlab_ssh_port` (default: `22022`)
 *   `gitlab_monitoring_whitelist` (default: `127.0.0.0/8`)
+*   `gitlab_nginix_listen_port`
 
 An example of variables usage provided in *Example Playbook* section.
 
@@ -42,7 +43,8 @@ Example Playbook
     - role: yabusygin.gitlab
   vars:
     gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
-    gitlab_url: http://gitlab.test
+    gitlab_url: http://gitlab.test:8000
+    gitlab_nginix_listen_port: 80
     gitlab_ssh_port: 2222
     gitlab_monitoring_whitelist:
       - 127.0.0.0/8
