@@ -2,6 +2,7 @@ Ansible Role: gitlab
 ====================
 
 ![Test workflow status](https://github.com/yabusygin/ansible-role-gitlab/workflows/test/badge.svg)
+![Release workflow status](https://github.com/yabusygin/ansible-role-docker/workflows/release/badge.svg)
 
 An Ansible role installing [GitLab CE][GitLab].
 
