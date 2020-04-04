@@ -43,7 +43,14 @@ Dependencies
 
 The role depends on [yabusygin.docker][Docker Role] role.
 
+It is recommended to enable [userns-remap feature][User Namespace]:
+
+```yaml
+docker_userns_remap_enable: yes
+```
+
 [Docker Role]: https://galaxy.ansible.com/yabusygin/docker
+[User Namespace]: https://docs.docker.com/engine/security/userns-remap/
 
 Example Playbook
 ----------------
