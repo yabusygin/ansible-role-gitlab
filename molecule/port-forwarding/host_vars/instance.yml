@@ -1,6 +1,6 @@
 ---
 ansible_python_interpreter: python3
 
-gitlab_url: http://gitlab.test:8000
+gitlab_external_url: http://gitlab.test:8000
 gitlab_nginix_listen_port: 80
 gitlab_monitoring_whitelist: 0.0.0.0/0
