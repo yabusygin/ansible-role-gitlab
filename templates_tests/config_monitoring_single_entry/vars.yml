@@ -1,2 +1,2 @@
 ---
-gitlab_monitoring_whitelist: 127.0.0.0/8
+gitlab_rails_monitoring_whitelist: 127.0.0.0/8

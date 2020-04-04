@@ -3,10 +3,10 @@ external_url '{{ gitlab_external_url }}'
 nginx['listen_port'] = {{ gitlab_nginix_listen_port }}
 {% endif %}
 gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_rails_gitlab_shell_ssh_port }}
-{% if gitlab_monitoring_whitelist is defined %}
-    {% if gitlab_monitoring_whitelist is string %}
-gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist }}']
+{% if gitlab_rails_monitoring_whitelist is defined %}
+    {% if gitlab_rails_monitoring_whitelist is string %}
+gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_rails_monitoring_whitelist }}']
     {% else %}
-gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist|join("', '") }}']
+gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_rails_monitoring_whitelist|join("', '") }}']
     {% endif %}
 {% endif %}
