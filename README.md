@@ -19,18 +19,61 @@ Role Variables
 All variables are optional. The most of variables set values of corresponding
 Omnibus GitLab settings:
 
-| Role Variable                        | Omnibus GitLab setting                  | Default Value               |
-| ------------------------------------ | --------------------------------------- | --------------------------- |
-| `gitlab_image`                       |                                         | `gitlab/gitlab-ce`          |
-| `gitlab_external_url`                | `external_url`                          | `http://gitlab.example.com` |
-| `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` |                             |
-| `gitlab_rails_monitoring_whitelist`  | `gitlab_rails['monitoring_whitelist']`  |                             |
-| `gitlab_nginix_listen_port`          | `nginix['listen_port']`                 |                             |
+*   Docker:
 
-`gitlab_image` variable specifies [GitLab Docker image][gitlab/gitlab-ce]
-to install.
+    | Role Variable  | Omnibus GitLab setting | Default Value      |
+    | -------------- | ---------------------- | ------------------ |
+    | `gitlab_image` | none                   | `gitlab/gitlab-ce` |
 
-[gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
+    `gitlab_image` variable specifies [GitLab Docker image][gitlab/gitlab-ce]
+    to install.
+
+    [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
+
+*   Basic settings:
+
+    | Role Variable         | Omnibus GitLab setting | Default Value               |
+    | --------------------- | ---------------------- | --------------------------- |
+    | `gitlab_external_url` | `external_url`         | `http://gitlab.example.com` |
+
+*   GitLab shell SSH port:
+
+    | Role Variable                        | Omnibus GitLab setting                  |
+    | ------------------------------------ | --------------------------------------- |
+    | `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` |
+
+*   Monitoring white list:
+
+    | Role Variable                       | Omnibus GitLab setting                 |
+    | ----------------------------------- | -------------------------------------- |
+    | `gitlab_rails_monitoring_whitelist` | `gitlab_rails['monitoring_whitelist']` |
+
+*   SMTP:
+
+    | Role Variable                            | Omnibus GitLab setting                      |
+    | ---------------------------------------- | ------------------------------------------- |
+    | `gitlab_rails_smtp_enable`               | `gitlab_rails['smtp_enable']`               |
+    | `gitlab_rails_smtp_address`              | `gitlab_rails['smtp_address']`              |
+    | `gitlab_rails_smtp_port`                 | `gitlab_rails['smtp_port']`                 |
+    | `gitlab_rails_smtp_user_name`            | `gitlab_rails['smtp_user_name']`            |
+    | `gitlab_rails_smtp_password`             | `gitlab_rails['smtp_password']`             |
+    | `gitlab_rails_smtp_domain`               | `gitlab_rails['smtp_domain']`               |
+    | `gitlab_rails_smtp_authentication`       | `gitlab_rails['smtp_authentication']`       |
+    | `gitlab_rails_smtp_enable_starttls_auto` | `gitlab_rails['smtp_enable_starttls_auto']` |
+    | `gitlab_rails_smtp_openssl_verify_mode`  | `gitlab_rails['smtp_openssl_verify_mode']`  |
+    | `gitlab_rails_smtp_tls`                  | `gitlab_rails['smtp_tls']`                  |
+    | `gitlab_rails_smtp_ssl`                  | `gitlab_rails['smtp_ssl']`                  |
+    | `gitlab_rails_smtp_force_ssl`            | `gitlab_rails['smtp_force_ssl']`            |
+    | `gitlab_rails_gitlab_email_enabled`      | `gitlab_rails['gitlab_email_enabled']`      |
+    | `gitlab_rails_gitlab_email_from`         | `gitlab_rails['gitlab_email_from']`         |
+    | `gitlab_rails_gitlab_email_display_name` | `gitlab_rails['gitlab_email_display_name']` |
+    | `gitlab_rails_gitlab_email_reply_to`     | `gitlab_rails['gitlab_email_reply_to']`     |
+
+*   NGINX:
+
+    | Role Variable               | Omnibus GitLab setting  |
+    | --------------------------- | ----------------------- |
+    | `gitlab_nginix_listen_port` | `nginix['listen_port']` |
 
 Dependencies
 ------------
@@ -56,13 +99,32 @@ Example Playbook
     - role: yabusygin.gitlab
   vars:
     docker_userns_remap_enable: yes
+  
     gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+  
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
     gitlab_rails_gitlab_shell_ssh_port: 2222
+
     gitlab_rails_monitoring_whitelist:
       - 127.0.0.0/8
       - 10.0.1.0/24
+
+    gitlab_rails_smtp_enable: "true"
+    gitlab_rails_smtp_address: smtp.example.com
+    gitlab_rails_smtp_port: 465
+    gitlab_rails_smtp_user_name: gitlab
+    gitlab_rails_smtp_password: 'Pa$$w0rD'
+    gitlab_rails_smtp_domain: example.com
+    gitlab_rails_smtp_authentication: login
+    gitlab_rails_smtp_tls: "true"
+    gitlab_rails_smtp_enable_starttls_auto: "true"
+    gitlab_rails_smtp_openssl_verify_mode: peer
+
+    gitlab_rails_gitlab_email_enabled: "true"
+    gitlab_rails_gitlab_email_from: gitlab@example.com
+    gitlab_rails_gitlab_email_display_name: GitLab
+    gitlab_rails_gitlab_email_reply_to: noreply@example.com
 ```
 
 License
