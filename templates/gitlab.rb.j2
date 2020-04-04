@@ -58,3 +58,6 @@ gitlab_rails['gitlab_email_display_name'] = '{{ gitlab_rails_gitlab_email_displa
 {% if gitlab_rails_gitlab_email_reply_to is defined %}
 gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_rails_gitlab_email_reply_to }}'
 {% endif %}
+{% if gitlab_unicorn_worker_processes is defined %}
+unicorn['worker_processes'] = {{ gitlab_unicorn_worker_processes }}
+{% endif %}
