@@ -1,0 +1,11 @@
+---
+- name: converge
+  hosts: instance
+  roles:
+    - role: gitlab
+  tasks:
+    - name: install HTTPie
+      pip:
+        name:
+          - httpie
+        state: present
