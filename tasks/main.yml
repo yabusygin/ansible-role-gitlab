@@ -12,6 +12,7 @@
   template:
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
+    lstrip_blocks: yes
   notify:
     - restart GitLab
 
@@ -19,6 +20,7 @@
   template:
     src: docker-compose.yml.j2
     dest: /etc/docker-gitlab/docker-compose.yml
+    lstrip_blocks: yes
   notify:
     - restart GitLab
 
