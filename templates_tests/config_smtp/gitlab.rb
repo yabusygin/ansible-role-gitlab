@@ -1,5 +1,4 @@
 external_url 'http://gitlab.example.com'
-gitlab_rails['gitlab_shell_ssh_port'] = 22022
 gitlab_rails['smtp_enable'] = true
 gitlab_rails['smtp_address'] = 'smtp.example.com'
 gitlab_rails['smtp_port'] = 465

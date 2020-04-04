@@ -2,7 +2,9 @@ external_url '{{ gitlab_external_url }}'
 {% if gitlab_nginix_listen_port is defined %}
 nginx['listen_port'] = {{ gitlab_nginix_listen_port }}
 {% endif %}
+{% if gitlab_rails_gitlab_shell_ssh_port is defined %}
 gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_rails_gitlab_shell_ssh_port }}
+{% endif %}
 {% if gitlab_rails_monitoring_whitelist is defined %}
     {% if gitlab_rails_monitoring_whitelist is string %}
 gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_rails_monitoring_whitelist }}']

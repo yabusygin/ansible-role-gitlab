@@ -38,9 +38,9 @@ Omnibus GitLab settings:
 
 *   GitLab shell SSH port:
 
-    | Role Variable                        | Omnibus GitLab setting                  | Default Value |
-    | ------------------------------------ | --------------------------------------- | ------------- |
-    | `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` | `22022`       |
+    | Role Variable                        | Omnibus GitLab setting                  |
+    | ------------------------------------ | --------------------------------------- |
+    | `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` |
 
 *   Monitoring white list:
 
