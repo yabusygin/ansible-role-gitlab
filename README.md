@@ -106,7 +106,7 @@ Example Playbook
     gitlab_rails_smtp_enable: "true"
     gitlab_rails_smtp_address: smtp.example.com
     gitlab_rails_smtp_port: 465
-    gitlab_rails_smtp_user_name: johndoe
+    gitlab_rails_smtp_user_name: gitlab
     gitlab_rails_smtp_password: 'Pa$$w0rD'
     gitlab_rails_smtp_domain: example.com
     gitlab_rails_smtp_authentication: login
