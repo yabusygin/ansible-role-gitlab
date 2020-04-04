@@ -69,13 +69,13 @@ Omnibus GitLab settings:
     | `gitlab_rails_gitlab_email_display_name` | `gitlab_rails['gitlab_email_display_name']` |
     | `gitlab_rails_gitlab_email_reply_to`     | `gitlab_rails['gitlab_email_reply_to']`     |
 
-*   NGINX:
+*   Nginx:
 
     | Role Variable               | Omnibus GitLab setting  |
     | --------------------------- | ----------------------- |
     | `gitlab_nginix_listen_port` | `nginix['listen_port']` |
 
-*   Unicorn
+*   Unicorn:
 
     | Role Variable                     | Omnibus GitLab setting        |
     | --------------------------------- | ----------------------------- |
