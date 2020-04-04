@@ -54,6 +54,7 @@ Example Playbook
   roles:
     - role: yabusygin.gitlab
   vars:
+    docker_userns_remap_enable: yes
     gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
