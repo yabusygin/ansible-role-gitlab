@@ -75,6 +75,12 @@ Omnibus GitLab settings:
     | --------------------------- | ----------------------- |
     | `gitlab_nginix_listen_port` | `nginix['listen_port']` |
 
+*   Unicorn
+
+    | Role Variable                     | Omnibus GitLab setting        |
+    | --------------------------------- | ----------------------------- |
+    | `gitlab_unicorn_worker_processes` | `unicorn['worker_processes']` |
+
 Dependencies
 ------------
 
@@ -125,6 +131,8 @@ Example Playbook
     gitlab_rails_gitlab_email_from: gitlab@example.com
     gitlab_rails_gitlab_email_display_name: GitLab
     gitlab_rails_gitlab_email_reply_to: noreply@example.com
+
+    gitlab_unicorn_worker_processes: 3
 ```
 
 License
