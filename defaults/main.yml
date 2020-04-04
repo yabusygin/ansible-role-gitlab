@@ -1,4 +1,4 @@
 ---
 gitlab_image: gitlab/gitlab-ce
 gitlab_external_url: http://gitlab.example.com
-gitlab_ssh_port: 22022
+gitlab_rails_gitlab_shell_ssh_port: 22022

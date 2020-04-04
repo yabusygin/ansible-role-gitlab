@@ -20,7 +20,7 @@ Optional variables:
 
 *   `gitlab_image` (default: `gitlab/gitlab-ce`)
 *   `gitlab_external_url` (default: `http://gitlab.example.com`)
-*   `gitlab_ssh_port` (default: `22022`)
+*   `gitlab_rails_gitlab_shell_ssh_port` (default: `22022`)
 *   `gitlab_monitoring_whitelist` (default: `127.0.0.0/8`)
 *   `gitlab_nginix_listen_port`
 
@@ -45,7 +45,7 @@ Example Playbook
     gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
-    gitlab_ssh_port: 2222
+    gitlab_rails_gitlab_shell_ssh_port: 2222
     gitlab_monitoring_whitelist:
       - 127.0.0.0/8
       - 10.0.1.0/24

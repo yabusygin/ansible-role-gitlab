@@ -24,7 +24,7 @@ services:
         published: 80
       - protocol: tcp
         target: 22
-        published: {{ gitlab_ssh_port }}
+        published: {{ gitlab_rails_gitlab_shell_ssh_port }}
     restart: always
 volumes:
   config:
