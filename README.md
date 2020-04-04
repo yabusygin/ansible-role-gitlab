@@ -65,13 +65,32 @@ Example Playbook
     - role: yabusygin.gitlab
   vars:
     docker_userns_remap_enable: yes
+  
     gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+  
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
     gitlab_rails_gitlab_shell_ssh_port: 2222
+
     gitlab_rails_monitoring_whitelist:
       - 127.0.0.0/8
       - 10.0.1.0/24
+
+    gitlab_rails_smtp_enable: "true"
+    gitlab_rails_smtp_address: smtp.example.com
+    gitlab_rails_smtp_port: 465
+    gitlab_rails_smtp_user_name: johndoe
+    gitlab_rails_smtp_password: 'Pa$$w0rD'
+    gitlab_rails_smtp_domain: example.com
+    gitlab_rails_smtp_authentication: login
+    gitlab_rails_smtp_tls: "true"
+    gitlab_rails_smtp_enable_starttls_auto: "true"
+    gitlab_rails_smtp_openssl_verify_mode: peer
+
+    gitlab_rails_gitlab_email_enabled: "true"
+    gitlab_rails_gitlab_email_from: gitlab@example.com
+    gitlab_rails_gitlab_email_display_name: GitLab
+    gitlab_rails_gitlab_email_reply_to: noreply@example.com
 ```
 
 License
