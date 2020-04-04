@@ -16,25 +16,19 @@ None.
 Role Variables
 --------------
 
-All variables are optional.
+All variables are optional. The most of variables set values of corresponding
+Omnibus GitLab settings:
+
+| Role Variable                        | Omnibus GitLab setting                  | Default Value               |
+| ------------------------------------ | --------------------------------------- | --------------------------- |
+| `gitlab_image`                       |                                         | `gitlab/gitlab-ce`          |
+| `gitlab_external_url`                | `external_url`                          | `http://gitlab.example.com` |
+| `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` | `22022`                     |
+| `gitlab_rails_monitoring_whitelist`  | `gitlab_rails['monitoring_whitelist']`  |                             |
+| `gitlab_nginix_listen_port`          | `nginix['listen_port']`                 |                             |
 
 `gitlab_image` variable specifies [GitLab Docker image][gitlab/gitlab-ce]
-to install. Default value: `gitlab/gitlab-ce`.
-
-`gitlab_external_url` variable specifies a value of `external_url` Omnibus
-GitLab configuration option. Default value: `http://gitlab.example.com`.
-
-`gitlab_rails_gitlab_shell_ssh_port` variable specifies a value of
-`gitlab_rails['gitlab_shell_ssh_port']` Omnibus GitLab configuration option.
-Default value: `22022`.
-
-`gitlab_rails_monitoring_whitelist` variable specifies a value of
-`gitlab_rails['monitoring_whitelist']` Omnibus GitLab configuration option.
-The value could be specified as a string (address, subnet) or an array
-of strings.
-
-`gitlab_nginix_listen_port` variable specifies a value of
-`nginix['listen_port']` Omnibus GitLab configuration option.
+to install.
 
 [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
 
