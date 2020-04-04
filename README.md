@@ -81,6 +81,15 @@ Omnibus GitLab settings:
     | --------------------------------- | ----------------------------- |
     | `gitlab_unicorn_worker_processes` | `unicorn['worker_processes']` |
 
+*   Container Registry:
+
+    | Role Variable                  | Omnibus GitLab setting  |
+    | ------------------------------ | ----------------------- |
+    | `gitlab_registry_external_url` | `registry_external_url` |
+
+    Port number is a required part of registry URL. Choose a port different than
+    5000.
+
 Dependencies
 ------------
 
