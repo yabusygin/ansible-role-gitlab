@@ -2,6 +2,7 @@ import pathlib
 
 import jinja2
 import ansible.plugins.filter.core
+import ansible.plugins.filter.urlsplit
 import ansible.template
 import yaml
 
@@ -38,7 +39,12 @@ def _make_template_env(search_path):
         lstrip_blocks=True,
         trim_blocks=True,
     )
-    env.filters.update(ansible.plugins.filter.core.FilterModule().filters())
+    env.filters.update(
+        ansible.plugins.filter.core.FilterModule().filters()
+    )
+    env.filters.update(
+        ansible.plugins.filter.urlsplit.FilterModule().filters()
+    )
     return env
 
 
