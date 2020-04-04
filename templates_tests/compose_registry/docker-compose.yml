@@ -2,7 +2,7 @@
 version: "3.7"
 services:
   gitlab:
-    image: {{ gitlab_image }}
+    image: gitlab/gitlab-ce
     volumes:
       - type: volume
         source: config
@@ -24,12 +24,10 @@ services:
         published: 80
       - protocol: tcp
         target: 22
-        published: {{ gitlab_rails_gitlab_shell_ssh_port|default(22) }}
-{% if gitlab_registry_external_url is defined %}
+        published: 22
       - protocol: tcp
-        target: {{ gitlab_registry_external_url|urlsplit('port') }}
-        published: {{ gitlab_registry_external_url|urlsplit('port') }}
-{% endif %}
+        target: 5050
+        published: 5050
     restart: always
 volumes:
   config:
