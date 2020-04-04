@@ -23,7 +23,7 @@ Omnibus GitLab settings:
 | ------------------------------------ | --------------------------------------- | --------------------------- |
 | `gitlab_image`                       |                                         | `gitlab/gitlab-ce`          |
 | `gitlab_external_url`                | `external_url`                          | `http://gitlab.example.com` |
-| `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` | `22022`                     |
+| `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` |                             |
 | `gitlab_rails_monitoring_whitelist`  | `gitlab_rails['monitoring_whitelist']`  |                             |
 | `gitlab_nginix_listen_port`          | `nginix['listen_port']`                 |                             |
 
