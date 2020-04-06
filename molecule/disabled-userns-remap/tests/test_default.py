@@ -40,5 +40,5 @@ def test_health(host):
 
 
 def test_config_permissions(host):
-    assert host.file("/etc/docker-gitlab/gitlab").uid == 0
-    assert host.file("/etc/docker-gitlab/gitlab").uid == 0
+    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == 0
+    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == 0

@@ -46,8 +46,8 @@ def test_config_permissions(host):
     subgid = int(
         _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
     )
-    assert host.file("/etc/docker-gitlab/gitlab").uid == subuid
-    assert host.file("/etc/docker-gitlab/gitlab").uid == subgid
+    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subuid
+    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subgid
 
 
 def _get_subuid_entry(host, path, name):
