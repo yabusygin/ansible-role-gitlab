@@ -1,0 +1,2 @@
+---
+gitlab_docker_restart_policy: always

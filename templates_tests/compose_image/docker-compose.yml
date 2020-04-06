@@ -25,7 +25,6 @@ services:
       - protocol: tcp
         target: 22
         published: 22
-    restart: always
 volumes:
   config:
   data:

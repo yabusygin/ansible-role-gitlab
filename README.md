@@ -21,14 +21,19 @@ Omnibus GitLab settings:
 
 *   Docker:
 
-    | Role Variable         | Omnibus GitLab setting | Default Value      |
-    | --------------------- | ---------------------- | ------------------ |
-    | `gitlab_docker_image` | none                   | `gitlab/gitlab-ce` |
+    | Role Variable                  | Default Value      |
+    | ------------------------------ | ------------------ |
+    | `gitlab_docker_image`          | `gitlab/gitlab-ce` |
+    | `gitlab_docker_restart_policy` |                    |
 
     `gitlab_docker_image` variable specifies [GitLab Docker
     image][gitlab/gitlab-ce] to install.
 
+    `gitlab_docker_restart_policy` variable specifies [restart
+    policy][Compose restart option] for GitLab container.
+
     [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
+    [Compose restart option]: https://docs.docker.com/compose/compose-file/#restart
 
 *   Basic settings:
 
