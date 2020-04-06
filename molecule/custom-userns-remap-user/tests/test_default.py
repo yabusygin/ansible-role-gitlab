@@ -47,7 +47,7 @@ def test_config_permissions(host):
         _get_subuid_entry(host=host, path="/etc/subgid", name="testuser")[1]
     )
     assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subuid
-    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subgid
+    assert host.file("/etc/docker-gitlab/gitlab.rb").gid == subgid
 
 
 def _get_subuid_entry(host, path, name):
