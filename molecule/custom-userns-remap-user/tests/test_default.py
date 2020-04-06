@@ -41,10 +41,10 @@ def test_health(host):
 
 def test_config_permissions(host):
     subuid = int(
-        _get_subuid_entry(host=host, path="/etc/subuid", name="dockremap")[1]
+        _get_subuid_entry(host=host, path="/etc/subuid", name="testuser")[1]
     )
     subgid = int(
-        _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
+        _get_subuid_entry(host=host, path="/etc/subgid", name="testuser")[1]
     )
     assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subuid
     assert host.file("/etc/docker-gitlab/gitlab.rb").gid == subgid
