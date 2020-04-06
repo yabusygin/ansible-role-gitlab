@@ -1,5 +1,5 @@
 ---
-- name: get begining of Docker userns-remap sub UID range (custom Docker user)
+- name: get begining of Docker userns-remap sub UID/GID range (custom Docker user)
   block:
     - name: get /etc/subuid entry of Docker user
       shell: |
@@ -12,27 +12,7 @@
     - name: get begining of sub UID range
       set_fact:
         gitlab_docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
-  when:
-    - docker_userns_remap_user is defined
-    - docker_userns_remap_user != 'default'
 
-- name: get begining of Docker userns-remap sub UID range (default Docker user)
-  block:
-    - name: get /etc/subuid entry of Docker user
-      shell: |
-        set -o pipefail
-        cat /etc/subuid | grep dockremap
-      args:
-        executable: /bin/bash
-      register: _result
-      changed_when: false
-    - name: get begining of sub UID range
-      set_fact:
-        gitlab_docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
-  when: docker_userns_remap_user is undefined or docker_userns_remap_user == 'default'
-
-- name: get begining of Docker userns-remap sub GID range (custom Docker user)
-  block:
     - name: get /etc/subgid entry of Docker user
       shell: |
         set -o pipefail
@@ -48,8 +28,20 @@
     - docker_userns_remap_user is defined
     - docker_userns_remap_user != 'default'
 
-- name: get begining of Docker userns-remap sub GID range (default Docker user)
+- name: get begining of Docker userns-remap sub UID/GID range (default Docker user)
   block:
+    - name: get /etc/subuid entry of Docker user
+      shell: |
+        set -o pipefail
+        cat /etc/subuid | grep dockremap
+      args:
+        executable: /bin/bash
+      register: _result
+      changed_when: false
+    - name: get begining of sub UID range
+      set_fact:
+        gitlab_docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
+
     - name: get /etc/subgid entry of Docker user
       shell: |
         set -o pipefail
