@@ -7,7 +7,9 @@
     executable: /bin/bash
   register: _result
   changed_when: false
-  when: docker_userns_remap_user != 'default'
+  when:
+    - docker_userns_remap_user is defined
+    - docker_userns_remap_user != 'default'
 
 - name: get info about userns-remap sub UID ranges (default Docker user)
   shell: |
@@ -17,7 +19,7 @@
     executable: /bin/bash
   register: _result
   changed_when: false
-  when: docker_userns_remap_user == 'default'
+  when: docker_userns_remap_user is undefined or docker_userns_remap_user == 'default'
 
 - name: get begining of target userns-remap sub UID range
   set_fact:
@@ -31,7 +33,9 @@
     executable: /bin/bash
   register: _result
   changed_when: false
-  when: docker_userns_remap_user != 'default'
+  when:
+    - docker_userns_remap_user is defined
+    - docker_userns_remap_user != 'default'
 
 - name: get info about userns-remap sub GID ranges (default Docker group)
   shell: |
@@ -41,7 +45,7 @@
     executable: /bin/bash
   register: _result
   changed_when: false
-  when: docker_userns_remap_user == 'default'
+  when: docker_userns_remap_user is undefined or docker_userns_remap_user == 'default'
 
 - name: get begining of target userns-remap sub GID range
   set_fact:
