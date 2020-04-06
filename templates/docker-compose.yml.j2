@@ -30,7 +30,9 @@ services:
         target: {{ gitlab_registry_external_url|urlsplit('port') }}
         published: {{ gitlab_registry_external_url|urlsplit('port') }}
 {% endif %}
-    restart: always
+{% if gitlab_docker_restart_policy is defined %}
+    restart: {{ gitlab_docker_restart_policy }}
+{% endif %}
 volumes:
   config:
   data:
