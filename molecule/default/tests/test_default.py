@@ -37,3 +37,30 @@ def test_health(host):
     assert response["queues_check"][0]["status"] == "ok"
     assert response["redis_check"][0]["status"] == "ok"
     assert response["shared_state_check"][0]["status"] == "ok"
+
+
+def test_config_permissions(host):
+    subuid = int(
+        _get_subuid_entry(host=host, path="/etc/subuid", name="dockremap")[1]
+    )
+    subgid = int(
+        _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
+    )
+    assert host.file("/etc/docker-gitlab/gitlab").uid == subuid
+    assert host.file("/etc/docker-gitlab/gitlab").uid == subgid
+
+
+def _get_subuid_entry(host, path, name):
+    content = host.file(path).content_string
+    entries = [
+        tuple(line.split(":"))
+        for line in content.splitlines()
+    ]
+    matches = [
+        entry
+        for entry in entries
+        if entry[0] == name
+    ]
+    if matches:
+        return matches[0]
+    return None
