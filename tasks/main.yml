@@ -8,11 +8,27 @@
     path: /etc/docker-gitlab
     state: directory
 
+- name: get userns-remap UID/GID ranges
+  import_tasks: get-docker-userns-remap-info.yml
+  when: docker_userns_remap_enable|default(false)
+
 - name: create config file
   template:
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
     lstrip_blocks: yes
+  when: not docker_userns_remap_enable|default(false)
+  notify:
+    - restart GitLab
+
+- name: create config file (userns-remap)
+  template:
+    src: gitlab.rb.j2
+    dest: /etc/docker-gitlab/gitlab.rb
+    lstrip_blocks: yes
+    owner: "{{ gitlab_docker_userns_remap_subuid_begin }}"
+    group: "{{ gitlab_docker_userns_remap_subgid_begin }}"
+  when: docker_userns_remap_enable|default(false)
   notify:
     - restart GitLab
 
