@@ -11,7 +11,7 @@
       changed_when: false
     - name: get begining of sub UID range
       set_fact:
-        gitlab_docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
+        docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
 
     - name: get /etc/subgid entry of Docker user
       shell: |
@@ -23,7 +23,7 @@
       changed_when: false
     - name: get begining of sub GID range
       set_fact:
-        gitlab_docker_userns_remap_subgid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
+        docker_userns_remap_subgid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
   when:
     - docker_userns_remap_user is defined
     - docker_userns_remap_user != 'default'
@@ -40,7 +40,7 @@
       changed_when: false
     - name: get begining of sub UID range
       set_fact:
-        gitlab_docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
+        docker_userns_remap_subuid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
 
     - name: get /etc/subgid entry of Docker user
       shell: |
@@ -52,5 +52,5 @@
       changed_when: false
     - name: get begining of sub GID range
       set_fact:
-        gitlab_docker_userns_remap_subgid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
+        docker_userns_remap_subgid_begin: "{{ _result.stdout_lines[0].split(':')[1] }}"
   when: docker_userns_remap_user is undefined or docker_userns_remap_user == 'default'

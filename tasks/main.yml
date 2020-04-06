@@ -26,8 +26,8 @@
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
     lstrip_blocks: yes
-    owner: "{{ gitlab_docker_userns_remap_subuid_begin }}"
-    group: "{{ gitlab_docker_userns_remap_subgid_begin }}"
+    owner: "{{ docker_userns_remap_subuid_begin }}"
+    group: "{{ docker_userns_remap_subgid_begin }}"
   when: docker_userns_remap_enable|default(false)
   notify:
     - restart GitLab
