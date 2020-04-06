@@ -2,7 +2,7 @@
 version: "3.7"
 services:
   gitlab:
-    image: {{ gitlab_image }}
+    image: {{ gitlab_docker_image }}
     volumes:
       - type: volume
         source: config

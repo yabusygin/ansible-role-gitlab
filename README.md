@@ -21,12 +21,12 @@ Omnibus GitLab settings:
 
 *   Docker:
 
-    | Role Variable  | Omnibus GitLab setting | Default Value      |
-    | -------------- | ---------------------- | ------------------ |
-    | `gitlab_image` | none                   | `gitlab/gitlab-ce` |
+    | Role Variable         | Omnibus GitLab setting | Default Value      |
+    | --------------------- | ---------------------- | ------------------ |
+    | `gitlab_docker_image` | none                   | `gitlab/gitlab-ce` |
 
-    `gitlab_image` variable specifies [GitLab Docker image][gitlab/gitlab-ce]
-    to install.
+    `gitlab_docker_image` variable specifies [GitLab Docker
+    image][gitlab/gitlab-ce] to install.
 
     [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
 
@@ -115,7 +115,7 @@ Example Playbook
   vars:
     docker_userns_remap_enable: yes
   
-    gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+    gitlab_docker_image: gitlab/gitlab-ce:12.7.6-ce.0
   
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
