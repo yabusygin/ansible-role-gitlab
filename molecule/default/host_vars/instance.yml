@@ -3,5 +3,7 @@ ansible_python_interpreter: python3
 
 docker_userns_remap_enable: yes
 
+gitlab_docker_hostname: gitlab
+
 gitlab_rails_gitlab_shell_ssh_port: 22022
 gitlab_rails_monitoring_whitelist: 0.0.0.0/0
