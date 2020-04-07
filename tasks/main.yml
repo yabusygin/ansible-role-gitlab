@@ -17,6 +17,7 @@
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
     lstrip_blocks: yes
+    mode: 0600
   when: not docker_userns_remap_enable|default(false)
   notify:
     - restart GitLab
@@ -28,6 +29,7 @@
     lstrip_blocks: yes
     owner: "{{ docker_userns_remap_subuid_begin }}"
     group: "{{ docker_userns_remap_subgid_begin }}"
+    mode: 0600
   when: docker_userns_remap_enable|default(false)
   notify:
     - restart GitLab
@@ -37,6 +39,7 @@
     src: docker-compose.yml.j2
     dest: /etc/docker-gitlab/docker-compose.yml
     lstrip_blocks: yes
+    mode: 0600
   notify:
     - restart GitLab
 
