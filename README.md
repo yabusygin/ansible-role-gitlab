@@ -121,6 +121,7 @@ Example Playbook
     docker_userns_remap_enable: yes
 
     gitlab_docker_image: gitlab/gitlab-ce:12.7.6-ce.0
+    gitlab_docker_restart_policy: always
 
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
