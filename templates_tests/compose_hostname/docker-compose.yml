@@ -2,10 +2,8 @@
 version: "3.7"
 services:
   gitlab:
-    image: {{ gitlab_docker_image }}
-{% if gitlab_docker_hostname is defined %}
-    hostname: {{ gitlab_docker_hostname }}
-{% endif %}
+    image: gitlab/gitlab-ce
+    hostname: gitlab
     volumes:
       - type: volume
         source: config
@@ -27,15 +25,7 @@ services:
         published: 80
       - protocol: tcp
         target: 22
-        published: {{ gitlab_rails_gitlab_shell_ssh_port|default(22) }}
-{% if gitlab_registry_external_url is defined %}
-      - protocol: tcp
-        target: {{ gitlab_registry_external_url|urlsplit('port') }}
-        published: {{ gitlab_registry_external_url|urlsplit('port') }}
-{% endif %}
-{% if gitlab_docker_restart_policy is defined %}
-    restart: {{ gitlab_docker_restart_policy }}
-{% endif %}
+        published: 22
 volumes:
   config:
   data:
