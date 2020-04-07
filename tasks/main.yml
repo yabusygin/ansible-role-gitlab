@@ -30,6 +30,7 @@
     lstrip_blocks: yes
     owner: "{{ docker_userns_remap_subuid_begin }}"
     group: "{{ docker_userns_remap_subgid_begin }}"
+    mode: 0600
   when: docker_userns_remap_enable|default(false)
   notify:
     - restart GitLab
