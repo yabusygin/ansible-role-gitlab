@@ -39,6 +39,7 @@
     src: docker-compose.yml.j2
     dest: /etc/docker-gitlab/docker-compose.yml
     lstrip_blocks: yes
+    mode: 0600
   notify:
     - restart GitLab
 
