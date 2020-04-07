@@ -25,12 +25,15 @@ Omnibus GitLab settings:
     | ------------------------------ | ------------------ |
     | `gitlab_docker_image`          | `gitlab/gitlab-ce` |
     | `gitlab_docker_restart_policy` |                    |
+    | `gitlab_docker_hostname`       |                    |
 
     `gitlab_docker_image` variable specifies [GitLab Docker
     image][gitlab/gitlab-ce] to install.
 
     `gitlab_docker_restart_policy` variable specifies [restart
     policy][Compose restart option] for GitLab container.
+
+    `gitlab_docker_hostname` variable specifies GitLab container hostname.
 
     [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
     [Compose restart option]: https://docs.docker.com/compose/compose-file/#restart
@@ -121,6 +124,7 @@ Example Playbook
     docker_userns_remap_enable: yes
   
     gitlab_docker_image: gitlab/gitlab-ce:12.7.6-ce.0
+    gitlab_docker_hostname: gitlab
   
     gitlab_external_url: http://gitlab.test:8000
     gitlab_nginix_listen_port: 80
