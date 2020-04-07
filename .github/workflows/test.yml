@@ -13,6 +13,12 @@ jobs:
           - "geerlingguy/docker-debian10-ansible:latest"
           - "geerlingguy/docker-ubuntu1604-ansible:latest"
           - "geerlingguy/docker-ubuntu1804-ansible:latest"
+        scenario:
+          - custom-userns-remap-user
+          - default
+          - disabled-userns-remap
+          - port-forwarding
+          - registry
     steps:
       - name: Check-out repository
         uses: actions/checkout@v2
@@ -29,6 +35,7 @@ jobs:
       - name: run molecule tests
         run: |
           cd $GITHUB_WORKSPACE/gitlab
-          molecule test --all
+          molecule test --scenario-name $TEST_SCENARIO
         env:
           TEST_IMAGE: ${{ matrix.image }}
+          TEST_SCENARIO: ${{ matrix.scenario }}
