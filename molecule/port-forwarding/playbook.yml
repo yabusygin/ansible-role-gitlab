@@ -7,5 +7,5 @@
     - name: install HTTPie
       pip:
         name:
-          - httpie
+          - httpie<2.0.0
         state: present
