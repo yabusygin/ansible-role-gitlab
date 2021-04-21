@@ -12,6 +12,7 @@ jobs:
           - "geerlingguy/docker-debian9-ansible:latest"
           - "geerlingguy/docker-debian10-ansible:latest"
           - "geerlingguy/docker-ubuntu1804-ansible:latest"
+          - "geerlingguy/docker-ubuntu2004-ansible:latest"
         scenario:
           - custom-userns-remap-user
           - default
