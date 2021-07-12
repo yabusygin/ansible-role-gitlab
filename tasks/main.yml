@@ -7,6 +7,7 @@
   file:
     path: /etc/docker-gitlab
     state: directory
+    mode: 0755
 
 - name: get userns-remap UID/GID ranges
   import_tasks: get-docker-userns-remap-info.yml
