@@ -1,68 +1,68 @@
-external_url '{{ gitlab_external_url }}'
-{% if gitlab_nginix_listen_port is defined %}
-nginx['listen_port'] = {{ gitlab_nginix_listen_port }}
+{% if gitlab_web_port is defined %}
+external_url 'http://{{ gitlab_hostname }}:{{ gitlab_web_port }}'
+{% else %}
+external_url 'http://{{ gitlab_hostname }}'
 {% endif %}
-{% if gitlab_rails_gitlab_shell_ssh_port is defined %}
-gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_rails_gitlab_shell_ssh_port }}
+registry_external_url 'http://{{ gitlab_hostname }}:{{ gitlab_registry_port }}'
+{% if gitlab_ssh_port is defined %}
+gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
 {% endif %}
-{% if gitlab_registry_external_url is defined %}
-registry_external_url '{{ gitlab_registry_external_url }}'
+{% if gitlab_unicorn_workers is defined %}
+
+unicorn['worker_processes'] = {{ gitlab_unicorn_workers }}
 {% endif %}
-{% if gitlab_rails_monitoring_whitelist is defined %}
-    {% if gitlab_rails_monitoring_whitelist is string %}
-gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_rails_monitoring_whitelist }}']
-    {% else %}
-gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_rails_monitoring_whitelist|join("', '") }}']
+{% if gitlab_monitoring_whitelist is defined %}
+
+gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist|join("', '") }}']
+{% endif %}
+
+{% if gitlab_email_enabled %}
+gitlab_rails['gitlab_email_enabled'] = true
+    {% if gitlab_email_from_mailbox is defined %}
+gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from_mailbox }}'
     {% endif %}
-{% endif %}
-{% if gitlab_rails_smtp_enable is defined %}
-gitlab_rails['smtp_enable'] = {{ gitlab_rails_smtp_enable }}
-{% endif %}
-{% if gitlab_rails_smtp_address is defined %}
-gitlab_rails['smtp_address'] = '{{ gitlab_rails_smtp_address }}'
-{% endif %}
-{% if gitlab_rails_smtp_port is defined %}
-gitlab_rails['smtp_port'] = {{ gitlab_rails_smtp_port }}
-{% endif %}
-{% if gitlab_rails_smtp_user_name is defined %}
-gitlab_rails['smtp_user_name'] = '{{ gitlab_rails_smtp_user_name }}'
-{% endif %}
-{% if gitlab_rails_smtp_password is defined %}
-gitlab_rails['smtp_password'] = '{{ gitlab_rails_smtp_password }}'
-{% endif %}
-{% if gitlab_rails_smtp_domain is defined %}
-gitlab_rails['smtp_domain'] = '{{ gitlab_rails_smtp_domain }}'
-{% endif %}
-{% if gitlab_rails_smtp_authentication is defined %}
-gitlab_rails['smtp_authentication'] = '{{ gitlab_rails_smtp_authentication }}'
-{% endif %}
-{% if gitlab_rails_smtp_tls is defined %}
-gitlab_rails['smtp_tls'] = {{ gitlab_rails_smtp_tls }}
-{% endif %}
-{% if gitlab_rails_smtp_openssl_verify_mode is defined %}
-gitlab_rails['smtp_openssl_verify_mode'] = '{{ gitlab_rails_smtp_openssl_verify_mode }}'
-{% endif %}
-{% if gitlab_rails_smtp_enable_starttls_auto is defined %}
-gitlab_rails['smtp_enable_starttls_auto'] = {{ gitlab_rails_smtp_enable_starttls_auto }}
-{% endif %}
-{% if gitlab_rails_smtp_ssl is defined %}
-gitlab_rails['smtp_ssl'] = {{ gitlab_rails_smtp_ssl }}
-{% endif %}
-{% if gitlab_rails_smtp_force_ssl is defined %}
-gitlab_rails['smtp_force_ssl'] = {{ gitlab_rails_smtp_force_ssl }}
-{% endif %}
-{% if gitlab_rails_gitlab_email_enabled is defined %}
-gitlab_rails['gitlab_email_enabled'] = {{ gitlab_rails_gitlab_email_enabled }}
-{% endif %}
-{% if gitlab_rails_gitlab_email_from is defined %}
-gitlab_rails['gitlab_email_from'] = '{{ gitlab_rails_gitlab_email_from }}'
-{% endif %}
-{% if gitlab_rails_gitlab_email_display_name is defined %}
-gitlab_rails['gitlab_email_display_name'] = '{{ gitlab_rails_gitlab_email_display_name }}'
-{% endif %}
-{% if gitlab_rails_gitlab_email_reply_to is defined %}
-gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_rails_gitlab_email_reply_to }}'
-{% endif %}
-{% if gitlab_unicorn_worker_processes is defined %}
-unicorn['worker_processes'] = {{ gitlab_unicorn_worker_processes }}
+    {% if gitlab_email_from_display_name is defined %}
+gitlab_rails['gitlab_email_display_name'] = '{{ gitlab_email_from_display_name }}'
+    {% endif %}
+    {% if gitlab_email_reply_to_mailbox is defined %}
+gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to_mailbox }}'
+    {% endif %}
+gitlab_rails['smtp_enable'] = true
+    {% if gitlab_email_smtp_server_host is defined %}
+gitlab_rails['smtp_address'] = '{{ gitlab_email_smtp_server_host }}'
+    {% endif %}
+    {% if gitlab_email_smtp_server_port is defined %}
+gitlab_rails['smtp_port'] = {{ gitlab_email_smtp_server_port }}
+    {% endif %}
+    {% if gitlab_email_smtp_transport_security is defined %}
+        {% if gitlab_email_smtp_transport_security == 'tls' %}
+gitlab_rails['smtp_tls'] = true
+gitlab_rails['smtp_enable_starttls_auto'] = false
+        {% elif gitlab_email_smtp_transport_security == 'starttls' %}
+gitlab_rails['smtp_tls'] = false
+gitlab_rails['smtp_enable_starttls_auto'] = true
+        {% endif %}
+        {% if gitlab_email_smtp_verify_server_cert %}
+gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+        {% else %}
+gitlab_rails['smtp_openssl_verify_mode'] = 'none'
+        {% endif %}
+        {% if gitlab_email_smtp_ca_cert is defined %}
+gitlab_rails['smtp_ca_file'] = '/etc/gitlab/ssl/smtp-ca.crt'
+        {% endif %}
+    {% else %}
+gitlab_rails['smtp_tls'] = false
+gitlab_rails['smtp_enable_starttls_auto'] = false
+    {% endif %}
+    {% if gitlab_email_smtp_user_auth_method is defined %}
+gitlab_rails['smtp_authentication'] = '{{ gitlab_email_smtp_user_auth_method }}'
+    {% endif %}
+    {% if gitlab_email_smtp_user_name is defined %}
+gitlab_rails['smtp_user_name'] = '{{ gitlab_email_smtp_user_name }}'
+    {% endif %}
+    {% if gitlab_email_smtp_user_password is defined %}
+gitlab_rails['smtp_password'] = '{{ gitlab_email_smtp_user_password }}'
+    {% endif %}
+{% else %}
+gitlab_rails['gitlab_email_enabled'] = false
 {% endif %}

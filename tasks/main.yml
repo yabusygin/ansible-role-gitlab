@@ -35,6 +35,29 @@
   notify:
     - restart GitLab
 
+- name: add CA certs
+  block:
+    - name: add CA certs
+      copy:
+        src: "{{ gitlab_email_smtp_ca_cert }}"
+        dest: /etc/docker-gitlab/smtp-ca.crt
+        mode: 0600
+      when: not docker_userns_remap_enable|default(false)
+      notify:
+        - restart GitLab
+
+    - name: add CA certs (userns-remap)
+      copy:
+        src: "{{ gitlab_email_smtp_ca_cert }}"
+        dest: /etc/docker-gitlab/smtp-ca.crt
+        owner: "{{ docker_userns_remap_subuid_begin }}"
+        group: "{{ docker_userns_remap_subgid_begin }}"
+        mode: 0600
+      when: docker_userns_remap_enable|default(false)
+      notify:
+        - restart GitLab
+  when: gitlab_email_smtp_ca_cert is defined
+
 - name: create Docker Compose file
   template:
     src: docker-compose.yml.j2

@@ -42,3 +42,33 @@ def test_health(host):
 def test_config_permissions(host):
     assert host.file("/etc/docker-gitlab/gitlab.rb").uid == 0
     assert host.file("/etc/docker-gitlab/gitlab.rb").gid == 0
+
+
+def test_cert_permissions(host):
+    assert host.file("/etc/docker-gitlab/smtp-ca.crt").uid == 0
+    assert host.file("/etc/docker-gitlab/smtp-ca.crt").gid == 0
+
+
+def test_registry_health(host):
+    args = (
+        "http",
+        "--ignore-stdin",
+        "--check-status",
+        "--body",
+        "localhost:5050/v2/",
+    )
+    retries = 120
+    while retries > 0:
+        cmd = host.run(
+            command=" ".join(args),
+        )
+        if cmd.rc == 0 or cmd.rc == 4:
+            break
+        retries -= 1
+        time.sleep(1)
+    assert retries > 0
+
+    response = json.loads(s=cmd.stdout)
+    assert "errors" in response
+    assert len(response["errors"]) == 1
+    assert response["errors"][0]["code"] == "UNAUTHORIZED"

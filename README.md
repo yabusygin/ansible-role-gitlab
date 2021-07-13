@@ -16,87 +16,257 @@ None.
 Role Variables
 --------------
 
-All variables are optional. The most of variables set values of corresponding
-Omnibus GitLab settings:
+### Docker Configuration ###
 
-*   Docker:
+Variable reference:
 
-    | Role Variable                  | Default Value      |
-    | ------------------------------ | ------------------ |
-    | `gitlab_docker_image`          | `gitlab/gitlab-ce` |
-    | `gitlab_docker_restart_policy` |                    |
-    | `gitlab_docker_hostname`       |                    |
-
-    `gitlab_docker_image` variable specifies [GitLab Docker
-    image][gitlab/gitlab-ce] to install.
-
-    `gitlab_docker_restart_policy` variable specifies [restart
-    policy][Compose restart option] for GitLab container.
-
-    `gitlab_docker_hostname` variable specifies GitLab container hostname.
+*   `gitlab_image` -- [Docker container image][gitlab/gitlab-ce] to use. Default
+    value: `gitlab/gitlab-ce:12.10.14-ce.0`.
 
     [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
-    [Compose restart option]: https://docs.docker.com/compose/compose-file/#restart
 
-*   Basic settings:
+*   `gitlab_restart_policy` -- Docker container
+    [restart policy][Restart Policy]. Values: `always`, `on-failure`,
+    `unless-stopped`. Docker doesn’t restart a container under any
+    circumstance by default.
 
-    | Role Variable         | Omnibus GitLab setting | Default Value               |
-    | --------------------- | ---------------------- | --------------------------- |
-    | `gitlab_external_url` | `external_url`         | `http://gitlab.example.com` |
+    [Restart Policy]: https://docs.docker.com/compose/compose-file/compose-file-v2/#restart
 
-*   GitLab shell SSH port:
+### URL ###
 
-    | Role Variable                        | Omnibus GitLab setting                  |
-    | ------------------------------------ | --------------------------------------- |
-    | `gitlab_rails_gitlab_shell_ssh_port` | `gitlab_rails['gitlab_shell_ssh_port']` |
+Variable reference:
 
-*   Monitoring white list:
+*   `gitlab_hostname` -- domain name of GitLab host. Default value:
+    `gitlab.test`.
 
-    | Role Variable                       | Omnibus GitLab setting                 |
-    | ----------------------------------- | -------------------------------------- |
-    | `gitlab_rails_monitoring_whitelist` | `gitlab_rails['monitoring_whitelist']` |
+*   `gitlab_web_port` -- web UI port number. Default value: `80`.
 
-*   SMTP:
+*   `gitlab_registry_port` -- container registry port number. Default value: `5050`.
 
-    | Role Variable                            | Omnibus GitLab setting                      |
-    | ---------------------------------------- | ------------------------------------------- |
-    | `gitlab_rails_smtp_enable`               | `gitlab_rails['smtp_enable']`               |
-    | `gitlab_rails_smtp_address`              | `gitlab_rails['smtp_address']`              |
-    | `gitlab_rails_smtp_port`                 | `gitlab_rails['smtp_port']`                 |
-    | `gitlab_rails_smtp_user_name`            | `gitlab_rails['smtp_user_name']`            |
-    | `gitlab_rails_smtp_password`             | `gitlab_rails['smtp_password']`             |
-    | `gitlab_rails_smtp_domain`               | `gitlab_rails['smtp_domain']`               |
-    | `gitlab_rails_smtp_authentication`       | `gitlab_rails['smtp_authentication']`       |
-    | `gitlab_rails_smtp_enable_starttls_auto` | `gitlab_rails['smtp_enable_starttls_auto']` |
-    | `gitlab_rails_smtp_openssl_verify_mode`  | `gitlab_rails['smtp_openssl_verify_mode']`  |
-    | `gitlab_rails_smtp_tls`                  | `gitlab_rails['smtp_tls']`                  |
-    | `gitlab_rails_smtp_ssl`                  | `gitlab_rails['smtp_ssl']`                  |
-    | `gitlab_rails_smtp_force_ssl`            | `gitlab_rails['smtp_force_ssl']`            |
-    | `gitlab_rails_gitlab_email_enabled`      | `gitlab_rails['gitlab_email_enabled']`      |
-    | `gitlab_rails_gitlab_email_from`         | `gitlab_rails['gitlab_email_from']`         |
-    | `gitlab_rails_gitlab_email_display_name` | `gitlab_rails['gitlab_email_display_name']` |
-    | `gitlab_rails_gitlab_email_reply_to`     | `gitlab_rails['gitlab_email_reply_to']`     |
+*   `gitlab_ssh_port` -- Git shell SSH port number. Default value: `22`.
 
-*   Nginx:
+A default Omnibus GitLab onfiguration:
 
-    | Role Variable               | Omnibus GitLab setting  |
-    | --------------------------- | ----------------------- |
-    | `gitlab_nginix_listen_port` | `nginix['listen_port']` |
+```ruby
+external_url 'http://gitlab.test'
+registry_external_url 'http://gitlab.test:5050'
+```
 
-*   Unicorn:
+#### Specify Hostname ####
 
-    | Role Variable                     | Omnibus GitLab setting        |
-    | --------------------------------- | ----------------------------- |
-    | `gitlab_unicorn_worker_processes` | `unicorn['worker_processes']` |
+```yaml
+gitlab_hostname: gitlab.example.com
+```
 
-*   Container Registry:
+The default configuration will be replaced with the following:
 
-    | Role Variable                  | Omnibus GitLab setting  |
-    | ------------------------------ | ----------------------- |
-    | `gitlab_registry_external_url` | `registry_external_url` |
+```ruby
+external_url 'http://gitlab.example.com'
+registry_external_url 'http://gitlab.example.com:5050'
+```
 
-    Port number is a required part of registry URL. Choose a port different than
-    5000.
+#### Non Default Ports ####
+
+```yaml
+gitlab_web_port: 8000
+gitlab_registry_port: 5001
+gitlab_ssh_port: 2222
+```
+
+The default configuration will be replaced with the following:
+
+```ruby
+external_url 'http://gitlab.test:8000'
+registry_external_url 'http://gitlab.test:5001'
+gitlab_rails['gitlab_shell_ssh_port'] = 2222
+```
+
+### Outgoing Emails ###
+
+Variable reference:
+
+*   `gitlab_email_enabled` -- enable outgoing emails. Values: `yes`, `no`.
+    Default value: `no`.
+
+*   `gitlab_email_from_mailbox` -- mailbox value of "From" header in an outgoing
+    email.
+
+*   `gitlab_email_from_display_name` -- display name value of "From" header in
+    an outgoing email.
+
+*   `gitlab_email_reply_to_mailbox` -- mailbox value of "Reply-To" header in an
+    outgoing email.
+
+*   `gitlab_email_smtp_server_host` -- SMTP server name.
+
+*   `gitlab_email_smtp_server_port` -- SMTP server port.
+
+*   `gitlab_email_smtp_transport_security` -- transport layer security
+    mechanism. Values: `tls` (SMTPS), `starttls`.
+
+*   `gitlab_email_smtp_verify_server_cert` -- verify SMTP server certificate,
+    when `tls` or `starttls` transport layer security mechanism is selected.
+    Default value: `yes`.
+
+*   `gitlab_email_smtp_ca_cert` -- local path to CA certificate used to verify SMTP
+    server certificate.
+
+*   `gitlab_email_smtp_user_auth_method` -- SMTP user authentication method.
+    Values: `plain`, `login`, `cram_md5`.
+
+*   `gitlab_email_smtp_user_name` -- SMTP user name.
+
+*   `gitlab_email_smtp_user_password` -- SMTP user passphrase.
+
+A default Omnibus GitLab onfiguration:
+
+```ruby
+gitlab_rails['gitlab_email_enabled'] = false
+```
+
+### Enable Outgoing Emails ###
+
+To enable outgoing emails:
+
+```yaml
+gitlab_email_enabled: yes
+```
+
+The default configuration will be replaced with the following:
+
+```ruby
+gitlab_rails['gitlab_email_enabled'] = true
+gitlab_rails['smtp_enable'] = true
+```
+
+#### Email Sender ####
+
+To configure an outgoing email "From" and "Reply-To" headers:
+
+```yaml
+gitlab_email_from_mailbox: gitlab@example.com
+gitlab_email_from_display_name: GitLab
+gitlab_email_reply_to_mailbox: noreply@example.com
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['gitlab_email_from'] = 'gitlab@example.com'
+gitlab_rails['gitlab_email_display_name'] = 'GitLab'
+gitlab_rails['gitlab_email_reply_to'] = 'noreply@example.com'
+```
+
+#### SMTP Server ####
+
+```yaml
+gitlab_email_smtp_server_host: smtp.example.com
+gitlab_email_smtp_server_port: 587
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_address'] = 'smtp.example.com'
+gitlab_rails['smtp_port'] = 587
+```
+
+#### STARTTLS ####
+
+```yaml
+gitlab_email_smtp_transport_security: starttls
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_tls'] = false
+gitlab_rails['smtp_enable_starttls_auto'] = true
+gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+```
+
+#### SMTPS ####
+
+```yaml
+gitlab_email_smtp_transport_security: tls
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_tls'] = true
+gitlab_rails['smtp_enable_starttls_auto'] = false
+gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+```
+
+#### SMTP Server Certificate Signed by Private CA ####
+
+```yaml
+gitlab_email_smtp_ca_cert: /path/to/private-ca.pem
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_ca_file'] = '/etc/gitlab/ssl/smtp-ca.crt'
+```
+
+#### Disable SMTP Server Certificate Verification ####
+
+```yaml
+gitlab_email_smtp_verify_server_cert: no
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_openssl_verify_mode'] = 'none'
+```
+
+#### SMTP without TLS ####
+
+```yaml
+gitlab_email_smtp_transport_security: none
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_tls'] = false
+gitlab_rails['smtp_enable_starttls_auto'] = false
+```
+
+#### SMTP user/client authentication ####
+
+```yaml
+gitlab_email_smtp_user_auth_method: plain
+gitlab_email_smtp_user_name: gitlab
+gitlab_email_smtp_user_password: Pa$$w0rD
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['smtp_authentication'] = 'plain'
+gitlab_rails['smtp_user_name'] = 'gitlab'
+gitlab_rails['smtp_password'] = 'Pa$$w0rD'
+```
+
+### Unicorn Settings ###
+
+Variable reference:
+
+*   `gitlab_unicorn_workers` -- number of [Unicorn][Unicorn Settings] worker
+    processes.
+
+    [Unicorn Settings]: https://docs.gitlab.com/12.10/omnibus/settings/unicorn.html
+
+### Monitoring Settings ###
+
+Variable reference:
+
+*   `gitlab_monitoring_whitelist` -- a list of addresses/subnets of monitoring
+    endpoints that are allowed to perform healthchecks.
 
 Dependencies
 ------------
@@ -118,40 +288,36 @@ Example Playbook
 ```yaml
 ---
 - hosts: production
-  roles:
-    - role: yabusygin.gitlab
-  vars:
-    docker_userns_remap_enable: yes
+  tasks:
+    - import_role:
+        name: yabusygin.gitlab
+      vars:
+        docker_userns_remap_enable: yes
 
-    gitlab_docker_image: gitlab/gitlab-ce:12.7.6-ce.0
-    gitlab_docker_hostname: gitlab
-    gitlab_docker_restart_policy: always
+        gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+        gitlab_restart_policy: always
 
-    gitlab_external_url: http://gitlab.test:8000
-    gitlab_nginix_listen_port: 80
-    gitlab_rails_gitlab_shell_ssh_port: 2222
+        gitlab_hostname: gitlab.example.com
+        gitlab_web_port: 8000
+        gitlab_registry_port: 5001
+        gitlab_ssh_port: 2222
 
-    gitlab_rails_monitoring_whitelist:
-      - 127.0.0.0/8
-      - 10.0.1.0/24
+        gitlab_unicorn_workers: 4
 
-    gitlab_rails_smtp_enable: "true"
-    gitlab_rails_smtp_address: smtp.example.com
-    gitlab_rails_smtp_port: 465
-    gitlab_rails_smtp_user_name: gitlab
-    gitlab_rails_smtp_password: 'Pa$$w0rD'
-    gitlab_rails_smtp_domain: example.com
-    gitlab_rails_smtp_authentication: login
-    gitlab_rails_smtp_tls: "true"
-    gitlab_rails_smtp_enable_starttls_auto: "true"
-    gitlab_rails_smtp_openssl_verify_mode: peer
+        gitlab_monitoring_whitelist:
+          - 192.168.10.39
+          - 10.0.1.0/24
 
-    gitlab_rails_gitlab_email_enabled: "true"
-    gitlab_rails_gitlab_email_from: gitlab@example.com
-    gitlab_rails_gitlab_email_display_name: GitLab
-    gitlab_rails_gitlab_email_reply_to: noreply@example.com
-
-    gitlab_unicorn_worker_processes: 3
+        gitlab_email_enabled: yes
+        gitlab_email_from_mailbox: gitlab@example.com
+        gitlab_email_from_display_name: GitLab
+        gitlab_email_reply_to_mailbox: noreply@example.com
+        gitlab_email_smtp_server_host: smtp.example.com
+        gitlab_email_smtp_server_port: 587
+        gitlab_email_smtp_transport_security: starttls
+        gitlab_email_smtp_user_auth_method: login
+        gitlab_email_smtp_user_name: gitlab
+        gitlab_email_smtp_user_password: Pa$$w0rD
 ```
 
 License
@@ -162,4 +328,4 @@ MIT
 Author Information
 ------------------
 
-Alexey Busygin \<busygin.contact@yandex.ru\>
+Alexey Busygin \<yaabusygin@gmail.com\>
