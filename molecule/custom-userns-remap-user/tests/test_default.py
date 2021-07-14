@@ -50,6 +50,17 @@ def test_config_permissions(host):
     assert host.file("/etc/docker-gitlab/gitlab.rb").gid == subgid
 
 
+def test_cert_permissions(host):
+    subuid = int(
+        _get_subuid_entry(host=host, path="/etc/subuid", name="testuser")[1]
+    )
+    subgid = int(
+        _get_subuid_entry(host=host, path="/etc/subgid", name="testuser")[1]
+    )
+    assert host.file("/etc/docker-gitlab/smtp-ca.crt").uid == subuid
+    assert host.file("/etc/docker-gitlab/smtp-ca.crt").gid == subgid
+
+
 def _get_subuid_entry(host, path, name):
     content = host.file(path).content_string
     entries = [
@@ -64,3 +75,28 @@ def _get_subuid_entry(host, path, name):
     if matches:
         return matches[0]
     return None
+
+
+def test_registry_health(host):
+    args = (
+        "http",
+        "--ignore-stdin",
+        "--check-status",
+        "--body",
+        "localhost:5050/v2/",
+    )
+    retries = 120
+    while retries > 0:
+        cmd = host.run(
+            command=" ".join(args),
+        )
+        if cmd.rc == 0 or cmd.rc == 4:
+            break
+        retries -= 1
+        time.sleep(1)
+    assert retries > 0
+
+    response = json.loads(s=cmd.stdout)
+    assert "errors" in response
+    assert len(response["errors"]) == 1
+    assert response["errors"][0]["code"] == "UNAUTHORIZED"

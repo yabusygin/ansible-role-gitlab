@@ -1,3 +1,5 @@
----
-gitlab_docker_image: gitlab/gitlab-ce
-gitlab_external_url: http://gitlab.example.com
+gitlab_image: gitlab/gitlab-ce:12.10.14-ce.0
+gitlab_hostname: gitlab.test
+gitlab_registry_port: 5050
+gitlab_email_enabled: no
+gitlab_email_smtp_verify_server_cert: yes

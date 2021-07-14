@@ -17,8 +17,6 @@ jobs:
           - custom-userns-remap-user
           - default
           - disabled-userns-remap
-          - port-forwarding
-          - registry
     steps:
       - name: Check-out repository
         uses: actions/checkout@v2

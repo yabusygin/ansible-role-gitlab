@@ -1,0 +1,9 @@
+---
+gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+gitlab_restart_policy: always
+
+gitlab_web_port: 8000
+gitlab_registry_port: 5001
+gitlab_ssh_port: 2222
+
+gitlab_email_smtp_ca_cert: certs/ca.pem

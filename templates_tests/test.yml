@@ -2,35 +2,15 @@
 tests:
   # test templates/docker-compose.yml.j2
 
-  - name: set gitlab_docker_hostname
+  - name: default Docker Compose file
     template: docker-compose.yml.j2
-    variables:
-      inventory: compose/gitlab_docker_hostname/inventory.yml
-    expected_result: compose/gitlab_docker_hostname/docker-compose.yml
+    expected_result: compose/default/docker-compose.yml
 
-  - name: set gitlab_docker_image
+  - name: custom Docker Compose file
     template: docker-compose.yml.j2
     variables:
-      inventory: compose/gitlab_docker_image/inventory.yml
-    expected_result: compose/gitlab_docker_image/docker-compose.yml
-
-  - name: set gitlab_registry_external_url
-    template: docker-compose.yml.j2
-    variables:
-      inventory: compose/gitlab_registry_external_url/inventory.yml
-    expected_result: compose/gitlab_registry_external_url/docker-compose.yml
-
-  - name: set gitlab_docker_restart_policy
-    template: docker-compose.yml.j2
-    variables:
-      inventory: compose/gitlab_docker_restart_policy/inventory.yml
-    expected_result: compose/gitlab_docker_restart_policy/docker-compose.yml
-
-  - name: set gitlab_rails_gitlab_shell_ssh_port
-    template: docker-compose.yml.j2
-    variables:
-      inventory: compose/gitlab_rails_gitlab_shell_ssh_port/inventory.yml
-    expected_result: compose/gitlab_rails_gitlab_shell_ssh_port/docker-compose.yml
+      inventory: compose/custom/inventory.yml
+    expected_result: compose/custom/docker-compose.yml
 
   # test templates/gitlab.rb.j2
 
@@ -38,50 +18,56 @@ tests:
     template: gitlab.rb.j2
     expected_result: config/default/gitlab.rb
 
-  - name: set gitlab_rails_monitoring_whitelist (single entry)
+  - name: custom URL settings
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_rails_monitoring_whitelist/single_entry/inventory.yml
-    expected_result: config/gitlab_rails_monitoring_whitelist/single_entry/gitlab.rb
+      inventory: config/url/inventory.yml
+    expected_result: config/url/gitlab.rb
 
-  - name: set gitlab_rails_monitoring_whitelist (multiple entries)
+  - name: set gitlab_unicorn_workers
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_rails_monitoring_whitelist/multiple_entries/inventory.yml
-    expected_result: config/gitlab_rails_monitoring_whitelist/multiple_entries/gitlab.rb
+      inventory: config/unicorn_workers/inventory.yml
+    expected_result: config/unicorn_workers/gitlab.rb
 
-  - name: set gitlab_nginix_listen_port
+  - name: set gitlab_monitoring_whitelist (single entry)
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_nginix_listen_port/inventory.yml
-    expected_result: config/gitlab_nginix_listen_port/gitlab.rb
+      inventory: config/monitoring_whitelist/single_entry/inventory.yml
+    expected_result: config/monitoring_whitelist/single_entry/gitlab.rb
 
-  - name: set gitlab_registry_external_url
+  - name: set gitlab_monitoring_whitelist (multiple entries)
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_registry_external_url/inventory.yml
-    expected_result: config/gitlab_registry_external_url/gitlab.rb
+      inventory: config/monitoring_whitelist/multiple_entries/inventory.yml
+    expected_result: config/monitoring_whitelist/multiple_entries/gitlab.rb
 
-  - name: set outgoing email config
+  - name: SMTPS
     template: gitlab.rb.j2
     variables:
-      inventory: config/email/inventory.yml
-    expected_result: config/email/gitlab.rb
+      inventory: config/email/tls/inventory.yml
+    expected_result: config/email/tls/gitlab.rb
 
-  - name: set gitlab_rails_gitlab_shell_ssh_port
+  - name: STARTTLS
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_rails_gitlab_shell_ssh_port/inventory.yml
-    expected_result: config/gitlab_rails_gitlab_shell_ssh_port/gitlab.rb
+      inventory: config/email/starttls/inventory.yml
+    expected_result: config/email/starttls/gitlab.rb
 
-  - name: set gitlab_unicorn_worker_processes
+  - name: insecure transport
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_unicorn_worker_processes/inventory.yml
-    expected_result: config/gitlab_unicorn_worker_processes/gitlab.rb
+      inventory: config/email/insecure_transport/inventory.yml
+    expected_result: config/email/insecure_transport/gitlab.rb
 
-  - name: set gitlab_external_url
+  - name: unverified certificate
     template: gitlab.rb.j2
     variables:
-      inventory: config/gitlab_external_url/inventory.yml
-    expected_result: config/gitlab_external_url/gitlab.rb
+      inventory: config/email/unverified_cert/inventory.yml
+    expected_result: config/email/unverified_cert/gitlab.rb
+
+  - name: private CA
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/email/private_ca/inventory.yml
+    expected_result: config/email/private_ca/gitlab.rb
