@@ -1,8 +1,4 @@
 ---
-- name: install Docker
-  import_role:
-    name: yabusygin.docker
-
 - name: create configuration directory
   file:
     path: /etc/docker-gitlab
@@ -10,53 +6,30 @@
     mode: 0755
 
 - name: get userns-remap UID/GID ranges
-  import_tasks: get-docker-userns-remap-info.yml
-  when: docker_userns_remap_enable|default(false)
+  import_tasks: get-userns-info.yml
+  when: gitlab_userns_enable
 
 - name: create config file
   template:
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
     lstrip_blocks: yes
+    owner: "{{ _bindmount_owner }}"
+    group: "{{ _bindmount_group }}"
     mode: 0600
-  when: not docker_userns_remap_enable|default(false)
   notify:
     - restart GitLab
 
-- name: create config file (userns-remap)
-  template:
-    src: gitlab.rb.j2
-    dest: /etc/docker-gitlab/gitlab.rb
-    lstrip_blocks: yes
-    owner: "{{ docker_userns_remap_subuid_begin }}"
-    group: "{{ docker_userns_remap_subgid_begin }}"
+- name: add SMTP CA certificate
+  copy:
+    src: "{{ gitlab_email_smtp_ca_cert }}"
+    dest: /etc/docker-gitlab/smtp-ca.crt
+    owner: "{{ _bindmount_owner }}"
+    group: "{{ _bindmount_group }}"
     mode: 0600
-  when: docker_userns_remap_enable|default(false)
-  notify:
-    - restart GitLab
-
-- name: add CA certs
-  block:
-    - name: add CA certs
-      copy:
-        src: "{{ gitlab_email_smtp_ca_cert }}"
-        dest: /etc/docker-gitlab/smtp-ca.crt
-        mode: 0600
-      when: not docker_userns_remap_enable|default(false)
-      notify:
-        - restart GitLab
-
-    - name: add CA certs (userns-remap)
-      copy:
-        src: "{{ gitlab_email_smtp_ca_cert }}"
-        dest: /etc/docker-gitlab/smtp-ca.crt
-        owner: "{{ docker_userns_remap_subuid_begin }}"
-        group: "{{ docker_userns_remap_subgid_begin }}"
-        mode: 0600
-      when: docker_userns_remap_enable|default(false)
-      notify:
-        - restart GitLab
   when: gitlab_email_smtp_ca_cert is defined
+  notify:
+    - restart GitLab
 
 - name: create Docker Compose file
   template:

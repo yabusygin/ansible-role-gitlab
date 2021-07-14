@@ -1,0 +1,26 @@
+---
+- name: get /etc/subuid entry of Docker user
+  shell: |
+    set -o pipefail
+    cat /etc/subuid | grep {{ gitlab_userns_user }}
+  args:
+    executable: /bin/bash
+  register: _result
+  changed_when: false
+
+- name: get begining of sub UID range
+  set_fact:
+    _bindmount_owner: "{{ _result.stdout_lines[0].split(':')[1] }}"
+
+- name: get /etc/subgid entry of Docker user
+  shell: |
+    set -o pipefail
+    cat /etc/subgid | grep {{ gitlab_userns_user }}
+  args:
+    executable: /bin/bash
+  register: _result
+  changed_when: false
+
+- name: get begining of sub GID range
+  set_fact:
+    _bindmount_group: "{{ _result.stdout_lines[0].split(':')[1] }}"

@@ -1,9 +1,15 @@
 ---
 - name: converge
   hosts: instance
-  roles:
-    - role: gitlab
   tasks:
+    - name: install Docker
+      import_role:
+        name: yabusygin.docker
+
+    - name: install GitLab
+      import_role:
+        name: gitlab
+
     - name: install HTTPie
       pip:
         name:

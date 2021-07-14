@@ -4,6 +4,9 @@ ansible_python_interpreter: python3
 docker_userns_remap_enable: yes
 docker_userns_remap_user: testuser
 
+gitlab_userns_enable: yes
+gitlab_userns_user: testuser
+
 gitlab_ssh_port: 22022
 
 gitlab_monitoring_whitelist:

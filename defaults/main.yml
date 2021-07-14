@@ -1,5 +1,10 @@
 gitlab_image: gitlab/gitlab-ce:12.10.14-ce.0
+gitlab_userns_enable: no
+gitlab_userns_user: dockremap
 gitlab_hostname: gitlab.test
 gitlab_registry_port: 5050
 gitlab_email_enabled: no
 gitlab_email_smtp_verify_server_cert: yes
+
+_bindmount_owner: 0
+_bindmount_group: 0
