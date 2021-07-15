@@ -14,9 +14,8 @@ jobs:
           - "geerlingguy/docker-ubuntu1804-ansible:latest"
           - "geerlingguy/docker-ubuntu2004-ansible:latest"
         scenario:
-          - custom-userns-remap-user
           - default
-          - disabled-userns-remap
+          - userns_remap
     steps:
       - name: Check-out repository
         uses: actions/checkout@v2
