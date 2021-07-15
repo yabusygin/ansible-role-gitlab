@@ -1,21 +1,21 @@
 ---
+- name: set owner/group ID for files that are mounted to container
+  import_tasks: set-volume-owner.yml
+  when: gitlab_userns_remap_enable
+
 - name: create configuration directory
   file:
     path: /etc/docker-gitlab
     state: directory
     mode: 0755
 
-- name: get userns-remap UID/GID ranges
-  import_tasks: get-userns-info.yml
-  when: gitlab_userns_enable
-
 - name: create config file
   template:
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
     lstrip_blocks: yes
-    owner: "{{ _bindmount_owner }}"
-    group: "{{ _bindmount_group }}"
+    owner: "{{ _volume_owner }}"
+    group: "{{ _volume_group }}"
     mode: 0600
   notify:
     - restart GitLab
@@ -24,8 +24,8 @@
   copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
     dest: /etc/docker-gitlab/smtp-ca.crt
-    owner: "{{ _bindmount_owner }}"
-    group: "{{ _bindmount_group }}"
+    owner: "{{ _volume_owner }}"
+    group: "{{ _volume_group }}"
     mode: 0600
   when: gitlab_email_smtp_ca_cert is defined
   notify:

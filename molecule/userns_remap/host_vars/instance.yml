@@ -3,7 +3,7 @@ ansible_python_interpreter: python3
 
 docker_userns_remap_enable: yes
 
-gitlab_userns_enable: yes
+gitlab_userns_remap_enable: yes
 
 gitlab_ssh_port: 22022
 
