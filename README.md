@@ -11,7 +11,16 @@ An Ansible role installing [GitLab CE][GitLab].
 Requirements
 ------------
 
-None.
+The following requirements are needed on a managed host to execute this role:
+
+* [Docker Engine](https://docs.docker.com/engine/install/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
+* [docker_compose module requirements](https://docs.ansible.com/ansible/2.9/modules/docker_compose_module.html#requirements)
+
+Its recommended to use [yabusygin.docker][DockerRole] role for installing all
+the requiremets.
+
+[DockerRole]: https://galaxy.ansible.com/yabusygin/docker
 
 Role Variables
 --------------
@@ -268,19 +277,30 @@ Variable reference:
 *   `gitlab_monitoring_whitelist` -- a list of addresses/subnets of monitoring
     endpoints that are allowed to perform healthchecks.
 
+### Docker User Namespace Remapping ###
+
+Variable reference:
+
+*   `gitlab_userns_remap_enable` -- signals that Docker
+    [user namespace remapping feature][UsernsRemap] is enabled. Default value:
+    `no`.
+
+*   `gitlab_userns_remap_user` -- user used by Docker for running containers
+    with enabled user namespace remapping. Default value `dockremap`.
+
+[UsernsRemap]: https://docs.docker.com/engine/security/userns-remap/
+
 Dependencies
 ------------
 
-The role depends on [yabusygin.docker][Docker Role] role.
-
-It is recommended to enable [userns-remap feature][User Namespace]:
+If [yabusygin.docker][DockerRole] role is used for installing Docker and other
+requirements, then it is recommended to enable
+[user namespace remapping feature][UsernsRemap]:
 
 ```yaml
 docker_userns_remap_enable: yes
+gitlab_userns_remap_enable: yes
 ```
-
-[Docker Role]: https://galaxy.ansible.com/yabusygin/docker
-[User Namespace]: https://docs.docker.com/engine/security/userns-remap/
 
 Example Playbook
 ----------------
@@ -292,7 +312,8 @@ Example Playbook
     - import_role:
         name: yabusygin.gitlab
       vars:
-        docker_userns_remap_enable: yes
+        gitlab_userns_remap_enable: yes
+        gitlab_userns_remap_user: nsremap
 
         gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
         gitlab_restart_policy: always
@@ -318,6 +339,23 @@ Example Playbook
         gitlab_email_smtp_user_auth_method: login
         gitlab_email_smtp_user_name: gitlab
         gitlab_email_smtp_user_password: Pa$$w0rD
+```
+
+With [yabusygin.docker][DockerRole] role:
+
+```yaml
+- hosts: production
+  tasks:
+    - import_role:
+        name: yabusygin.docker
+      vars:
+        docker_userns_remap_enable: yes
+
+    - import_role:
+        name: yabusygin.gitlab
+      vars:
+        gitlab_userns_remap_enable: yes
+        gitlab_hostname: gitlab.example.com
 ```
 
 License
