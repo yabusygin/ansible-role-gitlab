@@ -40,41 +40,13 @@ def test_health(host):
 
 
 def test_config_permissions(host):
-    subuid = int(
-        _get_subuid_entry(host=host, path="/etc/subuid", name="dockremap")[1]
-    )
-    subgid = int(
-        _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
-    )
-    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subuid
-    assert host.file("/etc/docker-gitlab/gitlab.rb").gid == subgid
+    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == 0
+    assert host.file("/etc/docker-gitlab/gitlab.rb").gid == 0
 
 
 def test_cert_permissions(host):
-    subuid = int(
-        _get_subuid_entry(host=host, path="/etc/subuid", name="dockremap")[1]
-    )
-    subgid = int(
-        _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
-    )
-    assert host.file("/etc/docker-gitlab/smtp-ca.crt").uid == subuid
-    assert host.file("/etc/docker-gitlab/smtp-ca.crt").gid == subgid
-
-
-def _get_subuid_entry(host, path, name):
-    content = host.file(path).content_string
-    entries = [
-        tuple(line.split(":"))
-        for line in content.splitlines()
-    ]
-    matches = [
-        entry
-        for entry in entries
-        if entry[0] == name
-    ]
-    if matches:
-        return matches[0]
-    return None
+    assert host.file("/etc/docker-gitlab/smtp-ca.crt").uid == 0
+    assert host.file("/etc/docker-gitlab/smtp-ca.crt").gid == 0
 
 
 def test_registry_health(host):
