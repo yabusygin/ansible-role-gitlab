@@ -3,6 +3,7 @@ gitlab_userns_remap_enable: no
 gitlab_userns_remap_user: dockremap
 gitlab_hostname: gitlab.test
 gitlab_registry_port: 5050
+gitlab_unicorn_force: no
 gitlab_email_enabled: no
 gitlab_email_smtp_verify_server_cert: yes
 

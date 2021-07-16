@@ -7,6 +7,19 @@ registry_external_url 'http://{{ gitlab_hostname }}:{{ gitlab_registry_port }}'
 {% if gitlab_ssh_port is defined %}
 gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
 {% endif %}
+{% if gitlab_unicorn_force %}
+
+puma['enable'] = false
+unicorn['enable'] = true
+    {% if gitlab_workers is defined %}
+unicorn['worker_processes'] = {{ gitlab_workers }}
+    {% endif %}
+{% else %}
+    {% if gitlab_workers is defined %}
+
+puma['worker_processes'] = {{ gitlab_workers }}
+    {% endif %}
+{% endif %}
 {% if gitlab_unicorn_workers is defined %}
 
 unicorn['worker_processes'] = {{ gitlab_unicorn_workers }}
