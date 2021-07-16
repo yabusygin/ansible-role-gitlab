@@ -7,6 +7,8 @@ gitlab_userns_remap_enable: yes
 
 gitlab_ssh_port: 22022
 
+gitlab_workers: 2
+
 gitlab_monitoring_whitelist:
   - 0.0.0.0/0
 
