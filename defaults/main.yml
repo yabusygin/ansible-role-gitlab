@@ -1,4 +1,4 @@
-gitlab_image: gitlab/gitlab-ce:12.10.14-ce.0
+gitlab_image: gitlab/gitlab-ce:latest
 gitlab_userns_remap_enable: no
 gitlab_userns_remap_user: dockremap
 gitlab_hostname: gitlab.test
