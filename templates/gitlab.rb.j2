@@ -1,3 +1,4 @@
+# URL
 {% if gitlab_web_port is defined %}
 external_url 'http://{{ gitlab_hostname }}:{{ gitlab_web_port }}'
 {% else %}
@@ -7,15 +8,35 @@ registry_external_url 'http://{{ gitlab_hostname }}:{{ gitlab_registry_port }}'
 {% if gitlab_ssh_port is defined %}
 gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_ssh_port }}
 {% endif %}
-{% if gitlab_unicorn_workers is defined %}
 
+# Application server
+{% if gitlab_unicorn_force %}
+puma['enable'] = false
+unicorn['enable'] = true
+    {% if gitlab_workers is defined %}
+unicorn['worker_processes'] = {{ gitlab_workers }}
+    {% endif %}
+{% else %}
+    {% if gitlab_workers is defined %}
+puma['worker_processes'] = {{ gitlab_workers }}
+    {% endif %}
+    {% if gitlab_min_threads is defined %}
+puma['min_threads'] = {{ gitlab_min_threads }}
+    {% endif %}
+    {% if gitlab_max_threads is defined %}
+puma['max_threads'] = {{ gitlab_max_threads }}
+    {% endif %}
+{% endif %}
+{% if gitlab_unicorn_workers is defined %}
 unicorn['worker_processes'] = {{ gitlab_unicorn_workers }}
 {% endif %}
-{% if gitlab_monitoring_whitelist is defined %}
 
+# Monitoring
+{% if gitlab_monitoring_whitelist is defined %}
 gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist|join("', '") }}']
 {% endif %}
 
+# Outgoing emails
 {% if gitlab_email_enabled %}
 gitlab_rails['gitlab_email_enabled'] = true
     {% if gitlab_email_from_mailbox is defined %}

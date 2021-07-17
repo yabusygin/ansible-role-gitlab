@@ -1,0 +1,3 @@
+---
+gitlab_unicorn_force: yes
+gitlab_workers: 3

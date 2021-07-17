@@ -1,6 +1,12 @@
+# URL
 external_url 'http://gitlab.test'
 registry_external_url 'http://gitlab.test:5050'
 
+# Application server
+
+# Monitoring
+
+# Outgoing emails
 gitlab_rails['gitlab_email_enabled'] = true
 gitlab_rails['gitlab_email_from'] = 'gitlab@test'
 gitlab_rails['gitlab_email_display_name'] = 'GitLab'

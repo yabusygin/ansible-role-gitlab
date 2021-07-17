@@ -24,11 +24,23 @@ tests:
       inventory: config/url/inventory.yml
     expected_result: config/url/gitlab.rb
 
-  - name: set gitlab_unicorn_workers
+  - name: Puma configuration
     template: gitlab.rb.j2
     variables:
-      inventory: config/unicorn_workers/inventory.yml
-    expected_result: config/unicorn_workers/gitlab.rb
+      inventory: config/puma_configuration/inventory.yml
+    expected_result: config/puma_configuration/gitlab.rb
+
+  - name: set gitlab_unicorn_force
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/force_unicorn/inventory.yml
+    expected_result: config/force_unicorn/gitlab.rb
+
+  - name: set gitlab_unicorn_workers (deprecated)
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/deprecated_unicorn_workers/inventory.yml
+    expected_result: config/deprecated_unicorn_workers/gitlab.rb
 
   - name: set gitlab_monitoring_whitelist (single entry)
     template: gitlab.rb.j2
