@@ -1,0 +1,4 @@
+---
+gitlab_workers: 3
+gitlab_min_threads: 1
+gitlab_max_threads: 4

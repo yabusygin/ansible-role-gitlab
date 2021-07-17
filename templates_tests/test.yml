@@ -24,11 +24,11 @@ tests:
       inventory: config/url/inventory.yml
     expected_result: config/url/gitlab.rb
 
-  - name: set gitlab_workers
+  - name: Puma configuration
     template: gitlab.rb.j2
     variables:
-      inventory: config/puma_workers/inventory.yml
-    expected_result: config/puma_workers/gitlab.rb
+      inventory: config/puma_configuration/inventory.yml
+    expected_result: config/puma_configuration/gitlab.rb
 
   - name: set gitlab_unicorn_force
     template: gitlab.rb.j2
