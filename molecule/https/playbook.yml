@@ -1,0 +1,23 @@
+---
+- name: converge
+  hosts: instance
+  tasks:
+    - name: install Docker
+      import_role:
+        name: yabusygin.docker
+
+    - name: install GitLab
+      import_role:
+        name: gitlab
+
+    - name: add root CA certificate
+      copy:
+        src: root.crt.pem
+        dest: /etc/ssl/certs/
+        mode: 0644
+
+    - name: install HTTPie
+      pip:
+        name:
+          - httpie<2.0.0
+        state: present

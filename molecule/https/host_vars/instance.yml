@@ -1,0 +1,19 @@
+---
+ansible_python_interpreter: python3
+
+docker_userns_remap_enable: yes
+
+gitlab_userns_remap_enable: yes
+
+gitlab_ssh_port: 22022
+
+gitlab_https_enable: yes
+gitlab_https_key: gitlab.key.pem
+gitlab_https_cert: gitlab.crt.pem
+
+gitlab_workers: 2
+gitlab_min_threads: 4
+gitlab_max_threads: 4
+
+gitlab_monitoring_whitelist:
+  - 0.0.0.0/0
