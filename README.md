@@ -90,6 +90,52 @@ registry_external_url 'http://gitlab.test:5001'
 gitlab_rails['gitlab_shell_ssh_port'] = 2222
 ```
 
+### HTTPS ###
+
+Variable reference:
+
+*   `gitlab_https_enable` -- enable HTTPS. Default: `no`.
+*   `gitlab_letsencrypt_enable` -- enable automated HTTPS with Let’s Encrypt.
+    Default: `no`.
+*   `gitlab_https_key` -- path to private key on the control host.
+*   `gitlab_https_cert` -- path to certificate chainon the control host.
+
+#### Manual HTTPS Configuration ####
+
+```yaml
+gitlab_https_enable: yes
+gitlab_https_key: https/gitlab.key.pem
+gitlab_https_cert: https/gitlab.crt.pem
+```
+
+The default configuration will be replaced with the following:
+
+```ruby
+external_url 'https://gitlab.test'
+registry_external_url 'https://gitlab.test:5050'
+letsencrypt['enable'] = false
+```
+
+Private key `https/gitlab.key.pem` will be mounted to
+`/etc/gitlab/ssl/gitlab.test.key` in container. Certificate
+`https/gitlab.crt.pem` will be mounted to `/etc/gitlab/ssl/gitlab.test.crt` in
+container.
+
+#### Let's Encrypt HTTPS Configuration ####
+
+```yaml
+gitlab_https_enable: yes
+gitlab_letsencrypt_enable: yes
+```
+
+The default configuration will be replaced with the following:
+
+```ruby
+external_url 'https://gitlab.test'
+registry_external_url 'https://gitlab.test:5050'
+letsencrypt['enable'] = true
+```
+
 ### Outgoing Emails ###
 
 Variable reference:
@@ -371,9 +417,13 @@ Example Playbook
         gitlab_restart_policy: always
 
         gitlab_hostname: gitlab.example.com
-        gitlab_web_port: 8000
+        gitlab_web_port: 3443
         gitlab_registry_port: 5001
         gitlab_ssh_port: 2222
+
+        gitlab_https_enable: yes
+        gitlab_https_key: https/gitlab.key.pem
+        gitlab_https_cert: https/gitlab.crt.pem
 
         gitlab_workers: 2
         gitlab_min_threads: 4
