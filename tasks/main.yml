@@ -23,7 +23,7 @@
 - name: add SMTP CA certificate
   copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
-    dest: /etc/docker-gitlab/smtp-ca.crt
+    dest: /etc/docker-gitlab/smtp.crt.pem
     owner: "{{ _volume_owner }}"
     group: "{{ _volume_group }}"
     mode: 0600

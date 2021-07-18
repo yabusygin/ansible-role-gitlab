@@ -13,8 +13,8 @@ services:
         target: /etc/gitlab/gitlab.rb
 {% if gitlab_email_smtp_ca_cert is defined %}
       - type: bind
-        source: ./smtp-ca.crt
-        target: /etc/gitlab/ssl/smtp-ca.crt
+        source: ./smtp.crt.pem
+        target: /etc/ssl/certs/smtp.crt.pem
 {% endif %}
       - type: volume
         source: data
