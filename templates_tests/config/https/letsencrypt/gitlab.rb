@@ -1,11 +1,11 @@
 # URL
-external_url 'http://gitlab.test'
-registry_external_url 'http://gitlab.test:5050'
+external_url 'https://gitlab.test'
+registry_external_url 'https://gitlab.test:5050'
 
 # HTTPS
+letsencrypt['enable'] = true
 
 # Application server
-unicorn['worker_processes'] = 3
 
 # Monitoring
 

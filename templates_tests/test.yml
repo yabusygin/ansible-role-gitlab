@@ -12,6 +12,12 @@ tests:
       inventory: compose/custom/inventory.yml
     expected_result: compose/custom/docker-compose.yml
 
+  - name: HTTPS
+    template: docker-compose.yml.j2
+    variables:
+      inventory: compose/https/inventory.yml
+    expected_result: compose/https/docker-compose.yml
+
   # test templates/gitlab.rb.j2
 
   - name: default config
@@ -23,6 +29,18 @@ tests:
     variables:
       inventory: config/url/inventory.yml
     expected_result: config/url/gitlab.rb
+
+  - name: manual HTTPS
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/https/manual/inventory.yml
+    expected_result: config/https/manual/gitlab.rb
+
+  - name: Let's Encrypt HTTPS
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/https/letsencrypt/inventory.yml
+    expected_result: config/https/letsencrypt/gitlab.rb
 
   - name: Puma configuration
     template: gitlab.rb.j2

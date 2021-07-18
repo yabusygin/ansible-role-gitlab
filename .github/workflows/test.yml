@@ -16,6 +16,7 @@ jobs:
         scenario:
           - default
           - userns_remap
+          - https
     steps:
       - name: Check-out repository
         uses: actions/checkout@v2

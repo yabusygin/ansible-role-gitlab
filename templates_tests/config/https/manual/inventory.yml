@@ -1,0 +1,4 @@
+---
+gitlab_https_enable: yes
+gitlab_https_key: https/gitlab.key.pem
+gitlab_https_cert: https/gitlab.crt.pem
