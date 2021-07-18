@@ -2,6 +2,8 @@
 external_url 'http://gitlab.test'
 registry_external_url 'http://gitlab.test:5050'
 
+# HTTPS
+
 # Application server
 puma['enable'] = false
 unicorn['enable'] = true

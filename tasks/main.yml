@@ -20,6 +20,36 @@
   notify:
     - restart GitLab
 
+- name: create HTTPS key and certificate directory
+  file:
+    path: /etc/docker-gitlab/https
+    state: directory
+    owner: "{{ _volume_owner }}"
+    group: "{{ _volume_group }}"
+    mode: 0700
+
+- name: upload HTTPS key
+  copy:
+    src: "{{ gitlab_https_key }}"
+    dest: "/etc/docker-gitlab/https/{{ gitlab_hostname }}.key"
+    owner: "{{ _volume_owner }}"
+    group: "{{ _volume_group }}"
+    mode: 0600
+  when: gitlab_https_key is defined
+  notify:
+    - restart GitLab
+
+- name: upload HTTPS certificate
+  copy:
+    src: "{{ gitlab_https_cert }}"
+    dest: "/etc/docker-gitlab/https/{{ gitlab_hostname }}.crt"
+    owner: "{{ _volume_owner }}"
+    group: "{{ _volume_group }}"
+    mode: 0600
+  when: gitlab_https_cert is defined
+  notify:
+    - restart GitLab
+
 - name: add SMTP CA certificate
   copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"

@@ -16,6 +16,11 @@ services:
         source: ./smtp.crt.pem
         target: /etc/ssl/certs/smtp.crt.pem
 {% endif %}
+{% if gitlab_https_enable %}
+      - type: bind
+        source: ./https/
+        target: /etc/gitlab/ssl/
+{% endif %}
       - type: volume
         source: data
         target: /var/opt/gitlab
@@ -30,8 +35,13 @@ services:
         target: {{ gitlab_web_port }}
         published: {{ gitlab_web_port }}
 {% else %}
+    {% if gitlab_https_enable %}
+        target: 443
+        published: 443
+    {% else %}
         target: 80
         published: 80
+    {% endif %}
 {% endif %}
       - protocol: tcp
         target: 22
