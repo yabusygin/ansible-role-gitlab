@@ -367,7 +367,7 @@ Example Playbook
         gitlab_userns_remap_enable: yes
         gitlab_userns_remap_user: nsremap
 
-        gitlab_image: gitlab/gitlab-ce:12.7.6-ce.0
+        gitlab_image: gitlab/gitlab-ce:13.12.8-ce.0
         gitlab_restart_policy: always
 
         gitlab_hostname: gitlab.example.com
@@ -375,7 +375,9 @@ Example Playbook
         gitlab_registry_port: 5001
         gitlab_ssh_port: 2222
 
-        gitlab_unicorn_workers: 4
+        gitlab_workers: 2
+        gitlab_min_threads: 4
+        gitlab_max_threads: 4
 
         gitlab_monitoring_whitelist:
           - 192.168.10.39
