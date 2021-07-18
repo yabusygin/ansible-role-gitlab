@@ -45,8 +45,8 @@ def test_config_permissions(host):
 
 
 def test_cert_permissions(host):
-    assert host.file("/etc/docker-gitlab/smtp-ca.crt").uid == 0
-    assert host.file("/etc/docker-gitlab/smtp-ca.crt").gid == 0
+    assert host.file("/etc/docker-gitlab/smtp.crt.pem").uid == 0
+    assert host.file("/etc/docker-gitlab/smtp.crt.pem").gid == 0
 
 
 def test_registry_health(host):

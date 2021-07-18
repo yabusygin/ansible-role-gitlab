@@ -57,8 +57,8 @@ def test_cert_permissions(host):
     subgid = int(
         _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
     )
-    assert host.file("/etc/docker-gitlab/smtp-ca.crt").uid == subuid
-    assert host.file("/etc/docker-gitlab/smtp-ca.crt").gid == subgid
+    assert host.file("/etc/docker-gitlab/smtp.crt.pem").uid == subuid
+    assert host.file("/etc/docker-gitlab/smtp.crt.pem").gid == subgid
 
 
 def _get_subuid_entry(host, path, name):

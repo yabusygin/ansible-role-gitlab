@@ -12,8 +12,8 @@ services:
         source: ./gitlab.rb
         target: /etc/gitlab/gitlab.rb
       - type: bind
-        source: ./smtp-ca.crt
-        target: /etc/gitlab/ssl/smtp-ca.crt
+        source: ./smtp.crt.pem
+        target: /etc/ssl/certs/smtp.crt.pem
       - type: volume
         source: data
         target: /var/opt/gitlab
