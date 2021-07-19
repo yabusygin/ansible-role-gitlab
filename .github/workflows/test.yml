@@ -17,6 +17,7 @@ jobs:
           - default
           - userns_remap
           - https
+          - smtp
     steps:
       - name: Check-out repository
         uses: actions/checkout@v2
