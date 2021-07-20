@@ -8,7 +8,13 @@
 
     - name: install GitLab
       import_role:
-        name: gitlab
+        name: yabusygin.gitlab
+
+    - name: add root CA certificate
+      copy:
+        src: root.crt.pem
+        dest: /etc/ssl/certs/
+        mode: 0644
 
     - name: install HTTPie
       pip:
