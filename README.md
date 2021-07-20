@@ -254,7 +254,7 @@ gitlab_rails['smtp_enable_starttls_auto'] = false
 gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
 ```
 
-#### SMTP Server Certificate Signed by Private CA ####
+#### SMTP Server Certificate Issued by Private CA ####
 
 ```yaml
 gitlab_email_smtp_ca_cert: /path/to/private-ca.pem
@@ -263,7 +263,7 @@ gitlab_email_smtp_ca_cert: /path/to/private-ca.pem
 The following configuration will be added:
 
 ```ruby
-gitlab_rails['smtp_ca_file'] = '/etc/gitlab/ssl/smtp-ca.crt'
+gitlab_rails['smtp_ca_file'] = '/etc/ssl/certs/smtp.crt.pem'
 ```
 
 #### Disable SMTP Server Certificate Verification ####
