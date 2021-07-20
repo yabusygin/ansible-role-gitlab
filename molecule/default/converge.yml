@@ -8,7 +8,7 @@
 
     - name: install GitLab
       import_role:
-        name: gitlab
+        name: yabusygin.gitlab
 
     - name: install HTTPie
       pip:
