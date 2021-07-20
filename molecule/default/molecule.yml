@@ -3,8 +3,7 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: ./lint.sh
 platforms:
   - name: instance
     image: ${TEST_IMAGE}
@@ -17,9 +16,5 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8
