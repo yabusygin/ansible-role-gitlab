@@ -4,7 +4,7 @@ Ansible Role: gitlab
 ![Test workflow status](https://github.com/yabusygin/ansible-role-gitlab/workflows/test/badge.svg)
 ![Release workflow status](https://github.com/yabusygin/ansible-role-docker/workflows/release/badge.svg)
 
-An Ansible role installing [GitLab CE][GitLab].
+An Ansible role installing [GitLab][GitLab].
 
 [GitLab]: https://docs.gitlab.com/ce/README.html
 
@@ -29,10 +29,10 @@ Role Variables
 
 Variable reference:
 
-*   `gitlab_image` -- [Docker container image][gitlab/gitlab-ce] to use. Default
-    value: `gitlab/gitlab-ce:12.10.14-ce.0`.
+*   `gitlab_image` -- [Docker container image][GitLabImages] to use. Default
+    value: `gitlab/gitlab-ce:latest`.
 
-    [gitlab/gitlab-ce]: https://hub.docker.com/r/gitlab/gitlab-ce
+    [GitLabImages]: https://hub.docker.com/u/gitlab
 
 *   `gitlab_restart_policy` -- Docker container
     [restart policy][Restart Policy]. Values: `always`, `on-failure`,
