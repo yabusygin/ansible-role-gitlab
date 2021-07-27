@@ -7,7 +7,7 @@ gitlab_workers: 2
 gitlab_min_threads: 4
 gitlab_max_threads: 4
 
-gitlab_email_enabled: yes
+gitlab_email_enable: yes
 gitlab_email_from_mailbox: gitlab@test
 gitlab_email_from_display_name: GitLab
 gitlab_email_reply_to_mailbox: noreply@test

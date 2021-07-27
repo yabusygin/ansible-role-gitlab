@@ -72,6 +72,12 @@ tests:
       inventory: config/monitoring_whitelist/multiple_entries/inventory.yml
     expected_result: config/monitoring_whitelist/multiple_entries/gitlab.rb
 
+  - name: deprecated gitlab_email_enabled
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/email/deprecated/inventory.yml
+    expected_result: config/email/deprecated/gitlab.rb
+
   - name: SMTPS
     template: gitlab.rb.j2
     variables:

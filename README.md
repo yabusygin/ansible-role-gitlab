@@ -140,8 +140,8 @@ letsencrypt['enable'] = true
 
 Variable reference:
 
-*   `gitlab_email_enabled` -- enable outgoing emails. Values: `yes`, `no`.
-    Default value: `no`.
+*   `gitlab_email_enable` (or deprecated `gitlab_email_enabled`) -- enable
+    outgoing emails. Values: `yes`, `no`. Default value: `no`.
 
 *   `gitlab_email_from_mailbox` -- mailbox value of "From" header in an outgoing
     email.
@@ -184,7 +184,7 @@ gitlab_rails['gitlab_email_enabled'] = false
 To enable outgoing emails:
 
 ```yaml
-gitlab_email_enabled: yes
+gitlab_email_enable: yes
 ```
 
 The default configuration will be replaced with the following:
@@ -433,7 +433,7 @@ Example Playbook
           - 192.168.10.39
           - 10.0.1.0/24
 
-        gitlab_email_enabled: yes
+        gitlab_email_enable: yes
         gitlab_email_from_mailbox: gitlab@example.com
         gitlab_email_from_display_name: GitLab
         gitlab_email_reply_to_mailbox: noreply@example.com
