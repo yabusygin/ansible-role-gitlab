@@ -1,0 +1,48 @@
+---
+- name: send test message
+  hosts: gitlab
+  gather_facts: false
+  tasks:
+    - name: generate nonce
+      set_fact:
+        _nonce: "{{ 4294967296|random }}"
+
+    - name: wait until GitLab starts
+      uri:
+        url: http://localhost/
+      register: _result
+      until: _result.status == 200
+      retries: 120
+      delay: 10
+
+    - name: send test message
+      command:
+        argv:
+          - docker-compose
+          - --project-directory=/etc/docker-gitlab
+          - exec
+          - -T
+          - gitlab
+          - gitlab-rails
+          - runner
+          - "Notify.test_email('Alice <alice@test>', 'Test {{ _nonce }}', 'Test {{ _nonce }}.').deliver_now"
+      changed_when: no
+
+- name: check smtp mailbox
+  hosts: smtp
+  gather_facts: false
+  vars:
+    _nonce: "{{ hostvars['gitlab']['_nonce'] }}"
+  tasks:
+    - name: check mailbox
+      command:
+        argv:
+          - /usr/bin/contains_message.py
+          - --debug
+          - --maildir-path=/mailbox
+          - --from=GitLab <gitlab@test>
+          - --reply-to=GitLab <noreply@test>
+          - --to=Alice <alice@test>
+          - --subject=Test {{ _nonce }}
+          - --count=1
+      changed_when: no

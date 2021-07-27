@@ -1,0 +1,33 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: ./lint.sh
+platforms:
+  - name: gitlab
+    image: ${TEST_IMAGE}
+    pre_build_image: true
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/lib/docker
+    keep_volumes: false
+    privileged: true
+    networks_cli_compatible: yes
+    networks:
+      - name: test-smtp
+        aliases:
+          - gitlab.test
+  - name: smtp
+    image: debian:buster
+    command: "--nosetuid --class=aiosmtpd.handlers.Mailbox /mailbox"
+    networks_cli_compatible: yes
+    networks:
+      - name: test-smtp
+        aliases:
+          - smtp.test
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

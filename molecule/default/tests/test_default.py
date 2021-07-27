@@ -39,16 +39,6 @@ def test_health(host):
     assert response["shared_state_check"][0]["status"] == "ok"
 
 
-def test_config_permissions(host):
-    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == 0
-    assert host.file("/etc/docker-gitlab/gitlab.rb").gid == 0
-
-
-def test_cert_permissions(host):
-    assert host.file("/etc/docker-gitlab/smtp.crt.pem").uid == 0
-    assert host.file("/etc/docker-gitlab/smtp.crt.pem").gid == 0
-
-
 def test_registry_health(host):
     args = (
         "http",
