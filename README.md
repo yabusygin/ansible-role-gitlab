@@ -396,7 +396,12 @@ requirements, then it is recommended to enable
 [user namespace remapping feature][UsernsRemap]:
 
 ```yaml
-docker_userns_remap_enable: yes
+docker_config:
+  userns-remap: default
+  log-driver: json-file
+  log-opts:
+    max-size: 10m
+    max-file: "3"
 gitlab_userns_remap_enable: yes
 ```
 
@@ -453,7 +458,12 @@ With [yabusygin.docker][DockerRole] role:
     - import_role:
         name: yabusygin.docker
       vars:
-        docker_userns_remap_enable: yes
+        docker_config:
+          userns-remap: default
+          log-driver: json-file
+          log-opts:
+            max-size: 10m
+            max-file: "3"
 
     - import_role:
         name: yabusygin.gitlab
