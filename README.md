@@ -408,15 +408,45 @@ gitlab_userns_remap_enable: yes
 Example Playbook
 ----------------
 
+Default setup:
+
+```yaml
+- hosts: production
+  tasks:
+    - import_role:
+        name: yabusygin.gitlab
+```
+
+Default setup with [yabusygin.docker][DockerRole] role:
+
+```yaml
+- hosts: production
+  tasks:
+    - import_role:
+        name: yabusygin.docker
+    - import_role:
+        name: yabusygin.gitlab
+```
+
+Customized setup:
+
 ```yaml
 ---
 - hosts: production
   tasks:
     - import_role:
+        name: yabusygin.docker
+      vars:
+        userns-remap: default
+        log-driver: json-file
+        log-opts:
+          max-size: 10m
+          max-file: "3"
+
+    - import_role:
         name: yabusygin.gitlab
       vars:
         gitlab_userns_remap_enable: yes
-        gitlab_userns_remap_user: nsremap
 
         gitlab_image: gitlab/gitlab-ce:13.12.8-ce.0
         gitlab_restart_policy: always
@@ -448,28 +478,6 @@ Example Playbook
         gitlab_email_smtp_user_auth_method: login
         gitlab_email_smtp_user_name: gitlab
         gitlab_email_smtp_user_password: Pa$$w0rD
-```
-
-With [yabusygin.docker][DockerRole] role:
-
-```yaml
-- hosts: production
-  tasks:
-    - import_role:
-        name: yabusygin.docker
-      vars:
-        docker_config:
-          userns-remap: default
-          log-driver: json-file
-          log-opts:
-            max-size: 10m
-            max-file: "3"
-
-    - import_role:
-        name: yabusygin.gitlab
-      vars:
-        gitlab_userns_remap_enable: yes
-        gitlab_hostname: gitlab.example.com
 ```
 
 License
