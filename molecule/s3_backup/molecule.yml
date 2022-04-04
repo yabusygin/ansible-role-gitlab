@@ -1,0 +1,33 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: ./lint.sh
+platforms:
+  - name: gitlab
+    image: ${TEST_IMAGE}
+    pre_build_image: true
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/lib/docker
+    keep_volumes: false
+    privileged: true
+    networks_cli_compatible: yes
+    networks:
+      - name: test-s3
+        aliases:
+          - gitlab.test
+  - name: s3
+    image: andrewgaul/s3proxy:sha-b5d090d
+    pre_build_image: true
+    networks_cli_compatible: yes
+    networks:
+      - name: test-s3
+        aliases:
+          - s3.test
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
