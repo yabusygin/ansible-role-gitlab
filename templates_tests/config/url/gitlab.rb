@@ -11,3 +11,5 @@ gitlab_rails['gitlab_shell_ssh_port'] = 2222
 
 # Outgoing emails
 gitlab_rails['gitlab_email_enabled'] = false
+
+# Backup

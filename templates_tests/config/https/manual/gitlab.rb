@@ -11,3 +11,5 @@ letsencrypt['enable'] = false
 
 # Outgoing emails
 gitlab_rails['gitlab_email_enabled'] = false
+
+# Backup

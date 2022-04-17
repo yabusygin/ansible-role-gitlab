@@ -96,3 +96,25 @@ gitlab_rails['smtp_password'] = '{{ gitlab_email_smtp_user_password }}'
 {% else %}
 gitlab_rails['gitlab_email_enabled'] = false
 {% endif %}
+
+# Backup
+{% if gitlab_backup_keep_time is defined %}
+gitlab_rails['backup_keep_time'] = {{ gitlab_backup_keep_time }}
+{% endif %}
+{% if gitlab_backup_upload_enable %}
+    {% if gitlab_backup_upload_type == 's3' %}
+gitlab_rails['backup_upload_connection'] = {
+  'provider' => 'AWS',
+        {% if gitlab_backup_upload_s3_endpoint is defined %}
+  'endpoint' => '{{ gitlab_backup_upload_s3_endpoint }}',
+        {% endif %}
+  'region' => '{{ gitlab_backup_upload_s3_region }}',
+        {% if gitlab_backup_upload_s3_path_style_enable is defined %}
+  'path_style' => {{ 'true' if gitlab_backup_upload_s3_path_style_enable else 'false' }},
+        {% endif %}
+  'aws_access_key_id' => '{{ gitlab_backup_upload_s3_access_key_id }}',
+  'aws_secret_access_key' => '{{ gitlab_backup_upload_s3_secret_access_key }}'
+}
+gitlab_rails['backup_upload_remote_directory'] = '{{ gitlab_backup_upload_s3_bucket }}'
+    {% endif %}
+{% endif %}

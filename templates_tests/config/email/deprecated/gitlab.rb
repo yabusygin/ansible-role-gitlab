@@ -22,3 +22,5 @@ gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
 gitlab_rails['smtp_authentication'] = 'plain'
 gitlab_rails['smtp_user_name'] = 'gitlab'
 gitlab_rails['smtp_password'] = 'Pa$$w0rD'
+
+# Backup

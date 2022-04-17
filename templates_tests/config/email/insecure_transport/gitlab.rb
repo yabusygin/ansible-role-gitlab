@@ -21,3 +21,5 @@ gitlab_rails['smtp_enable_starttls_auto'] = false
 gitlab_rails['smtp_authentication'] = 'login'
 gitlab_rails['smtp_user_name'] = 'gitlab'
 gitlab_rails['smtp_password'] = 'Pa$$w0rD'
+
+# Backup
