@@ -16,6 +16,11 @@ gitlab_email_enabled: no
 gitlab_email_smtp_verify_server_cert: yes
 
 gitlab_backup_upload_enable: no
+gitlab_backup_cron_enable: no
+gitlab_backup_cron_day_of_month: "*"
+gitlab_backup_cron_month: "*"
+gitlab_backup_cron_day_of_week: "*"
+gitlab_backup_cron_docker_compose_path: docker-compose
 
 _volume_owner: 0
 _volume_group: 0

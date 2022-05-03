@@ -70,6 +70,14 @@
   notify:
     - restart GitLab
 
+- name: configure automated backups
+  template:
+    src: gitlab-backup.cron.j2
+    dest: /etc/cron.d/gitlab-backup
+    lstrip_blocks: yes
+    mode: 0644
+  when: gitlab_backup_cron_enable
+
 - name: run GitLab
   docker_compose:
     state: present

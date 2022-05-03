@@ -1,0 +1,1 @@
+0 1 2 3 4 root docker-compose --project-directory=/etc/docker-gitlab exec -T gitlab /opt/gitlab/bin/gitlab-backup create CRON=1

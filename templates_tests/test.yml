@@ -131,3 +131,15 @@ tests:
     variables:
       inventory: config/backup/upload/s3/path_style/inventory.yml
     expected_result: config/backup/upload/s3/path_style/gitlab.rb
+
+  - name: cronjob for automated daily backups (default)
+    template: gitlab-backup.cron.j2
+    variables:
+      inventory: cron/default/inventory.yml
+    expected_result: cron/default/gitlab-backup
+
+  - name: cronjob for automated backups (custom day and month)
+    template: gitlab-backup.cron.j2
+    variables:
+      inventory: cron/custom/inventory.yml
+    expected_result: cron/custom/gitlab-backup

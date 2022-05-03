@@ -1,0 +1,7 @@
+---
+gitlab_backup_cron_enable: yes
+gitlab_backup_cron_minute: 0
+gitlab_backup_cron_hour: 1
+gitlab_backup_cron_day_of_month: 2
+gitlab_backup_cron_month: 3
+gitlab_backup_cron_day_of_week: 4
