@@ -1,1 +1,1 @@
-{{ gitlab_backup_cron_minute|mandatory }} {{ gitlab_backup_cron_hour|mandatory }} {{ gitlab_backup_cron_day_of_month }} {{ gitlab_backup_cron_month }} {{ gitlab_backup_cron_day_of_week }} root {{ gitlab_backup_cron_docker_compose_path }} --project-directory=/etc/docker-gitlab exec -T gitlab /opt/gitlab/bin/gitlab-backup create CRON=1
+{{ gitlab_backup_cron_minute|mandatory }} {{ gitlab_backup_cron_hour|mandatory }} {{ gitlab_backup_cron_day_of_month }} {{ gitlab_backup_cron_month }} {{ gitlab_backup_cron_day_of_week }} root /usr/local/bin/gitlab-backup-wrapper

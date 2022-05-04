@@ -70,6 +70,12 @@
   notify:
     - restart GitLab
 
+- name: add backup helper script
+  copy:
+    src: gitlab-backup-wrapper
+    dest: /usr/local/bin/gitlab-backup-wrapper
+    mode: 0755
+
 - name: configure automated backups
   template:
     src: gitlab-backup.cron.j2
