@@ -388,6 +388,104 @@ Variable reference:
 
 [UsernsRemap]: https://docs.docker.com/engine/security/userns-remap/
 
+### Backup ###
+
+See [Gitlab documentation][Backup] for details.
+
+[Backup]: https://docs.gitlab.com/ee/raketasks/backup_restore.html
+
+#### Automated Backups ####
+
+Variable reference:
+
+*   `gitlab_backup_cron_enable` -- enable cron job that performs periodic
+    backups. Default value: `no`.
+
+*   `gitlab_backup_cron_minute` -- a "minute" field of cron command line.
+    Mandatory variable. See [`crontab(5)`][Crontab5].
+
+*   `gitlab_backup_cron_hour` -- a "hour" field of cron command line. Mandatory
+    variable. See [`crontab(5)`][Crontab5].
+
+*   `gitlab_backup_cron_day_of_month` -- a "day of month" field of cron command
+    line. Default value: `*`.
+
+*   `gitlab_backup_cron_month` -- a "month" field of cron command line. Default
+    value: `*`.
+
+*   `gitlab_backup_cron_day_of_week` -- a "day of week" field of cron command
+    line. Default value: `*`.
+
+[Crontab5]: https://man7.org/linux/man-pages/man5/crontab.5.html
+
+#### Uploading Backups to Remote Storage ####
+
+Only S3 compatible remote storage is currently supported.
+
+Variable reference:
+
+*   `gitlab_backup_upload_enable` -- enable uploading backups to remote storage.
+    Default value: `no`.
+
+*   `gitlab_backup_upload_type` -- remote storage type. Values: `s3`.
+
+*   `gitlab_backup_upload_s3_region` -- AWS [region][AWSRegion].
+
+    [AWSRegion]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#region
+
+*   `gitlab_backup_upload_s3_bucket` -- S3 [bucket][AWSS3Bucket] to store backup
+    objects.
+
+    [AWSS3Bucket]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#bucket
+
+*   `gitlab_backup_upload_s3_access_key_id` -- [access key ID][AWSAccessKeyID].
+
+    [AWSAccessKeyID]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#accesskeyID
+
+*   `gitlab_backup_upload_s3_secret_access_key` -- [secret access key][AWSsecretAccessKey].
+
+    [AWSsecretAccessKey]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#SecretAccessKey
+
+*   `gitlab_backup_upload_s3_endpoint` -- S3 compatible storage HTTP API endpoint.
+
+*   `gitlab_backup_upload_s3_path_style_enable` -- use path-style method for
+    accessing a bucket (see
+    [Methods for accessing a bucket][AWSS3AccessBucket]). Sets
+    `gitlab_rails['backup_upload_connection']['path_style']` value.
+
+    [AWSS3AccessBucket]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html
+
+Example of uploading backups to Digital Ocean Spaces:
+
+```yaml
+gitlab_backup_upload_enable: yes
+gitlab_backup_upload_type: s3
+gitlab_backup_upload_s3_endpoint: https://ams3.digitaloceanspaces.com
+gitlab_backup_upload_s3_region: ams3
+gitlab_backup_upload_s3_bucket: my.s3.bucket
+gitlab_backup_upload_s3_access_key_id: AKIAKIAKI
+gitlab_backup_upload_s3_secret_access_key: secret123
+```
+
+The following configuration will be added:
+
+```ruby
+gitlab_rails['backup_upload_connection'] = {
+  'provider' => 'AWS',
+  'endpoint' => 'https://ams3.digitaloceanspaces.com',
+  'region' => 'ams3',
+  'aws_access_key_id' => 'AKIAKIAKI',
+  'aws_secret_access_key' => 'secret123'
+}
+gitlab_rails['backup_upload_remote_directory'] = 'my.s3.bucket'
+```
+
+#### Limit Lifetime of Local Backup Files ####
+
+Variable reference:
+
+*   `gitlab_backup_keep_time` -- sets `gitlab_rails['backup_keep_time']` value.
+
 Dependencies
 ------------
 
@@ -478,6 +576,20 @@ Customized setup:
         gitlab_email_smtp_user_auth_method: login
         gitlab_email_smtp_user_name: gitlab
         gitlab_email_smtp_user_password: Pa$$w0rD
+
+        gitlab_backup_cron_enable: yes
+        gitlab_backup_cron_minute: 0
+        gitlab_backup_cron_hour: 2
+
+        gitlab_backup_upload_enable: yes
+        gitlab_backup_upload_type: s3
+        gitlab_backup_upload_s3_endpoint: https://ams3.digitaloceanspaces.com
+        gitlab_backup_upload_s3_region: ams3
+        gitlab_backup_upload_s3_bucket: my.s3.bucket
+        gitlab_backup_upload_s3_access_key_id: AKIAKIAKI
+        gitlab_backup_upload_s3_secret_access_key: secret123
+
+        gitlab_backup_keep_time: 604800
 ```
 
 License
