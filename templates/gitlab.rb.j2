@@ -108,7 +108,9 @@ gitlab_rails['backup_upload_connection'] = {
         {% if gitlab_backup_upload_s3_endpoint is defined %}
   'endpoint' => '{{ gitlab_backup_upload_s3_endpoint }}',
         {% endif %}
+        {% if gitlab_backup_upload_s3_region is defined %}
   'region' => '{{ gitlab_backup_upload_s3_region }}',
+        {% endif %}
         {% if gitlab_backup_upload_s3_path_style_enable is defined %}
   'path_style' => {{ 'true' if gitlab_backup_upload_s3_path_style_enable else 'false' }},
         {% endif %}

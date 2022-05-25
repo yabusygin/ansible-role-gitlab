@@ -14,7 +14,7 @@ gitlab_rails['gitlab_email_enabled'] = false
 # Backup
 gitlab_rails['backup_upload_connection'] = {
   'provider' => 'AWS',
-  'region' => 'eu-west-1',
+  'endpoint' => 'https://minio.test',
   'path_style' => true,
   'aws_access_key_id' => 'AKIAKIAKI',
   'aws_secret_access_key' => 'secret123'

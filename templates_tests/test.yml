@@ -126,11 +126,11 @@ tests:
       inventory: config/backup/upload/s3/digital_ocean/inventory.yml
     expected_result: config/backup/upload/s3/digital_ocean/gitlab.rb
 
-  - name: use path-style requests to access S3
+  - name: upload backups to MinIO
     template: gitlab.rb.j2
     variables:
-      inventory: config/backup/upload/s3/path_style/inventory.yml
-    expected_result: config/backup/upload/s3/path_style/gitlab.rb
+      inventory: config/backup/upload/s3/minio/inventory.yml
+    expected_result: config/backup/upload/s3/minio/gitlab.rb
 
   - name: cronjob for automated daily backups (default)
     template: gitlab-backup.cron.j2
