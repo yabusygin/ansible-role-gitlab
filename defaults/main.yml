@@ -16,6 +16,7 @@ gitlab_email_enabled: no
 gitlab_email_smtp_verify_server_cert: yes
 
 gitlab_backup_upload_enable: no
+gitlab_backup_upload_type: s3
 gitlab_backup_cron_enable: no
 gitlab_backup_cron_day_of_month: "*"
 gitlab_backup_cron_month: "*"
