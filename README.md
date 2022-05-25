@@ -427,22 +427,25 @@ Variable reference:
 *   `gitlab_backup_upload_enable` -- enable uploading backups to remote storage.
     Default value: `no`.
 
-*   `gitlab_backup_upload_type` -- remote storage type. Values: `s3`.
+*   `gitlab_backup_upload_type` -- remote storage type. Supported values: `s3`.
+    Default value: `s3`.
 
 *   `gitlab_backup_upload_s3_region` -- AWS [region][AWSRegion].
 
     [AWSRegion]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#region
 
 *   `gitlab_backup_upload_s3_bucket` -- S3 [bucket][AWSS3Bucket] to store backup
-    objects.
+    objects. Mandatory variable.
 
     [AWSS3Bucket]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#bucket
 
 *   `gitlab_backup_upload_s3_access_key_id` -- [access key ID][AWSAccessKeyID].
+    Mandatory variable.
 
     [AWSAccessKeyID]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#accesskeyID
 
-*   `gitlab_backup_upload_s3_secret_access_key` -- [secret access key][AWSsecretAccessKey].
+*   `gitlab_backup_upload_s3_secret_access_key` --
+    [secret access key][AWSsecretAccessKey]. Mandatory variable.
 
     [AWSsecretAccessKey]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#SecretAccessKey
 
