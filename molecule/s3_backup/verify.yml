@@ -23,19 +23,14 @@
           - create
       changed_when: no
 
-- name: check storage
-  hosts: s3
-  gather_facts: no
-  tasks:
     - name: list all keys in gitlab-backup bucket
       amazon.aws.aws_s3:
-        s3_url: http://s3.test
-        region: us-east-1
-        bucket: gitlab-backup
-        aws_access_key: local-identity
-        aws_secret_key: local-credential
-        mode: list
         rgw: yes
+        s3_url: "{{ gitlab_backup_upload_s3_endpoint }}"
+        bucket: "{{ gitlab_backup_upload_s3_bucket }}"
+        aws_access_key: "{{ gitlab_backup_upload_s3_access_key_id }}"
+        aws_secret_key: "{{ gitlab_backup_upload_s3_secret_access_key }}"
+        mode: list
       register: _result
 
     - name: check that backup exists

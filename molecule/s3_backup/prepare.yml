@@ -1,6 +1,6 @@
 ---
 - name: prepare
-  hosts: gitlab:s3
+  hosts: gitlab
   gather_facts: false
   tasks:
     - name: install Python 3 for Ansible
