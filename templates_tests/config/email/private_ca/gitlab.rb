@@ -23,3 +23,5 @@ gitlab_rails['smtp_ca_file'] = '/etc/ssl/certs/smtp.crt.pem'
 gitlab_rails['smtp_authentication'] = 'plain'
 gitlab_rails['smtp_user_name'] = 'gitlab'
 gitlab_rails['smtp_password'] = 'Pa$$w0rD'
+
+# Backup

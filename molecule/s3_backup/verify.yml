@@ -1,0 +1,40 @@
+---
+- name: trigger backup process
+  hosts: gitlab
+  gather_facts: no
+  tasks:
+    - name: wait until GitLab starts
+      uri:
+        url: http://gitlab.test/
+      register: _result
+      until: _result.status == 200
+      retries: 120
+      delay: 10
+
+    - name: backup GitLab
+      command:
+        argv:
+          - docker-compose
+          - --project-directory=/etc/docker-gitlab
+          - exec
+          - -T
+          - gitlab
+          - gitlab-backup
+          - create
+      changed_when: no
+
+    - name: list all keys in gitlab-backup bucket
+      amazon.aws.aws_s3:
+        rgw: yes
+        s3_url: "{{ gitlab_backup_upload_s3_endpoint }}"
+        bucket: "{{ gitlab_backup_upload_s3_bucket }}"
+        aws_access_key: "{{ gitlab_backup_upload_s3_access_key_id }}"
+        aws_secret_key: "{{ gitlab_backup_upload_s3_secret_access_key }}"
+        mode: list
+      register: _result
+
+    - name: check that backup exists
+      assert:
+        that: 
+          - _result.s3_keys|length == 1
+          - _result.s3_keys[0].endswith('_gitlab_backup.tar')

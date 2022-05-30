@@ -107,3 +107,39 @@ tests:
     variables:
       inventory: config/email/private_ca/inventory.yml
     expected_result: config/email/private_ca/gitlab.rb
+
+  - name: backup keep time
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/backup/keep_time/inventory.yml
+    expected_result: config/backup/keep_time/gitlab.rb
+
+  - name: upload backups to AWS S3
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/backup/upload/s3/aws/inventory.yml
+    expected_result: config/backup/upload/s3/aws/gitlab.rb
+
+  - name: upload backups to Digital Ocean Spaces
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/backup/upload/s3/digital_ocean/inventory.yml
+    expected_result: config/backup/upload/s3/digital_ocean/gitlab.rb
+
+  - name: upload backups to MinIO
+    template: gitlab.rb.j2
+    variables:
+      inventory: config/backup/upload/s3/minio/inventory.yml
+    expected_result: config/backup/upload/s3/minio/gitlab.rb
+
+  - name: cronjob for automated daily backups (default)
+    template: gitlab-backup.cron.j2
+    variables:
+      inventory: cron/default/inventory.yml
+    expected_result: cron/default/gitlab-backup
+
+  - name: cronjob for automated backups (custom day and month)
+    template: gitlab-backup.cron.j2
+    variables:
+      inventory: cron/custom/inventory.yml
+    expected_result: cron/custom/gitlab-backup

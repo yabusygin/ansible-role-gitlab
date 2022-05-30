@@ -5,9 +5,6 @@ registry_external_url 'http://gitlab.test:5050'
 # HTTPS
 
 # Application server
-puma['worker_processes'] = 3
-puma['min_threads'] = 1
-puma['max_threads'] = 4
 
 # Monitoring
 
@@ -15,3 +12,4 @@ puma['max_threads'] = 4
 gitlab_rails['gitlab_email_enabled'] = false
 
 # Backup
+gitlab_rails['backup_keep_time'] = 604800

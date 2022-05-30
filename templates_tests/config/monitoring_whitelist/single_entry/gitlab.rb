@@ -11,3 +11,5 @@ gitlab_rails['monitoring_whitelist'] = ['127.0.0.0/8']
 
 # Outgoing emails
 gitlab_rails['gitlab_email_enabled'] = false
+
+# Backup

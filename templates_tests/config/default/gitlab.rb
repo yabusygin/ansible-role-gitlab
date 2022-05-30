@@ -10,3 +10,5 @@ registry_external_url 'http://gitlab.test:5050'
 
 # Outgoing emails
 gitlab_rails['gitlab_email_enabled'] = false
+
+# Backup

@@ -13,3 +13,5 @@ unicorn['worker_processes'] = 3
 
 # Outgoing emails
 gitlab_rails['gitlab_email_enabled'] = false
+
+# Backup
