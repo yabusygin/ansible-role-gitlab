@@ -589,6 +589,8 @@ Customized setup:
         gitlab_backup_cron_enable: yes
         gitlab_backup_cron_minute: 0
         gitlab_backup_cron_hour: 2
+        gitlab_backup_cron_docker_cmd: /usr/bin/docker
+        gitlab_backup_cron_docker_compose_cmd: /usr/local/bin/docker-compose
 
         gitlab_backup_upload_enable: yes
         gitlab_backup_upload_type: s3
