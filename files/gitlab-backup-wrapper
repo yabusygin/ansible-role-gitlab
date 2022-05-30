@@ -2,6 +2,9 @@
 
 set -o errexit
 
+: ${DOCKER_CMD:=docker}
+: ${DOCKER_COMPOSE_CMD:=docker-compose}
+
 project_path=/etc/docker-gitlab
 service_name=gitlab
 
@@ -10,7 +13,7 @@ print_error() {
 }
 
 container_id=$(
-    docker-compose --project-directory="${project_path}" \
+    ${DOCKER_COMPOSE_CMD} --project-directory="${project_path}" \
         ps --quiet ${service_name}
 )
 if [ -z ${container_id} ]; then
@@ -19,7 +22,7 @@ if [ -z ${container_id} ]; then
 fi
 
 container_id=$(
-    docker ps \
+    ${DOCKER_CMD} ps \
         --quiet \
         --filter="id=${container_id}" \
         --filter="status=running" \
@@ -30,5 +33,5 @@ if [ -z ${container_id} ]; then
     exit 1
 fi
 
-docker exec ${container_id} \
+${DOCKER_CMD} exec ${container_id} \
     /opt/gitlab/bin/gitlab-backup create CRON=1
