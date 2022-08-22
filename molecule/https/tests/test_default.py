@@ -4,9 +4,9 @@ from time import sleep
 
 from testinfra.utils.ansible_runner import AnsibleRunner
 
-testinfra_hosts = AnsibleRunner(
-    environ['MOLECULE_INVENTORY_FILE'],
-).get_hosts('instance')
+testinfra_hosts = AnsibleRunner(environ["MOLECULE_INVENTORY_FILE"]).get_hosts(
+    "instance"
+)
 
 
 def test_health(host) -> None:

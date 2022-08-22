@@ -4,9 +4,9 @@ from time import sleep
 
 from testinfra.utils.ansible_runner import AnsibleRunner
 
-testinfra_hosts = AnsibleRunner(
-    environ['MOLECULE_INVENTORY_FILE'],
-).get_hosts('instance')
+testinfra_hosts = AnsibleRunner(environ["MOLECULE_INVENTORY_FILE"]).get_hosts(
+    "instance"
+)
 
 
 def test_health(host) -> None:
@@ -40,13 +40,7 @@ def test_health(host) -> None:
 
 
 def test_registry_health(host) -> None:
-    args = (
-        "http",
-        "--ignore-stdin",
-        "--check-status",
-        "--body",
-        "localhost:5050/v2/",
-    )
+    args = ("http", "--ignore-stdin", "--check-status", "--body", "localhost:5050/v2/")
     retries = 120
     while retries > 0:
         cmd = host.run(
