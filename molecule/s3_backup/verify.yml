@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: wait until GitLab starts
-      uri:
+      ansible.builtin.uri:
         url: http://gitlab.test/
       register: _result
       until: _result.status == 200
@@ -12,7 +12,7 @@
       delay: 10
 
     - name: backup GitLab
-      command:
+      ansible.builtin.command:
         argv:
           - docker-compose
           - --project-directory=/etc/docker-gitlab
@@ -34,7 +34,7 @@
       register: _result
 
     - name: check that backup exists
-      assert:
+      ansible.builtin.assert:
         that: 
           - _result.s3_keys | length == 1
           - _result.s3_keys[0].endswith('_gitlab_backup.tar')

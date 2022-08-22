@@ -1,16 +1,16 @@
 ---
 - name: set owner/group ID for files that are mounted to container
-  import_tasks: set-volume-owner.yml
+  ansible.builtin.import_tasks: set-volume-owner.yml
   when: gitlab_userns_remap_enable
 
 - name: create configuration directory
-  file:
+  ansible.builtin.file:
     path: /etc/docker-gitlab
     state: directory
     mode: 0755
 
 - name: create config file
-  template:
+  ansible.builtin.template:
     src: gitlab.rb.j2
     dest: /etc/docker-gitlab/gitlab.rb
     lstrip_blocks: yes
@@ -21,7 +21,7 @@
     - restart GitLab
 
 - name: create HTTPS key and certificate directory
-  file:
+  ansible.builtin.file:
     path: /etc/docker-gitlab/https
     state: directory
     owner: "{{ _volume_owner }}"
@@ -29,7 +29,7 @@
     mode: 0700
 
 - name: upload HTTPS key
-  copy:
+  ansible.builtin.copy:
     src: "{{ gitlab_https_key }}"
     dest: "/etc/docker-gitlab/https/{{ gitlab_hostname }}.key"
     owner: "{{ _volume_owner }}"
@@ -40,7 +40,7 @@
     - restart GitLab
 
 - name: upload HTTPS certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ gitlab_https_cert }}"
     dest: "/etc/docker-gitlab/https/{{ gitlab_hostname }}.crt"
     owner: "{{ _volume_owner }}"
@@ -51,7 +51,7 @@
     - restart GitLab
 
 - name: add SMTP CA certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
     dest: /etc/docker-gitlab/smtp.crt.pem
     owner: "{{ _volume_owner }}"
@@ -62,7 +62,7 @@
     - restart GitLab
 
 - name: create Docker Compose file
-  template:
+  ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: /etc/docker-gitlab/docker-compose.yml
     lstrip_blocks: yes
@@ -71,13 +71,13 @@
     - restart GitLab
 
 - name: add backup helper script
-  copy:
+  ansible.builtin.copy:
     src: gitlab-backup-wrapper
     dest: /usr/local/bin/gitlab-backup-wrapper
     mode: 0755
 
 - name: configure automated backups
-  template:
+  ansible.builtin.template:
     src: gitlab-backup.cron.j2
     dest: /etc/cron.d/gitlab-backup
     lstrip_blocks: yes
@@ -85,6 +85,6 @@
   when: gitlab_backup_cron_enable
 
 - name: run GitLab
-  docker_compose:
+  community.docker.docker_compose:
     state: present
     project_src: /etc/docker-gitlab

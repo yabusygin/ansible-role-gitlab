@@ -3,15 +3,15 @@
   hosts: gitlab
   tasks:
     - name: install Docker
-      import_role:
+      ansible.builtin.import_role:
         name: yabusygin.docker
 
     - name: install GitLab
-      import_role:
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
 
     - name: install HTTPie
-      pip:
+      ansible.builtin.pip:
         name:
           - httpie<2.0.0
         state: present
@@ -20,7 +20,7 @@
   hosts: smtp
   tasks:
     - name: add mailbox testing util
-      copy:
+      ansible.builtin.copy:
         src: contains_message.py
         dest: /usr/bin/contains_message.py
         mode: 0755

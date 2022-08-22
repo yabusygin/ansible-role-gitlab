@@ -1,6 +1,6 @@
 ---
 - name: get subordinate UID range begining of Docker user
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     grep {{ gitlab_userns_remap_user }} /etc/subuid | awk -F ':' '{ print $2 }'
   args:
@@ -9,11 +9,11 @@
   changed_when: false
 
 - name: set owner ID for files that are mounted to container
-  set_fact:
+  ansible.builtin.set_fact:
     _volume_owner: "{{ _range_begin.stdout | int + _volume_owner }}"
 
 - name: get subordinate GID range begining of Docker user
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     grep {{ gitlab_userns_remap_user }} /etc/subgid | awk -F ':' '{ print $2 }'
   args:
@@ -22,5 +22,5 @@
   changed_when: false
 
 - name: set group ID for files that are mounted to container
-  set_fact:
+  ansible.builtin.set_fact:
     _volume_group: "{{ _range_begin.stdout | int + _volume_group }}"
