@@ -1,6 +1,6 @@
 ansible==6.2.0
 
-molecule[docker,lint,test]==4.0.1
+molecule[docker,test]==4.0.1
 ansible-lint==6.4.0
 mypy==0.971
 pylint==2.14.5
