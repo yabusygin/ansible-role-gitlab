@@ -520,7 +520,7 @@ Default setup:
 ```yaml
 - hosts: production
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: yabusygin.gitlab
 ```
 
@@ -529,9 +529,9 @@ Default setup with [yabusygin.docker][DockerRole] role:
 ```yaml
 - hosts: production
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: yabusygin.docker
-    - import_role:
+    - ansible.builtin.import_role:
         name: yabusygin.gitlab
 ```
 
@@ -541,7 +541,7 @@ Customized setup:
 ---
 - hosts: production
   tasks:
-    - import_role:
+    - ansible.builtin.import_role:
         name: yabusygin.docker
       vars:
         userns-remap: default
@@ -550,7 +550,7 @@ Customized setup:
           max-size: 10m
           max-file: "3"
 
-    - import_role:
+    - ansible.builtin.import_role:
         name: yabusygin.gitlab
       vars:
         gitlab_userns_remap_enable: yes
