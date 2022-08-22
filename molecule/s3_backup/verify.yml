@@ -36,5 +36,5 @@
     - name: check that backup exists
       assert:
         that: 
-          - _result.s3_keys|length == 1
+          - _result.s3_keys | length == 1
           - _result.s3_keys[0].endswith('_gitlab_backup.tar')

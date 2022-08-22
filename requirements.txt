@@ -1,8 +1,6 @@
-ansible>=5.0,<6.0
-ansible-lint>=6.0,<6.1
-templtest>=0.2,<0.3
-molecule[docker,lint,test]>=3.6,<3.7
+ansible==6.2.0
 
-# A workaround for the following issue:
-# https://github.com/ansible-community/molecule/issues/3404
-ansible-compat>=2.0,<2.1
+molecule[docker,lint,test]==4.0.1
+ansible-lint==6.4.0
+
+templtest==0.2.11

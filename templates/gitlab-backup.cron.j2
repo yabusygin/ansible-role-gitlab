@@ -4,4 +4,4 @@ DOCKER_CMD={{ gitlab_backup_cron_docker_cmd }}
 {% if gitlab_backup_cron_docker_compose_cmd is defined %}
 DOCKER_COMPOSE_CMD={{ gitlab_backup_cron_docker_compose_cmd }}
 {% endif %}
-{{ gitlab_backup_cron_minute|mandatory }} {{ gitlab_backup_cron_hour|mandatory }} {{ gitlab_backup_cron_day_of_month }} {{ gitlab_backup_cron_month }} {{ gitlab_backup_cron_day_of_week }} root /usr/local/bin/gitlab-backup-wrapper
+{{ gitlab_backup_cron_minute | mandatory }} {{ gitlab_backup_cron_hour | mandatory }} {{ gitlab_backup_cron_day_of_month }} {{ gitlab_backup_cron_month }} {{ gitlab_backup_cron_day_of_week }} root /usr/local/bin/gitlab-backup-wrapper

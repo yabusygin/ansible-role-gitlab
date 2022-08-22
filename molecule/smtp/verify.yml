@@ -5,7 +5,7 @@
   tasks:
     - name: generate nonce
       set_fact:
-        _nonce: "{{ 4294967296|random }}"
+        _nonce: "{{ 4294967296 | random }}"
 
     - name: wait until GitLab starts
       uri:

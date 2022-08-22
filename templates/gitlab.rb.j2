@@ -42,7 +42,7 @@ unicorn['worker_processes'] = {{ gitlab_unicorn_workers }}
 
 # Monitoring
 {% if gitlab_monitoring_whitelist is defined %}
-gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist|join("', '") }}']
+gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist | join("', '") }}']
 {% endif %}
 
 # Outgoing emails
@@ -114,9 +114,9 @@ gitlab_rails['backup_upload_connection'] = {
         {% if gitlab_backup_upload_s3_path_style_enable is defined %}
   'path_style' => {{ 'true' if gitlab_backup_upload_s3_path_style_enable else 'false' }},
         {% endif %}
-  'aws_access_key_id' => '{{ gitlab_backup_upload_s3_access_key_id|mandatory }}',
-  'aws_secret_access_key' => '{{ gitlab_backup_upload_s3_secret_access_key|mandatory }}'
+  'aws_access_key_id' => '{{ gitlab_backup_upload_s3_access_key_id | mandatory }}',
+  'aws_secret_access_key' => '{{ gitlab_backup_upload_s3_secret_access_key | mandatory }}'
 }
-gitlab_rails['backup_upload_remote_directory'] = '{{ gitlab_backup_upload_s3_bucket|mandatory }}'
+gitlab_rails['backup_upload_remote_directory'] = '{{ gitlab_backup_upload_s3_bucket | mandatory }}'
     {% endif %}
 {% endif %}
