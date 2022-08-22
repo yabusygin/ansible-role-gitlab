@@ -10,9 +10,6 @@ exit_handler() {
 
 trap exit_handler EXIT
 
-echo "Running yamllint..."
-yamllint .
-
 echo "Running ansible-lint..."
 ansible-lint
 
