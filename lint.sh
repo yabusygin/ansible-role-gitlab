@@ -23,6 +23,9 @@ done
 echo "Running pylint..."
 pylint ${testinfra_tests}
 
+echo "Running black..."
+black --check ${testinfra_tests}
+
 echo "Running flake8..."
 flake8 molecule/
 
