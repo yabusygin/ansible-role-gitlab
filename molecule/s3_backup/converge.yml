@@ -3,15 +3,15 @@
   hosts: gitlab
   tasks:
     - name: install Docker
-      import_role:
+      ansible.builtin.import_role:
         name: yabusygin.docker
 
     - name: install GitLab
-      import_role:
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
 
     - name: install ansible.builtin.pip module dependencies
-      apt:
+      ansible.builtin.apt:
         name:
           - python3-pip
           - python3-setuptools
@@ -21,7 +21,7 @@
         update_cache: yes
 
     - name: install amazon.aws.aws_s3 module dependencies
-      pip:
+      ansible.builtin.pip:
         name:
           - boto3
         state: present

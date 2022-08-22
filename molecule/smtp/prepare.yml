@@ -4,6 +4,6 @@
   gather_facts: false
   tasks:
     - name: install Python 3 for Ansible
-      raw: test -e /usr/bin/python3 || (apt-get update && apt-get install --yes python3-minimal)
+      ansible.builtin.raw: test -e /usr/bin/python3 || (apt-get update && apt-get install --yes python3-minimal)
       become: true
       changed_when: false

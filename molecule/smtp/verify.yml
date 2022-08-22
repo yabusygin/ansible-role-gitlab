@@ -4,11 +4,11 @@
   gather_facts: false
   tasks:
     - name: generate nonce
-      set_fact:
+      ansible.builtin.set_fact:
         _nonce: "{{ 4294967296 | random }}"
 
     - name: wait until GitLab starts
-      uri:
+      ansible.builtin.uri:
         url: http://localhost/
       register: _result
       until: _result.status == 200
@@ -16,7 +16,7 @@
       delay: 10
 
     - name: send test message
-      command:
+      ansible.builtin.command:
         argv:
           - docker-compose
           - --project-directory=/etc/docker-gitlab
@@ -35,7 +35,7 @@
     _nonce: "{{ hostvars['gitlab']['_nonce'] }}"
   tasks:
     - name: check mailbox
-      command:
+      ansible.builtin.command:
         argv:
           - /usr/bin/contains_message.py
           - --debug
