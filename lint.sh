@@ -20,6 +20,9 @@ for file in ${testinfra_tests}; do
     mypy ${file}
 done
 
+echo "Running pylint..."
+pylint ${testinfra_tests}
+
 echo "Running flake8..."
 flake8 molecule/
 
