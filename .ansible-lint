@@ -1,5 +1,3 @@
 ---
 mock_roles:
   - yabusygin.docker
-warn_list:
-  - fqcn-builtins
