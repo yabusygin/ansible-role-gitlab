@@ -1,6 +1,8 @@
 import json
 import os
+from pathlib import Path
 import time
+from typing import Optional
 
 import testinfra.utils.ansible_runner
 
@@ -9,34 +11,20 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts('instance')
 
 
-def _get_subuid_entry(host, path, name):
-    content = host.file(path).content_string
-    entries = [
-        tuple(line.split(":"))
-        for line in content.splitlines()
-    ]
-    matches = [
-        entry
-        for entry in entries
-        if entry[0] == name
-    ]
-    if matches:
-        return matches[0]
-    return None
+def test_config_permissions(host) -> None:
+    entry = _get_entry(host=host, path=Path("/etc/subuid"), name="dockremap")
+    assert entry is not None
+    subuid = entry[1]
 
+    entry = _get_entry(host=host, path=Path("/etc/subgid"), name="dockremap")
+    assert entry is not None
+    subgid = entry[1]
 
-def test_config_permissions(host):
-    subuid = int(
-        _get_subuid_entry(host=host, path="/etc/subuid", name="dockremap")[1]
-    )
-    subgid = int(
-        _get_subuid_entry(host=host, path="/etc/subgid", name="dockremap")[1]
-    )
     assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subuid
     assert host.file("/etc/docker-gitlab/gitlab.rb").gid == subgid
 
 
-def test_health(host):
+def test_health(host) -> None:
     args = (
         "http",
         "--ignore-stdin",
@@ -66,7 +54,7 @@ def test_health(host):
     assert response["shared_state_check"][0]["status"] == "ok"
 
 
-def test_registry_health(host):
+def test_registry_health(host) -> None:
     args = (
         "http",
         "--ignore-stdin",
@@ -89,3 +77,13 @@ def test_registry_health(host):
     assert "errors" in response
     assert len(response["errors"]) == 1
     assert response["errors"][0]["code"] == "UNAUTHORIZED"
+
+
+def _get_entry(host, path: Path, name: str) -> Optional[tuple[str, int, int]]:
+    content = host.file(str(path)).content_string
+    entries = [tuple(line.split(":")) for line in content.splitlines()]
+    matches = [entry for entry in entries if entry[0] == name]
+    if matches:
+        login, first_id, count = matches[0]
+        return login, int(first_id), int(count)
+    return None

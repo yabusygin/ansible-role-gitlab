@@ -9,7 +9,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts('instance')
 
 
-def test_health(host):
+def test_health(host) -> None:
     args = (
         "http",
         "--ignore-stdin",
@@ -39,7 +39,7 @@ def test_health(host):
     assert response["shared_state_check"][0]["status"] == "ok"
 
 
-def test_registry_health(host):
+def test_registry_health(host) -> None:
     args = (
         "http",
         "--ignore-stdin",
