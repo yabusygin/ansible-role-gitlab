@@ -54,7 +54,7 @@ def test_registry_health(host) -> None:
         cmd = host.run(
             command=" ".join(args),
         )
-        if cmd.rc == 0 or cmd.rc == 4:
+        if cmd.rc in [0, 4]:
             break
         retries -= 1
         sleep(1)
