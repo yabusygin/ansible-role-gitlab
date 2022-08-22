@@ -2,5 +2,6 @@ ansible==6.2.0
 
 molecule[docker,lint,test]==4.0.1
 ansible-lint==6.4.0
+mypy==0.971
 
 templtest==0.2.11

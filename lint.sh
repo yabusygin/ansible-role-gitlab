@@ -10,8 +10,15 @@ exit_handler() {
 
 trap exit_handler EXIT
 
+testinfra_tests=$(find molecule/ -name 'test_*.py')
+
 echo "Running ansible-lint..."
 ansible-lint
+
+echo "Running mypy..."
+for file in ${testinfra_tests}; do
+    mypy ${file}
+done
 
 echo "Running flake8..."
 flake8 molecule/

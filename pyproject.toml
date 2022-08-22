@@ -1,0 +1,5 @@
+[tool.mypy]
+
+[[tool.mypy.overrides]]
+module = "testinfra.*"
+ignore_missing_imports = true
