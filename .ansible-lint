@@ -1,12 +1,5 @@
 ---
-# A workaround to bypass the following error:
-# internal-error: the role 'yabusygin.gitlab' was not found
-exclude_paths:
-  - molecule/default/converge.yml
-  - molecule/https/converge.yml
-  - molecule/s3_backup/converge.yml
-  - molecule/smtp/converge.yml
-  - molecule/userns_remap/converge.yml
-
+mock_roles:
+  - yabusygin.docker
 warn_list:
   - fqcn-builtins
