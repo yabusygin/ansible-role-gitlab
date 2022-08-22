@@ -2,13 +2,13 @@
 
 set -o errexit
 
-exit_status_hook() {
+exit_handler() {
     if [ $? -ne 0 ]; then
-        echo "Failure"
+        echo "Failure" >&2
     fi
 }
 
-trap exit_status_hook EXIT
+trap exit_handler EXIT
 
 echo "Running yamllint..."
 yamllint .
