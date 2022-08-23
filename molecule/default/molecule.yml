@@ -10,6 +10,8 @@ platforms:
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      # Required for Docker in Docker. Default storage drivers (aufs/overlay2)
+      # don't support AUFS/OverlayFS backing filesystem.
       - /var/lib/docker
     keep_volumes: false
     privileged: true
