@@ -1,15 +1,15 @@
-import json
-import os
-import time
+from json import loads
+from os import environ
+from time import sleep
 
-import testinfra.utils.ansible_runner
+from testinfra.utils.ansible_runner import AnsibleRunner
 
-testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
-    os.environ['MOLECULE_INVENTORY_FILE']
-).get_hosts('instance')
+testinfra_hosts = AnsibleRunner(environ["MOLECULE_INVENTORY_FILE"]).get_hosts(
+    "instance"
+)
 
 
-def test_health(host):
+def test_health(host) -> None:
     args = (
         "http",
         "--ignore-stdin",
@@ -26,10 +26,10 @@ def test_health(host):
         if cmd.rc == 0:
             break
         retries -= 1
-        time.sleep(1)
+        sleep(1)
     assert retries > 0
 
-    response = json.loads(s=cmd.stdout)
+    response = loads(s=cmd.stdout)
     assert response["status"] == "ok"
     assert response["cache_check"][0]["status"] == "ok"
     assert response["db_check"][0]["status"] == "ok"
@@ -40,7 +40,7 @@ def test_health(host):
     assert response["shared_state_check"][0]["status"] == "ok"
 
 
-def test_registry_health(host):
+def test_registry_health(host) -> None:
     args = (
         "http",
         "--ignore-stdin",
@@ -54,13 +54,13 @@ def test_registry_health(host):
         cmd = host.run(
             command=" ".join(args),
         )
-        if cmd.rc == 0 or cmd.rc == 4:
+        if cmd.rc in [0, 4]:
             break
         retries -= 1
-        time.sleep(1)
+        sleep(1)
     assert retries > 0
 
-    response = json.loads(s=cmd.stdout)
+    response = loads(s=cmd.stdout)
     assert "errors" in response
     assert len(response["errors"]) == 1
     assert response["errors"][0]["code"] == "UNAUTHORIZED"

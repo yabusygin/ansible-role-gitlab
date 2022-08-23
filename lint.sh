@@ -2,21 +2,28 @@
 
 set -o errexit
 
-exit_status_hook() {
+exit_handler() {
     if [ $? -ne 0 ]; then
-        echo "Failure"
+        echo "Failure" >&2
     fi
 }
 
-trap exit_status_hook EXIT
+trap exit_handler EXIT
 
-echo "Running yamllint..."
-yamllint .
+testinfra_tests=$(find molecule/ -name 'test_*.py')
 
 echo "Running ansible-lint..."
 ansible-lint
 
-echo "Running flake8..."
-flake8 molecule/
+echo "Running mypy..."
+for file in ${testinfra_tests}; do
+    mypy ${file}
+done
+
+echo "Running pylint..."
+pylint ${testinfra_tests}
+
+echo "Running black..."
+black --check ${testinfra_tests}
 
 echo "Success"

@@ -1,0 +1,23 @@
+[tool.mypy]
+
+[[tool.mypy.overrides]]
+module = "testinfra.*"
+ignore_missing_imports = true
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = [
+    # prefer black
+    "format",
+
+    # prefer mypy
+    "syntax-error",
+
+    # actually disable
+    "too-few-public-methods",
+    "duplicate-code",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring"
+]
+
+[tool.black]
