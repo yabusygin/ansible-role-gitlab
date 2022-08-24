@@ -1,4 +1,4 @@
-ansible-core==2.13.3
+--requirement=requirements.ansible.txt
 
 molecule[docker,test]==4.0.1
 ansible-lint==6.4.0
