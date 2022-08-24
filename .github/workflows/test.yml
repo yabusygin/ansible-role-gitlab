@@ -18,12 +18,10 @@ jobs:
           python-version: "3.10"
 
       - name: install requirements
-        run: python -m pip install --requirement "$GITHUB_WORKSPACE/gitlab/requirements.txt"
+        run: python -m pip install --requirement=requirements.txt
 
       - name: test templates
-        run: |
-          cd $GITHUB_WORKSPACE/gitlab
-          templtest
+        run: templtest
 
   molecule:
     name: run Molecule tests
@@ -50,12 +48,10 @@ jobs:
           python-version: "3.10"
 
       - name: install requirements
-        run: python -m pip install --requirement "$GITHUB_WORKSPACE/gitlab/requirements.txt"
+        run: python -m pip install --requirement=requirements.txt
 
       - name: run Molecule tests
-        run: |
-          cd $GITHUB_WORKSPACE/gitlab
-          molecule test --scenario-name $TEST_SCENARIO
+        run: molecule test --scenario-name $TEST_SCENARIO
         env:
           TEST_IMAGE: ${{ matrix.image }}
           TEST_SCENARIO: ${{ matrix.scenario }}
