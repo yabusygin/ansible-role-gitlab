@@ -9,13 +9,20 @@ jobs:
     name: release to Ansible Galaxy
     runs-on: ubuntu-latest
     steps:
-      - name: set up Python 3.8
-        uses: actions/setup-python@v1
+      - name: check-out repository
+        uses: actions/checkout@v3.0.2
+
+      - name: set up Python
+        uses: actions/setup-python@v4.2.0
         with:
-          python-version: "3.8"
-      - name: install dependencies
-        run: python -m pip install ansible
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+
+      - name: install requirements
+        run: python -m pip install --requirement=requirements.ansible.txt
+
       - name: import role to Ansible Galaxy
-        run: ansible-galaxy role import --api-key $GALAXY_API_KEY $(echo $GITHUB_REPOSITORY | cut -d/ -f1) $(echo $GITHUB_REPOSITORY | cut -d/ -f2)
+        run: ansible-galaxy role import --api-key=${GALAXY_API_KEY} $(echo ${GITHUB_REPOSITORY} | cut -d/ -f1) $(echo ${GITHUB_REPOSITORY} | cut -d/ -f2)
         env:
           GALAXY_API_KEY: ${{ secrets.galaxy_api_key }}
