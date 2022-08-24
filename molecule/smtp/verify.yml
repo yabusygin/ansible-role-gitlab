@@ -1,7 +1,7 @@
 ---
 - name: send test message
   hosts: gitlab
-  gather_facts: false
+  gather_facts: no
   tasks:
     - name: generate nonce
       ansible.builtin.set_fact:
@@ -30,7 +30,7 @@
 
 - name: check smtp mailbox
   hosts: smtp
-  gather_facts: false
+  gather_facts: no
   vars:
     _nonce: "{{ hostvars['gitlab']['_nonce'] }}"
   tasks:
