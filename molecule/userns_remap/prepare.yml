@@ -1,9 +1,8 @@
 ---
 - name: prepare
   hosts: instance
-  gather_facts: false
+  gather_facts: no
   tasks:
     - name: install Python 3 for Ansible
       ansible.builtin.raw: test -e /usr/bin/python3 || (apt-get update && apt-get install --yes python3-minimal)
-      become: true
-      changed_when: false
+      changed_when: no

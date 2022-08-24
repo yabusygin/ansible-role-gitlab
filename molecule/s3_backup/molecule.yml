@@ -8,12 +8,14 @@ platforms:
   - name: gitlab
     image: ${TEST_IMAGE}
     pre_build_image: true
+    privileged: true
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      # Required for Docker in Docker. Default storage drivers (aufs/overlay2)
+      # don't support AUFS/OverlayFS backing filesystem.
       - /var/lib/docker
     keep_volumes: false
-    privileged: true
     networks_cli_compatible: yes
     networks:
       - name: test-s3

@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -o errexit
+set -o nounset
 
 exit_handler() {
     if [ $? -ne 0 ]; then
@@ -10,20 +11,25 @@ exit_handler() {
 
 trap exit_handler EXIT
 
-testinfra_tests=$(find molecule/ -name 'test_*.py')
-
 echo "Running ansible-lint..."
-ansible-lint
+ANSIBLE_ROLES_PATH="${MOLECULE_EPHEMERAL_DIRECTORY}/roles" \
+ANSIBLE_COLLECTIONS_PATH="${MOLECULE_EPHEMERAL_DIRECTORY}/collections" \
+ansible-lint \
+    "${MOLECULE_PROJECT_DIRECTORY}" \
+    "${MOLECULE_SCENARIO_DIRECTORY}"
 
-echo "Running mypy..."
-for file in ${testinfra_tests}; do
-    mypy ${file}
-done
+testinfra_tests_directory="${MOLECULE_SCENARIO_DIRECTORY}/tests"
+if [ -d "${testinfra_tests_directory}" ]; then
+    testinfra_tests=$(find "${testinfra_tests_directory}" -name 'test_*.py')
 
-echo "Running pylint..."
-pylint ${testinfra_tests}
+    echo "Running mypy..."
+    mypy ${testinfra_tests}
 
-echo "Running black..."
-black --check ${testinfra_tests}
+    echo "Running pylint..."
+    pylint ${testinfra_tests}
+
+    echo "Running black..."
+    black --check ${testinfra_tests}
+fi
 
 echo "Success"
