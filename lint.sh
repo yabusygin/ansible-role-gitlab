@@ -14,7 +14,9 @@ trap exit_handler EXIT
 testinfra_tests=$(find "${MOLECULE_SCENARIO_DIRECTORY}" -name 'test_*.py')
 
 echo "Running ansible-lint..."
-ansible-lint "${MOLECULE_PROJECT_DIRECTORY}" "${MOLECULE_SCENARIO_DIRECTORY}"
+ANSIBLE_COLLECTIONS_PATH="${MOLECULE_EPHEMERAL_DIRECTORY}/collections" ansible-lint \
+    "${MOLECULE_PROJECT_DIRECTORY}" \
+    "${MOLECULE_SCENARIO_DIRECTORY}"
 
 if [ ! -z "${testinfra_tests}" ]; then
     echo "Running mypy..."
