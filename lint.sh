@@ -11,20 +11,22 @@ exit_handler() {
 
 trap exit_handler EXIT
 
-testinfra_tests=$(find molecule/ -name 'test_*.py')
+testinfra_tests=$(find "${MOLECULE_SCENARIO_DIRECTORY}" -name 'test_*.py')
 
 echo "Running ansible-lint..."
 ansible-lint "${MOLECULE_PROJECT_DIRECTORY}" "${MOLECULE_SCENARIO_DIRECTORY}"
 
-echo "Running mypy..."
-for file in ${testinfra_tests}; do
-    mypy ${file}
-done
+if [ ! -z "${testinfra_tests}" ]; then
+    echo "Running mypy..."
+    for file in ${testinfra_tests}; do
+        mypy ${file}
+    done
 
-echo "Running pylint..."
-pylint ${testinfra_tests}
+    echo "Running pylint..."
+    pylint ${testinfra_tests}
 
-echo "Running black..."
-black --check ${testinfra_tests}
+    echo "Running black..."
+    black --check ${testinfra_tests}
+fi
 
 echo "Success"
