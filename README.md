@@ -17,14 +17,14 @@ The role uses [community.docker.docker_compose][ComposeModule] module. Therefore
 [ComposeModule]: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
 [DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
 
-The following requirements are needed on a managed host to execute this role:
+The following requirements are needed on a managed node to execute this role:
 
 * [Docker Engine](https://docs.docker.com/engine/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [community.docker.docker_compose][ComposeModule] module requirements
 
 Its recommended to use [yabusygin.docker][DockerRole] role for installing all
-the requiremets.
+the requiremets on the managed node.
 
 [DockerRole]: https://galaxy.ansible.com/yabusygin/docker
 
