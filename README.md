@@ -11,11 +11,17 @@ An Ansible role for setting up [GitLab][GitLab].
 Requirements
 ------------
 
+The role uses [community.docker.docker_compose][ComposeModule] module. Therefore,
+[community.docker][DockerCollection] collection is required on a control node.
+
+[ComposeModule]: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+[DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
+
 The following requirements are needed on a managed host to execute this role:
 
 * [Docker Engine](https://docs.docker.com/engine/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
-* [docker_compose module requirements](https://docs.ansible.com/ansible/2.9/modules/docker_compose_module.html#requirements)
+* [community.docker.docker_compose][ComposeModule] module requirements
 
 Its recommended to use [yabusygin.docker][DockerRole] role for installing all
 the requiremets.
