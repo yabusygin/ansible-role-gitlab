@@ -515,23 +515,29 @@ gitlab_userns_remap_enable: yes
 Example Playbook
 ----------------
 
-Default setup:
+Default setup (Docker and other requirements are already installed):
 
 ```yaml
-- hosts: production
+- name: set up GitLab
+  hosts: gitlab
   tasks:
-    - ansible.builtin.import_role:
+    - name: set up GitLab
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
 ```
 
 Default setup with [yabusygin.docker][DockerRole] role:
 
 ```yaml
-- hosts: production
+- name: set up Docker and GitLab
+  hosts: gitlab
   tasks:
-    - ansible.builtin.import_role:
+    - name: set up Docker
+      ansible.builtin.import_role:
         name: yabusygin.docker
-    - ansible.builtin.import_role:
+
+    - name: set up GitLab
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
 ```
 
@@ -539,9 +545,11 @@ Customized setup:
 
 ```yaml
 ---
-- hosts: production
+- name: set up customized Docker and GitLab
+  hosts: gitlab
   tasks:
-    - ansible.builtin.import_role:
+    - name: set up Docker
+      ansible.builtin.import_role:
         name: yabusygin.docker
       vars:
         userns-remap: default
@@ -550,7 +558,8 @@ Customized setup:
           max-size: 10m
           max-file: "3"
 
-    - ansible.builtin.import_role:
+    - name: set up GitLab
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
       vars:
         gitlab_userns_remap_enable: yes
