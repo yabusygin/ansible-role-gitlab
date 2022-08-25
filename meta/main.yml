@@ -3,7 +3,7 @@ galaxy_info:
   role_name: gitlab
   namespace: yabusygin
   author: Alexey Busygin
-  description: An Ansible role installing GitLab CE.
+  description: An Ansible role for setting up GitLab.
   license: MIT
   min_ansible_version: "2.10"
   platforms:
