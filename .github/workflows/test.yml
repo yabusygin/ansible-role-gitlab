@@ -32,8 +32,9 @@ jobs:
       matrix:
         image:
           - "geerlingguy/docker-debian10-ansible:latest"
-          - "geerlingguy/docker-ubuntu1804-ansible:latest"
+          - "geerlingguy/docker-debian11-ansible:latest"
           - "geerlingguy/docker-ubuntu2004-ansible:latest"
+          - "geerlingguy/docker-ubuntu2204-ansible:latest"
         scenario:
           - default
           - userns_remap
