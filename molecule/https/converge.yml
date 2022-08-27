@@ -19,5 +19,5 @@
     - name: install HTTPie
       ansible.builtin.pip:
         name:
-          - httpie<2.0.0
+          - httpie
         state: present
