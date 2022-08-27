@@ -4,21 +4,27 @@ Ansible Role: gitlab
 ![Test workflow status](https://github.com/yabusygin/ansible-role-gitlab/workflows/test/badge.svg)
 ![Release workflow status](https://github.com/yabusygin/ansible-role-docker/workflows/release/badge.svg)
 
-An Ansible role installing [GitLab][GitLab].
+An Ansible role for setting up [GitLab][GitLab].
 
 [GitLab]: https://docs.gitlab.com/ce/README.html
 
 Requirements
 ------------
 
-The following requirements are needed on a managed host to execute this role:
+The role uses [community.docker.docker_compose][ComposeModule] module. Therefore,
+[community.docker][DockerCollection] collection is required on a control node.
+
+[ComposeModule]: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+[DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
+
+The following requirements are needed on a managed node to execute this role:
 
 * [Docker Engine](https://docs.docker.com/engine/install/)
 * [Docker Compose](https://docs.docker.com/compose/install/)
-* [docker_compose module requirements](https://docs.ansible.com/ansible/2.9/modules/docker_compose_module.html#requirements)
+* [community.docker.docker_compose][ComposeModule] module requirements
 
 Its recommended to use [yabusygin.docker][DockerRole] role for installing all
-the requiremets.
+the requiremets on the managed node.
 
 [DockerRole]: https://galaxy.ansible.com/yabusygin/docker
 
@@ -515,23 +521,29 @@ gitlab_userns_remap_enable: yes
 Example Playbook
 ----------------
 
-Default setup:
+Default setup (Docker and other requirements are already installed):
 
 ```yaml
-- hosts: production
+- name: set up GitLab
+  hosts: gitlab
   tasks:
-    - ansible.builtin.import_role:
+    - name: set up GitLab
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
 ```
 
 Default setup with [yabusygin.docker][DockerRole] role:
 
 ```yaml
-- hosts: production
+- name: set up Docker and GitLab
+  hosts: gitlab
   tasks:
-    - ansible.builtin.import_role:
+    - name: set up Docker
+      ansible.builtin.import_role:
         name: yabusygin.docker
-    - ansible.builtin.import_role:
+
+    - name: set up GitLab
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
 ```
 
@@ -539,9 +551,11 @@ Customized setup:
 
 ```yaml
 ---
-- hosts: production
+- name: set up customized Docker and GitLab
+  hosts: gitlab
   tasks:
-    - ansible.builtin.import_role:
+    - name: set up Docker
+      ansible.builtin.import_role:
         name: yabusygin.docker
       vars:
         userns-remap: default
@@ -550,7 +564,8 @@ Customized setup:
           max-size: 10m
           max-file: "3"
 
-    - ansible.builtin.import_role:
+    - name: set up GitLab
+      ansible.builtin.import_role:
         name: yabusygin.gitlab
       vars:
         gitlab_userns_remap_enable: yes
