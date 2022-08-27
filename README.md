@@ -23,8 +23,8 @@ The following requirements are needed on a managed node to execute this role:
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * [community.docker.docker_compose][ComposeModule] module requirements
 
-Its recommended to use [yabusygin.docker][DockerRole] role for installing all
-the requiremets on the managed node.
+It's recommended to use [yabusygin.docker][DockerRole] role for installing all
+the requirements on the managed node.
 
 [DockerRole]: https://galaxy.ansible.com/yabusygin/docker
 
