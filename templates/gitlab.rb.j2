@@ -46,7 +46,7 @@ gitlab_rails['monitoring_whitelist'] = ['{{ gitlab_monitoring_whitelist | join("
 {% endif %}
 
 # Outgoing emails
-{% if gitlab_email_enabled or gitlab_email_enable %}
+{% if gitlab_email_enable %}
 gitlab_rails['gitlab_email_enabled'] = true
     {% if gitlab_email_from_mailbox is defined %}
 gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from_mailbox }}'
