@@ -39,7 +39,6 @@
       ansible.builtin.command:
         argv:
           - /usr/bin/contains_message.py
-          - --debug
           - --maildir-path=/mailbox
           - --from=GitLab <gitlab@test>
           - --reply-to=GitLab <noreply@test>
