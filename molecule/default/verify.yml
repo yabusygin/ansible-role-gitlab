@@ -1,0 +1,49 @@
+---
+- name: check that GitLab services are healthy
+  hosts: instance
+  gather_facts: no
+  tasks:
+    - name: wait until GitLab starts
+      ansible.builtin.uri:
+        url: http://localhost/
+      register: _result
+      until: _result.status == 200
+      retries: 120
+      delay: 1
+
+    - name: get status of GitLab services
+      ansible.builtin.uri:
+        url: http://localhost/-/readiness?all=1
+      register: _result
+
+    - name: check status of GitLab services
+      ansible.builtin.assert:
+        that: 
+          - _result.json.cache_check | length == 1
+          - _result.json.cache_check[0].status == "ok"
+          - _result.json.db_check | length == 1
+          - _result.json.db_check[0].status == "ok"
+          - _result.json.gitaly_check | length == 1
+          - _result.json.gitaly_check[0].status == "ok"
+          - _result.json.master_check | length == 1
+          - _result.json.master_check[0].status == "ok"
+          - _result.json.queues_check | length == 1
+          - _result.json.queues_check[0].status == "ok"
+          - _result.json.redis_check | length == 1
+          - _result.json.redis_check[0].status == "ok"
+          - _result.json.shared_state_check | length == 1
+          - _result.json.shared_state_check[0].status == "ok"
+
+    # Check Docker Registry health by performing API version check.
+    # See: https://docs.docker.com/registry/spec/api/#api-version-check
+
+    - name: get Docker Registry version support information
+      ansible.builtin.uri:
+        url: http://localhost:5050/v2/
+        status_code:
+          - 401
+      register: _result
+
+    - name: check Docker Registry version
+      ansible.builtin.assert:
+        that: _result.docker_distribution_api_version == "registry/2.0"
