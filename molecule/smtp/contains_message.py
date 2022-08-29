@@ -8,7 +8,7 @@ from sys import exit
 from typing import IO, Optional, NamedTuple
 
 
-debug_enabled = False
+DEBUG_ENABLED = False
 
 
 class MessageFilter(NamedTuple):
@@ -28,7 +28,7 @@ class MessageFilter(NamedTuple):
 
 
 def debug(message: str) -> None:
-    if debug_enabled:
+    if DEBUG_ENABLED:
         print(message)
 
 
@@ -89,8 +89,8 @@ def match(message: MaildirMessage, message_filter: MessageFilter) -> bool:
 
 def main() -> None:
     args = parse_args()
-    global debug_enabled
-    debug_enabled = args.debug
+    global DEBUG_ENABLED
+    DEBUG_ENABLED = args.debug
     mailbox = Maildir(
         dirname=args.maildir_path,
         factory=message_factory,
