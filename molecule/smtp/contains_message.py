@@ -20,10 +20,10 @@ class MessageFilter(NamedTuple):
     @classmethod
     def create(cls, args: Namespace) -> "MessageFilter":
         return cls(
-           from_=args.from_,
-           reply_to=args.reply_to,
-           to=args.to,
-           subject=args.subject,
+            from_=args.from_,
+            reply_to=args.reply_to,
+            to=args.to,
+            subject=args.subject,
         )
 
 
