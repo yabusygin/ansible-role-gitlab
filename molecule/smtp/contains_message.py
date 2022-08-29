@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 from email import message_from_binary_file, policy
 from mailbox import Maildir, MaildirMessage
 from pathlib import Path
-from sys import exit
+from sys import exit  # pylint: disable=redefined-builtin
 from typing import IO, Optional, NamedTuple
 
 
