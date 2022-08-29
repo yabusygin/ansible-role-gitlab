@@ -23,7 +23,7 @@ gitlab_backup_cron_month: "*"
 gitlab_backup_cron_day_of_week: "*"
 gitlab_backup_cron_docker_compose_path: docker-compose
 
-_volume_owner: 0
-_volume_group: 0
+_gitlab_volume_owner: 0
+_gitlab_volume_group: 0
 
-_url_scheme: "{% if gitlab_https_enable %}https{% else %}http{% endif %}"
+_gitlab_url_scheme: "{% if gitlab_https_enable %}https{% else %}http{% endif %}"
