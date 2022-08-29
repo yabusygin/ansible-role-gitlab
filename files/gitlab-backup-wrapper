@@ -3,7 +3,7 @@
 set -o errexit
 
 : ${DOCKER_CMD:=docker}
-: ${DOCKER_COMPOSE_CMD:=docker-compose}
+: ${DOCKER_COMPOSE_CMD:=docker compose}
 
 project_path=/etc/docker-gitlab
 service_name=gitlab

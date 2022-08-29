@@ -426,7 +426,7 @@ Variable reference:
     invoke Docker Engine. Default: `docker`.
 
 *   `gitlab_backup_cron_docker_compose_cmd` -- command that backup cron job uses
-    to invoke Docker Compose. Default: `docker-compose`.
+    to invoke Docker Compose. Default: `docker compose`.
 
 [Crontab5]: https://man7.org/linux/man-pages/man5/crontab.5.html
 
