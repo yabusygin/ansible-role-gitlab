@@ -5,7 +5,7 @@ from email import message_from_binary_file, policy
 from mailbox import Maildir, MaildirMessage
 from pathlib import Path
 from sys import exit
-from typing import BinaryIO, Optional, NamedTuple
+from typing import IO, Optional, NamedTuple
 
 
 debug_enabled = False
@@ -44,7 +44,7 @@ def parse_args() -> Namespace:
     return parser.parse_args()
 
 
-def message_factory(stream: BinaryIO) -> MaildirMessage:
+def message_factory(stream: IO[bytes]) -> MaildirMessage:
     message = message_from_binary_file(fp=stream, policy=policy.default)
     return MaildirMessage(message)
 
