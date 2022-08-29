@@ -8,9 +8,6 @@ from sys import exit
 from typing import IO, Optional, NamedTuple
 
 
-DEBUG_ENABLED = False
-
-
 class MessageFilter(NamedTuple):
     from_: Optional[str]
     reply_to: Optional[str]
@@ -27,14 +24,8 @@ class MessageFilter(NamedTuple):
         )
 
 
-def debug(message: str) -> None:
-    if DEBUG_ENABLED:
-        print(message)
-
-
 def parse_args() -> Namespace:
     parser = ArgumentParser()
-    parser.add_argument("--debug", action="store_true")
     parser.add_argument("--count", type=int)
     parser.add_argument("--from", dest="from_")
     parser.add_argument("--reply-to")
@@ -89,30 +80,25 @@ def match(message: MaildirMessage, message_filter: MessageFilter) -> bool:
 
 def main() -> None:
     args = parse_args()
-    global DEBUG_ENABLED
-    DEBUG_ENABLED = args.debug
     mailbox = Maildir(
         dirname=args.maildir_path,
         factory=message_factory,
         create=False,
     )
     message_filter = MessageFilter.create(args)
-    debug("filter: {}".format(message_filter))
+    # print(f"filter: {message_filter}")
     matches = 0
     for message in mailbox:
-        debug(
-            "message: {}".format(
-                (
-                    message.get("From"),
-                    message.get("Reply-To"),
-                    message.get("To"),
-                    message.get("Subject"),
-                ),
-            ),
-        )
+        # message_headers = (
+        #     message.get("From"),
+        #     message.get("Reply-To"),
+        #     message.get("To"),
+        #     message.get("Subject"),
+        # )
+        # print(f"message: {message_headers}")
         if match(message, message_filter):
             matches += 1
-            debug("matched: {}".format(matches))
+            # print(f"matched: {matches}")
     if args.count is None or args.count == matches:
         exit(0)
     exit(1)
