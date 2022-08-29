@@ -146,8 +146,8 @@ letsencrypt['enable'] = true
 
 Variable reference:
 
-*   `gitlab_email_enable` (or deprecated `gitlab_email_enabled`) -- enable
-    outgoing emails. Values: `yes`, `no`. Default value: `no`.
+*   `gitlab_email_enable` -- enable outgoing emails. Values: `yes`, `no`.
+    Default value: `no`.
 
 *   `gitlab_email_from_mailbox` -- mailbox value of "From" header in an outgoing
     email.

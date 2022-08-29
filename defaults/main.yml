@@ -11,8 +11,6 @@ gitlab_letsencrypt_enable: no
 gitlab_unicorn_force: no
 
 gitlab_email_enable: no
-# Deprecated. Use gitlab_email_enable instead.
-gitlab_email_enabled: no
 gitlab_email_smtp_verify_server_cert: yes
 
 gitlab_backup_upload_enable: no
