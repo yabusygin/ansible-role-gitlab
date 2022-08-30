@@ -45,6 +45,7 @@ services:
       - protocol: tcp
         target: 5050
         published: 5050
+    restart: always
 volumes:
   config:
   data:

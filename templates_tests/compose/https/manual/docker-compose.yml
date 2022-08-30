@@ -4,6 +4,23 @@ services:
   gitlab:
     image: gitlab/gitlab-ce:latest
     hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # URL
+        external_url 'https://gitlab.test'
+        registry_external_url 'https://gitlab.test:5050'
+
+        # HTTPS
+        letsencrypt['enable'] = false
+
+        # Application server
+
+        # Monitoring
+
+        # Outgoing emails
+        gitlab_rails['gitlab_email_enabled'] = false
+
+        # Backup
     volumes:
       - type: volume
         source: config

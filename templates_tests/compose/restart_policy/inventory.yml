@@ -1,0 +1,2 @@
+---
+gitlab_restart_policy: always

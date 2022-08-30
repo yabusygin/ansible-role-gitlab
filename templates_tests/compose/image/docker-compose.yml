@@ -2,7 +2,7 @@
 version: "3.7"
 services:
   gitlab:
-    image: gitlab/gitlab-ce:latest
+    image: gitlab/gitlab-ee:latest
     hostname: gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: |

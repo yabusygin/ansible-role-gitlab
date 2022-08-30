@@ -2,8 +2,25 @@
 version: "3.7"
 services:
   gitlab:
-    image: gitlab/gitlab-ce:12.7.6-ce.0
+    image: gitlab/gitlab-ce:latest
     hostname: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # URL
+        external_url 'http://gitlab.test'
+        registry_external_url 'http://gitlab.test:5050'
+
+        # HTTPS
+
+        # Application server
+        unicorn['worker_processes'] = 3
+
+        # Monitoring
+
+        # Outgoing emails
+        gitlab_rails['gitlab_email_enabled'] = false
+
+        # Backup
     volumes:
       - type: volume
         source: config
@@ -11,9 +28,6 @@ services:
       - type: bind
         source: ./gitlab.rb
         target: /etc/gitlab/gitlab.rb
-      - type: bind
-        source: ./smtp.crt.pem
-        target: /etc/ssl/certs/smtp.crt.pem
       - type: volume
         source: data
         target: /var/opt/gitlab
@@ -24,15 +38,14 @@ services:
       - bridge
     ports:
       - protocol: tcp
-        target: 8000
-        published: 8000
+        target: 80
+        published: 80
       - protocol: tcp
         target: 22
-        published: 2222
+        published: 22
       - protocol: tcp
-        target: 5001
-        published: 5001
-    restart: always
+        target: 5050
+        published: 5050
 volumes:
   config:
   data:

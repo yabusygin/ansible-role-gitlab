@@ -1,25 +1,5 @@
 ---
 tests:
-  # test templates/docker-compose.yml.j2
-
-  - name: default Docker Compose file
-    template: docker-compose.yml.j2
-    expected_result: compose/default/docker-compose.yml
-
-  - name: custom Docker Compose file
-    template: docker-compose.yml.j2
-    variables:
-      inventory: compose/custom/inventory.yml
-    expected_result: compose/custom/docker-compose.yml
-
-  - name: HTTPS
-    template: docker-compose.yml.j2
-    variables:
-      inventory: compose/https/inventory.yml
-    expected_result: compose/https/docker-compose.yml
-
-  # test templates/gitlab.rb.j2
-
   - name: default config
     template: gitlab.rb.j2
     expected_result: config/default/gitlab.rb
