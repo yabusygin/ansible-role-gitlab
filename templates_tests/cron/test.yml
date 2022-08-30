@@ -1,0 +1,13 @@
+---
+tests:
+  - name: cronjob for automated daily backups (default)
+    template: gitlab-backup.cron.j2
+    variables:
+      inventory: default/inventory.yml
+    expected_result: default/gitlab-backup
+
+  - name: cronjob for automated backups (custom day and month)
+    template: gitlab-backup.cron.j2
+    variables:
+      inventory: custom/inventory.yml
+    expected_result: custom/gitlab-backup
