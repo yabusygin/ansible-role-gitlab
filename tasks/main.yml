@@ -9,6 +9,19 @@
     state: directory
     mode: 0755
 
+- name: create container build directory
+  ansible.builtin.file:
+    path: /etc/docker-gitlab/build
+    state: directory
+    mode: 0755
+
+- name: set Dockerfile
+  ansible.builtin.template:
+    src: Dockerfile.j2
+    dest: /etc/docker-gitlab/build/Dockerfile
+    lstrip_blocks: yes
+    mode: 0644
+
 - name: create HTTPS key and certificate directory
   ansible.builtin.file:
     path: /etc/docker-gitlab/https
