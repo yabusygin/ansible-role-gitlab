@@ -18,18 +18,16 @@ ansible-lint \
     "${MOLECULE_PROJECT_DIRECTORY}" \
     "${MOLECULE_SCENARIO_DIRECTORY}"
 
-testinfra_tests_directory="${MOLECULE_SCENARIO_DIRECTORY}/tests"
-if [ -d "${testinfra_tests_directory}" ]; then
-    testinfra_tests=$(find "${testinfra_tests_directory}" -name 'test_*.py')
-
+python_src="$(find "${MOLECULE_SCENARIO_DIRECTORY}" -name '*.py')"
+if [ ! -z "${python_src}" ]; then
     echo "Running mypy..."
-    mypy ${testinfra_tests}
+    mypy ${python_src}
 
     echo "Running pylint..."
-    pylint ${testinfra_tests}
+    pylint ${python_src}
 
     echo "Running black..."
-    black --check ${testinfra_tests}
+    black --check ${python_src}
 fi
 
 echo "Success"
