@@ -22,14 +22,6 @@
     lstrip_blocks: yes
     mode: 0644
 
-- name: create HTTPS key and certificate directory
-  ansible.builtin.file:
-    path: /etc/docker-gitlab/https
-    state: directory
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
-    mode: 0700
-
 - name: upload HTTPS key
   ansible.builtin.copy:
     src: "{{ gitlab_https_key }}"
