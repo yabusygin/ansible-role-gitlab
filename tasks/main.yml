@@ -9,17 +9,6 @@
     state: directory
     mode: 0755
 
-- name: create config file
-  ansible.builtin.template:
-    src: gitlab.rb.j2
-    dest: /etc/docker-gitlab/gitlab.rb
-    lstrip_blocks: yes
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
-    mode: 0600
-  notify:
-    - restart GitLab
-
 - name: create HTTPS key and certificate directory
   ansible.builtin.file:
     path: /etc/docker-gitlab/https
