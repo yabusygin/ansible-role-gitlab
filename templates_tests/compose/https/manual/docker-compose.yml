@@ -26,9 +26,6 @@ services:
       - type: volume
         source: config
         target: /etc/gitlab
-      - type: bind
-        source: ./https/
-        target: /etc/gitlab/ssl/
       - type: volume
         source: data
         target: /var/opt/gitlab

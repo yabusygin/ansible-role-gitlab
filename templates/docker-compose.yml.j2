@@ -138,11 +138,6 @@ services:
         source: ./smtp.crt.pem
         target: /etc/ssl/certs/smtp.crt.pem
 {% endif %}
-{% if gitlab_https_enable %}
-      - type: bind
-        source: ./https/
-        target: /etc/gitlab/ssl/
-{% endif %}
       - type: volume
         source: data
         target: /var/opt/gitlab
