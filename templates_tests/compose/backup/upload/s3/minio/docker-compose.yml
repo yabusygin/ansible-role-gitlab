@@ -32,9 +32,6 @@ services:
       - type: volume
         source: config
         target: /etc/gitlab
-      - type: bind
-        source: ./gitlab.rb
-        target: /etc/gitlab/gitlab.rb
       - type: volume
         source: data
         target: /var/opt/gitlab

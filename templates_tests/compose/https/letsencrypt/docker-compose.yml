@@ -26,9 +26,6 @@ services:
         source: config
         target: /etc/gitlab
       - type: bind
-        source: ./gitlab.rb
-        target: /etc/gitlab/gitlab.rb
-      - type: bind
         source: ./https/
         target: /etc/gitlab/ssl/
       - type: volume
