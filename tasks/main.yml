@@ -18,6 +18,12 @@
     lstrip_blocks: yes
     mode: 0644
 
+- name: set .dockerignore
+  ansible.builtin.copy:
+    src: dockerignore
+    dest: /etc/docker-gitlab/build/.dockerignore
+    mode: 0644
+
 - name: upload HTTPS key
   ansible.builtin.copy:
     src: "{{ gitlab_https_key }}"
