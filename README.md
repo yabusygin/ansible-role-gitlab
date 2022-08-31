@@ -120,12 +120,16 @@ The default configuration will be replaced with the following:
 external_url 'https://gitlab.test'
 registry_external_url 'https://gitlab.test:5050'
 letsencrypt['enable'] = false
+nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
+nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
+registry_nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
+registry_nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
 ```
 
-Private key `https/gitlab.key.pem` will be mounted to
-`/etc/gitlab/ssl/gitlab.test.key` in container. Certificate
-`https/gitlab.crt.pem` will be mounted to `/etc/gitlab/ssl/gitlab.test.crt` in
-container.
+Private key `https/gitlab.key.pem` will be copied to
+`/opt/gitlab/tls/https.key` in container image. Certificate
+`https/gitlab.crt.pem` will be copied to `/opt/gitlab/tls/https.crt` in
+container image.
 
 #### Let's Encrypt HTTPS Configuration ####
 
@@ -269,8 +273,11 @@ gitlab_email_smtp_ca_cert: /path/to/private-ca.pem
 The following configuration will be added:
 
 ```ruby
-gitlab_rails['smtp_ca_file'] = '/etc/ssl/certs/smtp.crt.pem'
+gitlab_rails['smtp_ca_file'] = '/opt/gitlab/tls/smtp.ca.crt'
 ```
+
+Certificate `/path/to/private-ca.pem` will be copied to
+`/opt/gitlab/tls/smtp.ca.crt` in container image.
 
 #### Disable SMTP Server Certificate Verification ####
 
@@ -380,19 +387,6 @@ Variable reference:
 
 *   `gitlab_monitoring_whitelist` -- a list of addresses/subnets of monitoring
     endpoints that are allowed to perform healthchecks.
-
-### Docker User Namespace Remapping ###
-
-Variable reference:
-
-*   `gitlab_userns_remap_enable` -- signals that Docker
-    [user namespace remapping feature][UsernsRemap] is enabled. Default value:
-    `no`.
-
-*   `gitlab_userns_remap_user` -- user used by Docker for running containers
-    with enabled user namespace remapping. Default value `dockremap`.
-
-[UsernsRemap]: https://docs.docker.com/engine/security/userns-remap/
 
 ### Backup ###
 
@@ -506,17 +500,9 @@ Dependencies
 
 If [yabusygin.docker][DockerRole] role is used for installing Docker and other
 requirements, then it is recommended to enable
-[user namespace remapping feature][UsernsRemap]:
+[user namespace remapping][UsernsRemap] (see the example below).
 
-```yaml
-docker_config:
-  userns-remap: default
-  log-driver: json-file
-  log-opts:
-    max-size: 10m
-    max-file: "3"
-gitlab_userns_remap_enable: yes
-```
+[UsernsRemap]: https://docs.docker.com/engine/security/userns-remap/
 
 Example Playbook
 ----------------
@@ -532,22 +518,7 @@ Default setup (Docker and other requirements are already installed):
         name: yabusygin.gitlab
 ```
 
-Default setup with [yabusygin.docker][DockerRole] role:
-
-```yaml
-- name: set up Docker and GitLab
-  hosts: gitlab
-  tasks:
-    - name: set up Docker
-      ansible.builtin.import_role:
-        name: yabusygin.docker
-
-    - name: set up GitLab
-      ansible.builtin.import_role:
-        name: yabusygin.gitlab
-```
-
-Customized setup:
+Customized with [yabusygin.docker][DockerRole] role:
 
 ```yaml
 ---
@@ -568,8 +539,6 @@ Customized setup:
       ansible.builtin.import_role:
         name: yabusygin.gitlab
       vars:
-        gitlab_userns_remap_enable: yes
-
         gitlab_image: gitlab/gitlab-ce:13.12.8-ce.0
         gitlab_restart_policy: always
 
