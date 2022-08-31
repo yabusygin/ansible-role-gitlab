@@ -91,7 +91,7 @@ services:
         gitlab_rails['smtp_openssl_verify_mode'] = 'none'
         {% endif %}
         {% if gitlab_email_smtp_ca_cert is defined %}
-        gitlab_rails['smtp_ca_file'] = '/etc/ssl/certs/smtp.crt.pem'
+        gitlab_rails['smtp_ca_file'] = '/opt/gitlab/tls/smtp.ca.crt'
         {% endif %}
     {% else %}
         gitlab_rails['smtp_tls'] = false
