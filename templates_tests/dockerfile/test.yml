@@ -9,3 +9,9 @@ tests:
     variables:
       inventory: image/inventory.yml
     expected_result: image/Dockerfile
+
+  - name: HTTPS
+    template: Dockerfile.j2
+    variables:
+      inventory: https/inventory.yml
+    expected_result: https/Dockerfile
