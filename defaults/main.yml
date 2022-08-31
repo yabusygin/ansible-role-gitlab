@@ -1,6 +1,4 @@
 gitlab_image: gitlab/gitlab-ce:latest
-gitlab_userns_remap_enable: no
-gitlab_userns_remap_user: dockremap
 
 gitlab_hostname: gitlab.test
 gitlab_registry_port: 5050
