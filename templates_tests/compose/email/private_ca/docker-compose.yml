@@ -38,9 +38,6 @@ services:
       - type: volume
         source: config
         target: /etc/gitlab
-      - type: bind
-        source: ./smtp.crt.pem
-        target: /etc/ssl/certs/smtp.crt.pem
       - type: volume
         source: data
         target: /var/opt/gitlab

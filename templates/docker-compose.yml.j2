@@ -137,11 +137,6 @@ services:
       - type: volume
         source: config
         target: /etc/gitlab
-{% if gitlab_email_smtp_ca_cert is defined %}
-      - type: bind
-        source: ./smtp.crt.pem
-        target: /etc/ssl/certs/smtp.crt.pem
-{% endif %}
       - type: volume
         source: data
         target: /var/opt/gitlab
