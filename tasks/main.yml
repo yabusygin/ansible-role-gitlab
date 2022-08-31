@@ -1,8 +1,4 @@
 ---
-- name: set owner/group ID for files that are mounted to container
-  ansible.builtin.import_tasks: set-volume-owner.yml
-  when: gitlab_userns_remap_enable
-
 - name: create configuration directory
   ansible.builtin.file:
     path: /etc/docker-gitlab
