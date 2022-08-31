@@ -39,9 +39,7 @@
 - name: add SMTP CA certificate
   ansible.builtin.copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
-    dest: /etc/docker-gitlab/smtp.crt.pem
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
+    dest: /etc/docker-gitlab/build/smtp.ca.crt
     mode: 0600
   when: gitlab_email_smtp_ca_cert is defined
 
