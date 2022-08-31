@@ -15,3 +15,9 @@ tests:
     variables:
       inventory: https/inventory.yml
     expected_result: https/Dockerfile
+
+  - name: SMTPS
+    template: Dockerfile.j2
+    variables:
+      inventory: smtps/inventory.yml
+    expected_result: smtps/Dockerfile
