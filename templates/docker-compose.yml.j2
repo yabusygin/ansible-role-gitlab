@@ -24,6 +24,10 @@ services:
         letsencrypt['enable'] = true
     {% else %}
         letsencrypt['enable'] = false
+        nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
+        nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
+        registry_nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
+        registry_nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
     {% endif %}
 {% endif %}
 
