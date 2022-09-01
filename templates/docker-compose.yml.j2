@@ -33,22 +33,14 @@ services:
 {% endif %}
 
         # Application server
-{% if gitlab_unicorn_force %}
-        puma['enable'] = false
-        unicorn['enable'] = true
-    {% if gitlab_workers is defined %}
-        unicorn['worker_processes'] = {{ gitlab_workers }}
-    {% endif %}
-{% else %}
-    {% if gitlab_workers is defined %}
+{% if gitlab_workers is defined %}
         puma['worker_processes'] = {{ gitlab_workers }}
-    {% endif %}
-    {% if gitlab_min_threads is defined %}
+{% endif %}
+{% if gitlab_min_threads is defined %}
         puma['min_threads'] = {{ gitlab_min_threads }}
-    {% endif %}
-    {% if gitlab_max_threads is defined %}
+{% endif %}
+{% if gitlab_max_threads is defined %}
         puma['max_threads'] = {{ gitlab_max_threads }}
-    {% endif %}
 {% endif %}
 
         # Monitoring
