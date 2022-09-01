@@ -6,16 +6,11 @@ Ansible Role: gitlab
 
 An Ansible role for setting up [GitLab][GitLab] version 13.0 or newer.
 
-[GitLab]: https://docs.gitlab.com/ce/README.html
-
 Requirements
 ------------
 
 The role uses [community.docker.docker_compose][ComposeModule] module. Therefore,
 [community.docker][DockerCollection] collection is required on a control node.
-
-[ComposeModule]: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
-[DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
 
 The following requirements are needed on a managed node to execute this role:
 
@@ -25,8 +20,6 @@ The following requirements are needed on a managed node to execute this role:
 
 It's recommended to use [yabusygin.docker][DockerRole] role for installing all
 the requirements on the managed node.
-
-[DockerRole]: https://galaxy.ansible.com/yabusygin/docker
 
 Role Variables
 --------------
@@ -38,14 +31,10 @@ Variable reference:
 *   `gitlab_image` -- [Docker container image][GitLabImages] to use. Default
     value: `gitlab/gitlab-ce:latest`.
 
-    [GitLabImages]: https://hub.docker.com/u/gitlab
-
 *   `gitlab_restart_policy` -- Docker container
     [restart policy][Restart Policy]. Values: `always`, `on-failure`,
     `unless-stopped`. Docker doesn’t restart a container under any
     circumstance by default.
-
-    [Restart Policy]: https://docs.docker.com/compose/compose-file/compose-file-v2/#restart
 
 ### URL ###
 
@@ -328,8 +317,6 @@ Variable reference:
 *   `gitlab_min_threads` -- minimum number of Puma threads.
 *   `gitlab_max_threads` -- maximum number of Puma threads.
 
-[Puma]: https://docs.gitlab.com/ce/administration/operations/puma.html
-
 ```yaml
 gitlab_workers: 2
 gitlab_min_threads: 4
@@ -354,8 +341,6 @@ Variable reference:
 ### Backup ###
 
 See [Gitlab documentation][Backup] for details.
-
-[Backup]: https://docs.gitlab.com/ee/raketasks/backup_restore.html
 
 #### Automated Backups ####
 
@@ -385,8 +370,6 @@ Variable reference:
 *   `gitlab_backup_cron_docker_compose_cmd` -- command that backup cron job uses
     to invoke Docker Compose. Default: `docker compose`.
 
-[Crontab5]: https://man7.org/linux/man-pages/man5/crontab.5.html
-
 #### Uploading Backups to Remote Storage ####
 
 Only S3 compatible remote storage is currently supported.
@@ -401,22 +384,14 @@ Variable reference:
 
 *   `gitlab_backup_upload_s3_region` -- AWS [region][AWSRegion].
 
-    [AWSRegion]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#region
-
 *   `gitlab_backup_upload_s3_bucket` -- S3 [bucket][AWSS3Bucket] to store backup
     objects. Mandatory variable.
-
-    [AWSS3Bucket]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#bucket
 
 *   `gitlab_backup_upload_s3_access_key_id` -- [access key ID][AWSAccessKeyID].
     Mandatory variable.
 
-    [AWSAccessKeyID]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#accesskeyID
-
 *   `gitlab_backup_upload_s3_secret_access_key` --
     [secret access key][AWSsecretAccessKey]. Mandatory variable.
-
-    [AWSsecretAccessKey]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#SecretAccessKey
 
 *   `gitlab_backup_upload_s3_endpoint` -- S3 compatible storage HTTP API endpoint.
 
@@ -424,8 +399,6 @@ Variable reference:
     accessing a bucket (see
     [Methods for accessing a bucket][AWSS3AccessBucket]). Sets
     `gitlab_rails['backup_upload_connection']['path_style']` value.
-
-    [AWSS3AccessBucket]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html
 
 Example of uploading backups to Digital Ocean Spaces:
 
@@ -559,3 +532,18 @@ Author Information
 ------------------
 
 Alexey Busygin \<yaabusygin@gmail.com\>
+
+[GitLab]: https://docs.gitlab.com/ce/README.html
+[ComposeModule]: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
+[DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
+[DockerRole]: https://galaxy.ansible.com/yabusygin/docker
+[GitLabImages]: https://hub.docker.com/u/gitlab
+[Restart Policy]: https://docs.docker.com/compose/compose-file/compose-file-v2/#restart
+[Puma]: https://docs.gitlab.com/ce/administration/operations/puma.html
+[Backup]: https://docs.gitlab.com/ee/raketasks/backup_restore.html
+[Crontab5]: https://man7.org/linux/man-pages/man5/crontab.5.html
+[AWSRegion]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#region
+[AWSAccessKeyID]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#accesskeyID
+[AWSS3Bucket]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#bucket
+[AWSsecretAccessKey]: https://docs.aws.amazon.com/general/latest/gr/glos-chap.html#SecretAccessKey
+[AWSS3AccessBucket]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-bucket-intro.html
