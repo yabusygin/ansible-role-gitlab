@@ -329,9 +329,6 @@ Variable reference:
 *   `gitlab_min_threads` -- minimum number of Puma threads.
 *   `gitlab_max_threads` -- maximum number of Puma threads.
 *   `gitlab_unicorn_force` -- use Unicorn instead of Puma. Default: `no`.
-*   `gitlab_unicorn_workers` -- number of Unicorn worker processes (for GitLab
-    versions before 13.0). For Gitlab 13.0 user `gitlab_unicorn_force` and
-    `gitlab_workers` instead.
 
 [Puma]: https://docs.gitlab.com/ce/administration/operations/puma.html
 [Unicorn]: https://docs.gitlab.com/12.10/omnibus/settings/unicorn.html
@@ -366,18 +363,6 @@ The following configuration will be added:
 ```ruby
 puma['enable'] = false
 unicorn['enable'] = true
-unicorn['worker_processes'] = 3
-```
-
-For GitLab versions before 13.0:
-
-```yaml
-gitlab_unicorn_workers: 3
-```
-
-The following configuration will be added:
-
-```ruby
 unicorn['worker_processes'] = 3
 ```
 

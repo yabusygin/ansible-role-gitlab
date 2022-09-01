@@ -50,9 +50,6 @@ services:
         puma['max_threads'] = {{ gitlab_max_threads }}
     {% endif %}
 {% endif %}
-{% if gitlab_unicorn_workers is defined %}
-        unicorn['worker_processes'] = {{ gitlab_unicorn_workers }}
-{% endif %}
 
         # Monitoring
 {% if gitlab_monitoring_whitelist is defined %}
