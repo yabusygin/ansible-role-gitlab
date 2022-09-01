@@ -51,8 +51,6 @@
     dest: /etc/docker-gitlab/docker-compose.yml
     lstrip_blocks: yes
     mode: 0600
-  notify:
-    - restart GitLab
 
 - name: add backup helper script
   ansible.builtin.copy:
