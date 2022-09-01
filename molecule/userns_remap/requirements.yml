@@ -1,4 +1,0 @@
----
-roles:
-  - name: yabusygin.docker
-    version: 4.0.6
