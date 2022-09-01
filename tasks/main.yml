@@ -3,46 +3,46 @@
   ansible.builtin.file:
     path: /etc/docker-gitlab
     state: directory
-    mode: 0755
+    mode: u=rwx,g=,o=
 
 - name: create container build directory
   ansible.builtin.file:
     path: /etc/docker-gitlab/build
     state: directory
-    mode: 0755
+    mode: u=rwx,g=rx,o=rx
 
 - name: set Dockerfile
   ansible.builtin.template:
     src: Dockerfile.j2
     dest: /etc/docker-gitlab/build/Dockerfile
     lstrip_blocks: yes
-    mode: 0644
+    mode: u=rw,g=r,o=r
 
 - name: set .dockerignore
   ansible.builtin.copy:
     src: dockerignore
     dest: /etc/docker-gitlab/build/.dockerignore
-    mode: 0644
+    mode: u=rw,g=r,o=r
 
 - name: upload HTTPS key
   ansible.builtin.copy:
     src: "{{ gitlab_https_key }}"
     dest: /etc/docker-gitlab/build/https.key
-    mode: 0600
+    mode: u=rw,g=,o=
   when: gitlab_https_key is defined
 
 - name: upload HTTPS certificate
   ansible.builtin.copy:
     src: "{{ gitlab_https_cert }}"
     dest: /etc/docker-gitlab/build/https.crt
-    mode: 0644
+    mode: u=rw,g=r,o=r
   when: gitlab_https_cert is defined
 
 - name: add SMTP CA certificate
   ansible.builtin.copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
     dest: /etc/docker-gitlab/build/smtp.ca.crt
-    mode: 0600
+    mode: u=rw,g=r,o=r
   when: gitlab_email_smtp_ca_cert is defined
 
 - name: create Docker Compose file
@@ -50,20 +50,20 @@
     src: docker-compose.yml.j2
     dest: /etc/docker-gitlab/docker-compose.yml
     lstrip_blocks: yes
-    mode: 0600
+    mode: u=rw,g=,o=
 
 - name: add backup helper script
   ansible.builtin.copy:
     src: gitlab-backup-wrapper
     dest: /usr/local/bin/gitlab-backup-wrapper
-    mode: 0755
+    mode: u=rwx,g=rx,o=rx
 
 - name: configure automated backups
   ansible.builtin.template:
     src: gitlab-backup.cron.j2
     dest: /etc/cron.d/gitlab-backup
     lstrip_blocks: yes
-    mode: 0644
+    mode: u=rw,g=r,o=r
   when: gitlab_backup_cron_enable
 
 - name: run GitLab

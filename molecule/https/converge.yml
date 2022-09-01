@@ -14,7 +14,7 @@
       ansible.builtin.copy:
         src: root.crt.pem
         dest: /etc/ssl/certs/
-        mode: 0644
+        mode: u=rw,g=r,o=r
 
     - name: install HTTPie
       ansible.builtin.pip:
