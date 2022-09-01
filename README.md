@@ -539,7 +539,7 @@ Customized with [yabusygin.docker][DockerRole] role:
       ansible.builtin.import_role:
         name: yabusygin.gitlab
       vars:
-        gitlab_image: gitlab/gitlab-ce:13.12.8-ce.0
+        gitlab_image: gitlab/gitlab-ee:latest
         gitlab_restart_policy: always
 
         gitlab_hostname: gitlab.example.com
