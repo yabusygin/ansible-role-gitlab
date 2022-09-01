@@ -18,14 +18,8 @@ services:
         registry_nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
         registry_nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
 
-        # Application server
-
-        # Monitoring
-
         # Outgoing emails
         gitlab_rails['gitlab_email_enabled'] = false
-
-        # Backup
     volumes:
       - type: volume
         source: config
