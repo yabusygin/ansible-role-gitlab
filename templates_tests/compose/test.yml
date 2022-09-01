@@ -40,18 +40,6 @@ tests:
       inventory: puma_configuration/inventory.yml
     expected_result: puma_configuration/docker-compose.yml
 
-  - name: set gitlab_unicorn_force
-    template: docker-compose.yml.j2
-    variables:
-      inventory: force_unicorn/inventory.yml
-    expected_result: force_unicorn/docker-compose.yml
-
-  - name: set gitlab_unicorn_workers (deprecated)
-    template: docker-compose.yml.j2
-    variables:
-      inventory: deprecated_unicorn_workers/inventory.yml
-    expected_result: deprecated_unicorn_workers/docker-compose.yml
-
   - name: set gitlab_monitoring_whitelist (single entry)
     template: docker-compose.yml.j2
     variables:

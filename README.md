@@ -4,7 +4,7 @@ Ansible Role: gitlab
 ![Test workflow status](https://github.com/yabusygin/ansible-role-gitlab/workflows/test/badge.svg)
 ![Release workflow status](https://github.com/yabusygin/ansible-role-docker/workflows/release/badge.svg)
 
-An Ansible role for setting up [GitLab][GitLab].
+An Ansible role for setting up [GitLab][GitLab] version 13.0 or newer.
 
 [GitLab]: https://docs.gitlab.com/ce/README.html
 
@@ -320,23 +320,15 @@ gitlab_rails['smtp_user_name'] = 'gitlab'
 gitlab_rails['smtp_password'] = 'Pa$$w0rD'
 ```
 
-### Application Server Settings ###
+### Puma Settings ###
 
 Variable reference:
 
-*   `gitlab_workers` -- number of [Puma][Puma] workers or [Unicorn][Unicorn]
-    workers if `gitlab_unicorn_force` is set to `yes`.
+*   `gitlab_workers` -- number of [Puma][Puma] workers.
 *   `gitlab_min_threads` -- minimum number of Puma threads.
 *   `gitlab_max_threads` -- maximum number of Puma threads.
-*   `gitlab_unicorn_force` -- use Unicorn instead of Puma. Default: `no`.
-*   `gitlab_unicorn_workers` -- number of Unicorn worker processes (for GitLab
-    versions before 13.0). For Gitlab 13.0 user `gitlab_unicorn_force` and
-    `gitlab_workers` instead.
 
 [Puma]: https://docs.gitlab.com/ce/administration/operations/puma.html
-[Unicorn]: https://docs.gitlab.com/12.10/omnibus/settings/unicorn.html
-
-#### Puma ####
 
 ```yaml
 gitlab_workers: 2
@@ -350,35 +342,6 @@ The following configuration will be added:
 puma['worker_processes'] = 2
 puma['min_threads'] = 4
 puma['max_threads'] = 4
-```
-
-#### Unicorn ####
-
-For GitLab 13.0 and newer:
-
-```yaml
-gitlab_unicorn_force: yes
-gitlab_workers: 3
-```
-
-The following configuration will be added:
-
-```ruby
-puma['enable'] = false
-unicorn['enable'] = true
-unicorn['worker_processes'] = 3
-```
-
-For GitLab versions before 13.0:
-
-```yaml
-gitlab_unicorn_workers: 3
-```
-
-The following configuration will be added:
-
-```ruby
-unicorn['worker_processes'] = 3
 ```
 
 ### Monitoring Settings ###
