@@ -71,4 +71,5 @@
 - name: run GitLab
   community.docker.docker_compose:
     state: present
+    build: yes
     project_src: /etc/docker-gitlab
