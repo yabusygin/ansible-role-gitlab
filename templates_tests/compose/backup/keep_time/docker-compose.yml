@@ -21,6 +21,7 @@ services:
         gitlab_rails['gitlab_email_enabled'] = false
 
         # Backup
+        gitlab_rails['backup_keep_time'] = 604800
     volumes:
       - type: volume
         source: config

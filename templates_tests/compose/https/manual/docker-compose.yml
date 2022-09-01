@@ -8,10 +8,15 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         # URL
-        external_url 'http://gitlab.test'
-        registry_external_url 'http://gitlab.test:5050'
+        external_url 'https://gitlab.test'
+        registry_external_url 'https://gitlab.test:5050'
 
         # HTTPS
+        letsencrypt['enable'] = false
+        nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
+        nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
+        registry_nginx['ssl_certificate'] = '/opt/gitlab/tls/https.crt'
+        registry_nginx['ssl_certificate_key'] = '/opt/gitlab/tls/https.key'
 
         # Application server
 
@@ -35,8 +40,8 @@ services:
       - bridge
     ports:
       - protocol: tcp
-        target: 80
-        published: 80
+        target: 443
+        published: 443
       - protocol: tcp
         target: 22
         published: 22

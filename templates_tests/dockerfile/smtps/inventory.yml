@@ -1,0 +1,2 @@
+---
+gitlab_email_smtp_ca_cert: certs/smtp.ca.crt

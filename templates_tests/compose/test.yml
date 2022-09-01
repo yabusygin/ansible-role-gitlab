@@ -1,0 +1,119 @@
+---
+tests:
+  - name: default Docker Compose file
+    template: docker-compose.yml.j2
+    expected_result: default/docker-compose.yml
+
+  - name: custom Docker image
+    template: docker-compose.yml.j2
+    variables:
+      inventory: image/inventory.yml
+    expected_result: image/docker-compose.yml
+
+  - name: container restart policy
+    template: docker-compose.yml.j2
+    variables:
+      inventory: restart_policy/inventory.yml
+    expected_result: restart_policy/docker-compose.yml
+
+  - name: custom URL settings
+    template: docker-compose.yml.j2
+    variables:
+      inventory: url/inventory.yml
+    expected_result: url/docker-compose.yml
+
+  - name: manual HTTPS
+    template: docker-compose.yml.j2
+    variables:
+      inventory: https/manual/inventory.yml
+    expected_result: https/manual/docker-compose.yml
+
+  - name: Let's Encrypt HTTPS
+    template: docker-compose.yml.j2
+    variables:
+      inventory: https/letsencrypt/inventory.yml
+    expected_result: https/letsencrypt/docker-compose.yml
+
+  - name: Puma configuration
+    template: docker-compose.yml.j2
+    variables:
+      inventory: puma_configuration/inventory.yml
+    expected_result: puma_configuration/docker-compose.yml
+
+  - name: set gitlab_unicorn_force
+    template: docker-compose.yml.j2
+    variables:
+      inventory: force_unicorn/inventory.yml
+    expected_result: force_unicorn/docker-compose.yml
+
+  - name: set gitlab_unicorn_workers (deprecated)
+    template: docker-compose.yml.j2
+    variables:
+      inventory: deprecated_unicorn_workers/inventory.yml
+    expected_result: deprecated_unicorn_workers/docker-compose.yml
+
+  - name: set gitlab_monitoring_whitelist (single entry)
+    template: docker-compose.yml.j2
+    variables:
+      inventory: monitoring_whitelist/single_entry/inventory.yml
+    expected_result: monitoring_whitelist/single_entry/docker-compose.yml
+
+  - name: set gitlab_monitoring_whitelist (multiple entries)
+    template: docker-compose.yml.j2
+    variables:
+      inventory: monitoring_whitelist/multiple_entries/inventory.yml
+    expected_result: monitoring_whitelist/multiple_entries/docker-compose.yml
+
+  - name: SMTPS
+    template: docker-compose.yml.j2
+    variables:
+      inventory: email/tls/inventory.yml
+    expected_result: email/tls/docker-compose.yml
+
+  - name: STARTTLS
+    template: docker-compose.yml.j2
+    variables:
+      inventory: email/starttls/inventory.yml
+    expected_result: email/starttls/docker-compose.yml
+
+  - name: insecure transport
+    template: docker-compose.yml.j2
+    variables:
+      inventory: email/insecure_transport/inventory.yml
+    expected_result: email/insecure_transport/docker-compose.yml
+
+  - name: unverified certificate
+    template: docker-compose.yml.j2
+    variables:
+      inventory: email/unverified_cert/inventory.yml
+    expected_result: email/unverified_cert/docker-compose.yml
+
+  - name: private CA
+    template: docker-compose.yml.j2
+    variables:
+      inventory: email/private_ca/inventory.yml
+    expected_result: email/private_ca/docker-compose.yml
+
+  - name: backup keep time
+    template: docker-compose.yml.j2
+    variables:
+      inventory: backup/keep_time/inventory.yml
+    expected_result: backup/keep_time/docker-compose.yml
+
+  - name: upload backups to AWS S3
+    template: docker-compose.yml.j2
+    variables:
+      inventory: backup/upload/s3/aws/inventory.yml
+    expected_result: backup/upload/s3/aws/docker-compose.yml
+
+  - name: upload backups to Digital Ocean Spaces
+    template: docker-compose.yml.j2
+    variables:
+      inventory: backup/upload/s3/digital_ocean/inventory.yml
+    expected_result: backup/upload/s3/digital_ocean/docker-compose.yml
+
+  - name: upload backups to MinIO
+    template: docker-compose.yml.j2
+    variables:
+      inventory: backup/upload/s3/minio/inventory.yml
+    expected_result: backup/upload/s3/minio/docker-compose.yml

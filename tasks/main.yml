@@ -1,65 +1,49 @@
 ---
-- name: set owner/group ID for files that are mounted to container
-  ansible.builtin.import_tasks: set-volume-owner.yml
-  when: gitlab_userns_remap_enable
-
 - name: create configuration directory
   ansible.builtin.file:
     path: /etc/docker-gitlab
     state: directory
     mode: 0755
 
-- name: create config file
-  ansible.builtin.template:
-    src: gitlab.rb.j2
-    dest: /etc/docker-gitlab/gitlab.rb
-    lstrip_blocks: yes
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
-    mode: 0600
-  notify:
-    - restart GitLab
-
-- name: create HTTPS key and certificate directory
+- name: create container build directory
   ansible.builtin.file:
-    path: /etc/docker-gitlab/https
+    path: /etc/docker-gitlab/build
     state: directory
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
-    mode: 0700
+    mode: 0755
+
+- name: set Dockerfile
+  ansible.builtin.template:
+    src: Dockerfile.j2
+    dest: /etc/docker-gitlab/build/Dockerfile
+    lstrip_blocks: yes
+    mode: 0644
+
+- name: set .dockerignore
+  ansible.builtin.copy:
+    src: dockerignore
+    dest: /etc/docker-gitlab/build/.dockerignore
+    mode: 0644
 
 - name: upload HTTPS key
   ansible.builtin.copy:
     src: "{{ gitlab_https_key }}"
-    dest: "/etc/docker-gitlab/https/{{ gitlab_hostname }}.key"
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
+    dest: /etc/docker-gitlab/build/https.key
     mode: 0600
   when: gitlab_https_key is defined
-  notify:
-    - restart GitLab
 
 - name: upload HTTPS certificate
   ansible.builtin.copy:
     src: "{{ gitlab_https_cert }}"
-    dest: "/etc/docker-gitlab/https/{{ gitlab_hostname }}.crt"
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
-    mode: 0600
+    dest: /etc/docker-gitlab/build/https.crt
+    mode: 0644
   when: gitlab_https_cert is defined
-  notify:
-    - restart GitLab
 
 - name: add SMTP CA certificate
   ansible.builtin.copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
-    dest: /etc/docker-gitlab/smtp.crt.pem
-    owner: "{{ _gitlab_volume_owner }}"
-    group: "{{ _gitlab_volume_group }}"
+    dest: /etc/docker-gitlab/build/smtp.ca.crt
     mode: 0600
   when: gitlab_email_smtp_ca_cert is defined
-  notify:
-    - restart GitLab
 
 - name: create Docker Compose file
   ansible.builtin.template:
@@ -67,8 +51,6 @@
     dest: /etc/docker-gitlab/docker-compose.yml
     lstrip_blocks: yes
     mode: 0600
-  notify:
-    - restart GitLab
 
 - name: add backup helper script
   ansible.builtin.copy:
@@ -87,4 +69,5 @@
 - name: run GitLab
   community.docker.docker_compose:
     state: present
+    build: yes
     project_src: /etc/docker-gitlab

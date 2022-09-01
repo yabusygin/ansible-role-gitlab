@@ -1,0 +1,8 @@
+FROM {{ gitlab_image }}
+{% if gitlab_https_enable %}
+COPY https.key https.crt /opt/gitlab/tls/
+RUN chmod 'u=rw,g=,o=' /opt/gitlab/tls/https.key
+{% endif %}
+{% if gitlab_email_smtp_ca_cert is defined %}
+COPY smtp.ca.crt /opt/gitlab/tls/
+{% endif %}

@@ -14,6 +14,7 @@ services:
         # HTTPS
 
         # Application server
+        unicorn['worker_processes'] = 3
 
         # Monitoring
 

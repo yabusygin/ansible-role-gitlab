@@ -1,6 +1,0 @@
----
-- name: restart GitLab
-  community.docker.docker_compose:
-    state: present
-    restarted: yes
-    project_src: /etc/docker-gitlab

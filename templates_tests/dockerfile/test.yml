@@ -1,0 +1,23 @@
+---
+tests:
+  - name: default
+    template: Dockerfile.j2
+    expected_result: default/Dockerfile
+
+  - name: custom base image
+    template: Dockerfile.j2
+    variables:
+      inventory: image/inventory.yml
+    expected_result: image/Dockerfile
+
+  - name: HTTPS
+    template: Dockerfile.j2
+    variables:
+      inventory: https/inventory.yml
+    expected_result: https/Dockerfile
+
+  - name: SMTPS
+    template: Dockerfile.j2
+    variables:
+      inventory: smtps/inventory.yml
+    expected_result: smtps/Dockerfile

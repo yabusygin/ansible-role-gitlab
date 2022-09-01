@@ -11,19 +11,6 @@ testinfra_hosts = AnsibleRunner(environ["MOLECULE_INVENTORY_FILE"]).get_hosts(
 )
 
 
-def test_config_permissions(host) -> None:
-    entry = _get_entry(host=host, path=Path("/etc/subuid"), name="dockremap")
-    assert entry is not None
-    subuid = entry[1]
-
-    entry = _get_entry(host=host, path=Path("/etc/subgid"), name="dockremap")
-    assert entry is not None
-    subgid = entry[1]
-
-    assert host.file("/etc/docker-gitlab/gitlab.rb").uid == subuid
-    assert host.file("/etc/docker-gitlab/gitlab.rb").gid == subgid
-
-
 def test_health(host) -> None:
     args = (
         "http",
