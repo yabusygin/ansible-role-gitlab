@@ -14,14 +14,8 @@ services:
         # HTTPS
         letsencrypt['enable'] = true
 
-        # Application server
-
-        # Monitoring
-
         # Outgoing emails
         gitlab_rails['gitlab_email_enabled'] = false
-
-        # Backup
     volumes:
       - type: volume
         source: config
