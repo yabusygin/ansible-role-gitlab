@@ -538,7 +538,7 @@ Alexey Busygin \<yaabusygin@gmail.com\>
 [DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
 [DockerRole]: https://galaxy.ansible.com/yabusygin/docker
 [GitLabImages]: https://hub.docker.com/u/gitlab
-[RestartPolicy]: https://docs.docker.com/compose/compose-file/compose-file-v2/#restart
+[RestartPolicy]: https://docs.docker.com/compose/compose-file/#restart
 [Puma]: https://docs.gitlab.com/ee/administration/operations/puma.html
 [Backup]: https://docs.gitlab.com/ee/raketasks/backup_restore.html
 [Crontab5]: https://man7.org/linux/man-pages/man5/crontab.5.html

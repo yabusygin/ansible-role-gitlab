@@ -1,5 +1,4 @@
 ---
-version: "3.7"
 services:
   gitlab:
     build:
@@ -8,11 +7,11 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         # URL
-        external_url 'https://gitlab.test'
-        registry_external_url 'https://gitlab.test:5050'
+        external_url 'http://gitlab.test'
+        registry_external_url 'http://gitlab.test:5050'
 
-        # HTTPS
-        letsencrypt['enable'] = true
+        # Monitoring
+        gitlab_rails['monitoring_whitelist'] = ['127.0.0.0/8']
 
         # Outgoing emails
         gitlab_rails['gitlab_email_enabled'] = false
@@ -30,8 +29,8 @@ services:
       - bridge
     ports:
       - protocol: tcp
-        target: 443
-        published: 443
+        target: 80
+        published: 80
       - protocol: tcp
         target: 22
         published: 22

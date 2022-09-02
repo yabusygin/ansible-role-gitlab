@@ -1,5 +1,4 @@
 ---
-version: "3.7"
 services:
   gitlab:
     build:
@@ -8,11 +7,9 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         # URL
-        external_url 'http://gitlab.test'
-        registry_external_url 'http://gitlab.test:5050'
-
-        # Monitoring
-        gitlab_rails['monitoring_whitelist'] = ['127.0.0.0/8']
+        external_url 'http://gitlab.example.com:8000'
+        registry_external_url 'http://gitlab.example.com:5001'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
 
         # Outgoing emails
         gitlab_rails['gitlab_email_enabled'] = false
@@ -30,14 +27,14 @@ services:
       - bridge
     ports:
       - protocol: tcp
-        target: 80
-        published: 80
+        target: 8000
+        published: 8000
       - protocol: tcp
         target: 22
-        published: 22
+        published: 2222
       - protocol: tcp
-        target: 5050
-        published: 5050
+        target: 5001
+        published: 5001
 volumes:
   config:
   data:

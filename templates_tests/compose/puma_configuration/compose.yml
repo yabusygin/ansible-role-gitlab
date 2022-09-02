@@ -1,5 +1,4 @@
 ---
-version: "3.7"
 services:
   gitlab:
     build:
@@ -11,18 +10,13 @@ services:
         external_url 'http://gitlab.test'
         registry_external_url 'http://gitlab.test:5050'
 
+        # Application server
+        puma['worker_processes'] = 3
+        puma['min_threads'] = 1
+        puma['max_threads'] = 4
+
         # Outgoing emails
         gitlab_rails['gitlab_email_enabled'] = false
-
-        # Backup
-        gitlab_rails['backup_upload_connection'] = {
-          'provider' => 'AWS',
-          'endpoint' => 'https://ams3.digitaloceanspaces.com',
-          'region' => 'ams3',
-          'aws_access_key_id' => 'AKIAKIAKI',
-          'aws_secret_access_key' => 'secret123'
-        }
-        gitlab_rails['backup_upload_remote_directory'] = 'my.s3.bucket'
     volumes:
       - type: volume
         source: config

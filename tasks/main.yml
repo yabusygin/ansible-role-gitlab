@@ -45,10 +45,10 @@
     mode: u=rw,g=r,o=r
   when: gitlab_email_smtp_ca_cert is defined
 
-- name: create Docker Compose file
+- name: set Compose file
   ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: /etc/docker-gitlab/docker-compose.yml
+    src: compose.yml.j2
+    dest: /etc/docker-gitlab/compose.yml
     lstrip_blocks: yes
     mode: u=rw,g=,o=
 
