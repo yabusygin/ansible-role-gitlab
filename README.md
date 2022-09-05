@@ -14,9 +14,9 @@ The role uses [community.docker.docker_compose][ComposeModule] module. Therefore
 
 The following requirements are needed on a managed node to execute this role:
 
-* [Docker Engine](https://docs.docker.com/engine/install/)
-* [Docker Compose](https://docs.docker.com/compose/install/)
-* [community.docker.docker_compose][ComposeModule] module requirements
+- [Docker Engine](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [community.docker.docker_compose][ComposeModule] module requirements
 
 It's recommended to use [yabusygin.docker][DockerRole] role for installing all
 the requirements on the managed node.
@@ -29,65 +29,65 @@ Playbook" section below for examples.
 
 ### Docker Configuration ###
 
-* `gitlab_image` -- [Docker container image][GitLabImages] to use. Default
+- `gitlab_image` -- [Docker container image][GitLabImages] to use. Default
   value: `gitlab/gitlab-ce:latest`.
-* `gitlab_restart_policy` -- Docker container [restart policy][RestartPolicy].
+- `gitlab_restart_policy` -- Docker container [restart policy][RestartPolicy].
   Values: `always`, `on-failure`, `unless-stopped`. Docker doesn’t restart a
   container under any circumstance by default.
 
 ### URL ###
 
-* `gitlab_hostname` -- domain name of GitLab host. Default value: `gitlab.test`.
-* `gitlab_web_port` -- web UI port number. Default value: `80`.
-* `gitlab_registry_port` -- container registry port number. Default value:
+- `gitlab_hostname` -- domain name of GitLab host. Default value: `gitlab.test`.
+- `gitlab_web_port` -- web UI port number. Default value: `80`.
+- `gitlab_registry_port` -- container registry port number. Default value:
   `5050`.
-* `gitlab_ssh_port` -- Git shell SSH port number. Default value: `22`.
+- `gitlab_ssh_port` -- Git shell SSH port number. Default value: `22`.
 
 ### HTTPS ###
 
-* `gitlab_https_enable` -- enable HTTPS. Default: `no`.
-* `gitlab_letsencrypt_enable` -- enable automated HTTPS with Let’s Encrypt.
+- `gitlab_https_enable` -- enable HTTPS. Default: `no`.
+- `gitlab_letsencrypt_enable` -- enable automated HTTPS with Let’s Encrypt.
   Default: `no`.
-* `gitlab_https_key` -- path to private key on the control host.
-* `gitlab_https_cert` -- path to certificate chainon the control host.
+- `gitlab_https_key` -- path to private key on the control host.
+- `gitlab_https_cert` -- path to certificate chainon the control host.
 
 ### Outgoing Emails ###
 
-* `gitlab_email_enable` -- enable outgoing emails. Values: `yes`, `no`. Default
+- `gitlab_email_enable` -- enable outgoing emails. Values: `yes`, `no`. Default
   value: `no`.
-* `gitlab_email_from_mailbox` -- mailbox value of "From" header in an outgoing
+- `gitlab_email_from_mailbox` -- mailbox value of "From" header in an outgoing
   email.
-* `gitlab_email_from_display_name` -- display name value of "From" header in an
+- `gitlab_email_from_display_name` -- display name value of "From" header in an
   outgoing email.
-* `gitlab_email_reply_to_mailbox` -- mailbox value of "Reply-To" header in an
+- `gitlab_email_reply_to_mailbox` -- mailbox value of "Reply-To" header in an
   outgoing email.
-* `gitlab_email_smtp_server_host` -- SMTP server name.
-* `gitlab_email_smtp_server_port` -- SMTP server port.
-* `gitlab_email_smtp_transport_security` -- transport layer security mechanism.
+- `gitlab_email_smtp_server_host` -- SMTP server name.
+- `gitlab_email_smtp_server_port` -- SMTP server port.
+- `gitlab_email_smtp_transport_security` -- transport layer security mechanism.
   Values: `tls` (SMTPS), `starttls`.
-* `gitlab_email_smtp_verify_server_cert` -- verify SMTP server certificate, when
+- `gitlab_email_smtp_verify_server_cert` -- verify SMTP server certificate, when
   `tls` or `starttls` transport layer security mechanism is selected. Default
   value: `yes`.
-* `gitlab_email_smtp_ca_cert` -- local path to CA certificate used to verify
+- `gitlab_email_smtp_ca_cert` -- local path to CA certificate used to verify
   SMTP server certificate.
-* `gitlab_email_smtp_user_auth_method` -- SMTP user authentication method.
+- `gitlab_email_smtp_user_auth_method` -- SMTP user authentication method.
   Values: `plain`, `login`, `cram_md5`.
-* `gitlab_email_smtp_user_name` -- SMTP user name.
-* `gitlab_email_smtp_user_password` -- SMTP user passphrase.
+- `gitlab_email_smtp_user_name` -- SMTP user name.
+- `gitlab_email_smtp_user_password` -- SMTP user passphrase.
 
 ### Application server (Puma) ###
 
 Variable reference:
 
-* `gitlab_workers` -- number of [Puma][Puma] workers.
-* `gitlab_min_threads` -- minimum number of Puma threads.
-* `gitlab_max_threads` -- maximum number of Puma threads.
+- `gitlab_workers` -- number of [Puma][Puma] workers.
+- `gitlab_min_threads` -- minimum number of Puma threads.
+- `gitlab_max_threads` -- maximum number of Puma threads.
 
 ### Monitoring ###
 
 Variable reference:
 
-*   `gitlab_monitoring_whitelist` -- a list of addresses/subnets of monitoring
+-   `gitlab_monitoring_whitelist` -- a list of addresses/subnets of monitoring
     endpoints that are allowed to perform healthchecks.
 
 ### Backup ###
@@ -96,41 +96,41 @@ See [Gitlab documentation][Backup] for details.
 
 #### Automated Backups ####
 
-* `gitlab_backup_cron_enable` -- enable cron job that performs periodic backups.
+- `gitlab_backup_cron_enable` -- enable cron job that performs periodic backups.
   Default value: `no`.
-* `gitlab_backup_cron_minute` -- a "minute" field of cron command line.
+- `gitlab_backup_cron_minute` -- a "minute" field of cron command line.
   Mandatory variable. See [`crontab(5)`][Crontab5].
-* `gitlab_backup_cron_hour` -- a "hour" field of cron command line. Mandatory
+- `gitlab_backup_cron_hour` -- a "hour" field of cron command line. Mandatory
   variable. See [`crontab(5)`][Crontab5].
-* `gitlab_backup_cron_day_of_month` -- a "day of month" field of cron command
+- `gitlab_backup_cron_day_of_month` -- a "day of month" field of cron command
   line. Default value: `*`.
-* `gitlab_backup_cron_month` -- a "month" field of cron command line. Default
+- `gitlab_backup_cron_month` -- a "month" field of cron command line. Default
   value: `*`.
-* `gitlab_backup_cron_day_of_week` -- a "day of week" field of cron command
+- `gitlab_backup_cron_day_of_week` -- a "day of week" field of cron command
   line. Default value: `*`.
-* `gitlab_backup_cron_docker_cmd` -- command that backup cron job uses to invoke
+- `gitlab_backup_cron_docker_cmd` -- command that backup cron job uses to invoke
   Docker Engine. Default: `docker`.
-* `gitlab_backup_cron_docker_compose_cmd` -- command that backup cron job uses
+- `gitlab_backup_cron_docker_compose_cmd` -- command that backup cron job uses
   to invoke Docker Compose. Default: `docker compose`.
 
 #### Upload Backups to S3 Compatible Storage ####
 
-* `gitlab_backup_upload_enable` -- enable uploading backups to remote storage.
+- `gitlab_backup_upload_enable` -- enable uploading backups to remote storage.
   Default value: `no`.
-* `gitlab_backup_upload_s3_region` -- AWS [region][AWSRegion].
-* `gitlab_backup_upload_s3_bucket` -- S3 [bucket][AWSS3Bucket] to store backup
+- `gitlab_backup_upload_s3_region` -- AWS [region][AWSRegion].
+- `gitlab_backup_upload_s3_bucket` -- S3 [bucket][AWSS3Bucket] to store backup
   objects. Mandatory variable.
-* `gitlab_backup_upload_s3_access_key_id` -- [access key ID][AWSAccessKeyID].
+- `gitlab_backup_upload_s3_access_key_id` -- [access key ID][AWSAccessKeyID].
   Mandatory variable.
-* `gitlab_backup_upload_s3_secret_access_key` --
+- `gitlab_backup_upload_s3_secret_access_key` --
   [secret access key][AWSsecretAccessKey]. Mandatory variable.
-* `gitlab_backup_upload_s3_endpoint` -- S3 compatible storage HTTP API endpoint.
-* `gitlab_backup_upload_s3_path_style_enable` -- use path-style method for
+- `gitlab_backup_upload_s3_endpoint` -- S3 compatible storage HTTP API endpoint.
+- `gitlab_backup_upload_s3_path_style_enable` -- use path-style method for
   accessing a bucket (see [Methods for accessing a bucket][AWSS3AccessBucket]).
 
 ### Limit Lifetime of Local Backup Files ###
 
-* `gitlab_backup_keep_time` -- sets `gitlab_rails['backup_keep_time']` value.
+- `gitlab_backup_keep_time` -- sets `gitlab_rails['backup_keep_time']` value.
 
 Dependencies
 ------------
