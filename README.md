@@ -24,6 +24,9 @@ the requirements on the managed node.
 Role Variables
 --------------
 
+Here is a quick variable reference. See [Wiki][Wiki] and "Example
+Playbook" section below for examples.
+
 ### Docker Configuration ###
 
 * `gitlab_image` -- [Docker container image][GitLabImages] to use. Default
@@ -237,6 +240,7 @@ Alexey Busygin \<yaabusygin@gmail.com\>
 [ComposeModule]: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_module.html
 [DockerCollection]: https://docs.ansible.com/ansible/latest/collections/community/docker/index.html
 [DockerRole]: https://galaxy.ansible.com/yabusygin/docker
+[Wiki]: https://github.com/yabusygin/ansible-role-gitlab/wiki/Configuration-Examples
 [GitLabImages]: https://hub.docker.com/u/gitlab
 [RestartPolicy]: https://docs.docker.com/compose/compose-file/#restart
 [Puma]: https://docs.gitlab.com/ee/administration/operations/puma.html
