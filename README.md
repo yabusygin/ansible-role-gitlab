@@ -117,8 +117,6 @@ See [Gitlab documentation][Backup] for details.
 
 * `gitlab_backup_upload_enable` -- enable uploading backups to remote storage.
   Default value: `no`.
-* `gitlab_backup_upload_type` -- remote storage type. Supported values: `s3`.
-  Default value: `s3`.
 * `gitlab_backup_upload_s3_region` -- AWS [region][AWSRegion].
 * `gitlab_backup_upload_s3_bucket` -- S3 [bucket][AWSS3Bucket] to store backup
   objects. Mandatory variable.
