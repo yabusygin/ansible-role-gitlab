@@ -24,21 +24,21 @@
     dest: /etc/docker-gitlab/build/.dockerignore
     mode: u=rw,g=r,o=r
 
-- name: upload HTTPS key
+- name: set HTTPS key
   ansible.builtin.copy:
     src: "{{ gitlab_https_key }}"
     dest: /etc/docker-gitlab/build/https.key
     mode: u=rw,g=,o=
   when: gitlab_https_key is defined
 
-- name: upload HTTPS certificate
+- name: set HTTPS certificate
   ansible.builtin.copy:
     src: "{{ gitlab_https_cert }}"
     dest: /etc/docker-gitlab/build/https.crt
     mode: u=rw,g=r,o=r
   when: gitlab_https_cert is defined
 
-- name: add SMTP CA certificate
+- name: set SMTP CA certificate
   ansible.builtin.copy:
     src: "{{ gitlab_email_smtp_ca_cert }}"
     dest: /etc/docker-gitlab/build/smtp.ca.crt
@@ -52,7 +52,7 @@
     lstrip_blocks: yes
     mode: u=rw,g=,o=
 
-- name: add backup helper script
+- name: set backup helper script
   ansible.builtin.copy:
     src: gitlab-backup-wrapper
     dest: /usr/local/bin/gitlab-backup-wrapper
