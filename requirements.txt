@@ -4,6 +4,6 @@ molecule[docker,test]==4.0.1
 ansible-lint==6.4.0
 mypy==0.971
 pylint==2.14.5
-black==22.6.0
+black==24.3.0
 
 templtest==0.2.11
